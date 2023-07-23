@@ -3,6 +3,7 @@ let CATEGORY = 'card'
 const searchBox = document.querySelector('.search-term')
 const searchResult = document.querySelector('.search-result-section')
 const randomizeBtn = document.querySelector('.btn-randomize')
+const timerSpan = document.querySelector('.aside')
 
 const borderColor = {
   "card": "#2973C4",
@@ -387,29 +388,68 @@ function levenshtein(s, t) {
   return h;
 }
 
-function countdown() {
-  const countDownDate = new Date("August 8 2023 11:00:00 GMT+0800").getTime()
+function countDownDate(year, month, date) { 
+  return new Date(`${year}-${month.toString().padStart(2, 0)}-${date.toString().padStart(2, 0)}T03:00:00.000Z`) 
+}
 
-  const x = setInterval(function() {
+function newSeason(year, month) {
+  let date = ""
+  month += 1
+  if (month === 13) {
+      month = 0
+      year++
+  }
 
-    const now = new Date().getTime()
-      
-    const distance = countDownDate - now
-      
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24))
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000)
-      
-    document.querySelector(".countdown").innerHTML = `⏰ ${days}d ${hours}h ${minutes}m ${seconds}s`
-      
-    if (distance < 0) {
-      clearInterval(x)
-      document.querySelector(".countdown").innerHTML = "NEW SEASON BEGINS! 🎉"
+  new Array(31).fill().every((_, index) => {
+      index += 1
+
+      if (countDownDate(year, month, index).getDay() === 1) {
+          date = index
+          return false
+      }
+
+      return true
+  })
+
+  return countDownDate(year, month, date)
+}
+
+function countdown(seasonEnd) {
+  let year = 2023
+  let month = 8
+  let date = 7
+
+  let SEASON_END = seasonEnd ? seasonEnd : countDownDate(year, month, date)
+  const x = setInterval(_ => {      
+    const difference = SEASON_END - new Date()
+    
+    if (difference < 0) {
+      resetSeason(year, month++)
+      return clearInterval(x)
     }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
+    
+    document.querySelector(".countdown").innerHTML = `⏰ ${days}d ${hours}h ${minutes}m ${seconds}s`
   }, 1000)
 
   setTimeout(() => {
-    document.querySelector('.aside').style.visibility = "visible"
+    timerSpan.style.visibility = "visible"
   }, 2000);
+}
+
+function resetSeason(year, month, date) {
+  document.querySelector(".countdown").innerHTML = "NEW SEASON BEGINS! 🎉"
+
+  setTimeout(() => {
+    timerSpan.style.visibility = "hidden"
+    countdown(newSeason(year, month))
+  }, 2500)
+
+  setTimeout(() => {
+    timerSpan.style.visibility = "visible"
+  }, 3500)
 }
