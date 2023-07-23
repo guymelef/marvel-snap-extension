@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700;800&family=Roboto:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css">
+  <link rel="stylesheet" href="index.css">
+  <title>Marvel SNAP Searcher</title>
+</head>
+<body>
+  <main>
+    <section class="buttons">
+      <button type="button" id="card" class="btn btn-category btn-card btn-card-select">Card</button>
+      <button type="button" id="location" class="btn btn-category btn-location">Location</button>
+      <button type="button" id="bot" class="btn btn-category btn-bot" title="case-sensitive bot search">Bot</button>
+    </section>
+    <section class="search-section">
+      <form class="search-form">
+        <input name="search-term" class="search-term" placeholder="Card search..." type="text" autocomplete="off">
+      </form>
+    </section>
+    <section class="search-result-section">
+      <!-- search result -->
+    </section>
+    <section class="section-randomize">
+      <button type="button" class="btn btn-randomize">Randomize <img src="images/shuffle.svg" alt="shuffle"></button>
+    </section>
+    <section class="aside">
+      <!-- show season countdown -->
+      <h4>Season Reset: <span class="countdown"></span></h4>
+    </section>
+  </main>
+  <footer>
+    <p>
+      <img src="images/twitch-logo.svg" alt="shuffle search">
+      <a class="dev-link" href="https://twitch.tv/thesandvich" target="_blank">TheSandvich</a> made this.
+    </p>
+    &nbsp;
+    <a href="https://streamelements.com/thesandvich/tip" target="_blank" title="Donate">
+      <img src="images/donate.svg" alt="donate" class="donate-svg">
+    </a>
+  </footer>
+
+  <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
