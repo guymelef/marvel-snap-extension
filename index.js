@@ -162,7 +162,7 @@ function displayCard(card, type, isRandom) {
         <p class="card-ability">
           ${card.ability}
           ${card.evolved
-            ? `<br><br><strong>Evolved:</strong> ${card.evolved}`
+            ? `<br><br><strong class="evolved">Evolved:</strong> ${card.evolved}`
             : ''
           }
         </p>
@@ -206,6 +206,7 @@ function displayCard(card, type, isRandom) {
           src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.url}"
           alt="${card.name}"
           title="${card.name}"
+          loading="eager"
         >
       </div>
       <div class="search-result-info ${type}-search-result"> 

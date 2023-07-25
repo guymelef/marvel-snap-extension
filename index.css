@@ -204,6 +204,10 @@ main {
   animation: reveal 700ms ease-in 1;
 }
 
+.evolved {
+  color: #1fdd06;
+}
+
 .card-search-result {
   min-width: 192px;
 }
