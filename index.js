@@ -417,8 +417,8 @@ function newSeason(year, month) {
 
 function countdown(seasonEnd) {
   let year = 2023
-  let month = 8
-  let date = 7
+  let month = 9
+  let date = 5
 
   let SEASON_END = seasonEnd ? seasonEnd : countDownDate(year, month, date)
   const x = setInterval(_ => {      
