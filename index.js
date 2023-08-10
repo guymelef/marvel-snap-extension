@@ -12,6 +12,7 @@ const borderColor = {
 }
 
 
+
 startApp()
 
 randomizeBtn.onclick = _ => getRandomCard(CATEGORY)
@@ -109,6 +110,7 @@ searchBox.addEventListener('click', _ => {
   searchBox.value = ''
   searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
 })
+
 
 
 // HELPER FUNCTIONS
@@ -389,43 +391,17 @@ function levenshtein(s, t) {
   return h;
 }
 
-function countDownDate(year, month, date) { 
-  return new Date(`${year}-${month.toString().padStart(2, 0)}-${date.toString().padStart(2, 0)}T03:00:00.000Z`) 
-}
-
-function newSeason(year, month) {
-  let date = ""
-  month += 1
-  if (month === 13) {
-      month = 0
-      year++
-  }
-
-  new Array(31).fill().every((_, index) => {
-      index += 1
-
-      if (countDownDate(year, month, index).getDay() === 1) {
-          date = index
-          return false
-      }
-
-      return true
-  })
-
-  return countDownDate(year, month, date)
-}
-
 function countdown(seasonEnd) {
   let year = 2023
   let month = 9
-  let date = 5
+  let date = 4
 
-  let SEASON_END = seasonEnd ? seasonEnd : countDownDate(year, month, date)
+  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T20:00:00-07:00`)
   const x = setInterval(_ => {      
     const difference = SEASON_END - new Date()
     
     if (difference < 0) {
-      resetSeason(year, month++)
+      resetSeason(year, month)
       return clearInterval(x)
     }
 
@@ -442,12 +418,26 @@ function countdown(seasonEnd) {
   }, 2000);
 }
 
-function resetSeason(year, month, date) {
+function resetSeason(year, month) {
   document.querySelector(".countdown").innerHTML = "NEW SEASON BEGINS! 🎉"
+
+  month += 1
+  if (month === 13) {
+    month = 1
+    year += 1
+  }
+
+  let dateStart = 1
+  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T20:00:00.000-07:00`)
+  let weekday = date.getDay()
+  if (weekday !== 1) {
+    dateStart += weekday > 1 ? 8 - weekday : 1
+    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T20:00:00.000-07:00`)
+  }
 
   setTimeout(() => {
     timerSpan.style.visibility = "hidden"
-    countdown(newSeason(year, month))
+    countdown(date)
   }, 2500)
 
   setTimeout(() => {
