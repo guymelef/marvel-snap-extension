@@ -114,9 +114,13 @@ searchBox.addEventListener('click', _ => {
 
 
 // HELPER FUNCTIONS
-function startApp() {
+async function startApp() {
   countdown()
-  getRandomCard(CATEGORY)
+  const res = await fetch(`./data/${CATEGORY}s.json`)
+  let cards = await res.json()
+  let card = cards.find(card => card.series === "Season Pass")
+  displayCard(card, CATEGORY, false)
+  searchBox.focus()
 }
 
 async function getRandomCard(type) {
@@ -124,7 +128,7 @@ async function getRandomCard(type) {
   const res = await fetch(`./data/${type}s.json`)
   let cards = await res.json()
 
-  if (type === "card") cards = cards.filter(i => i.type === "character" && i.status === "released")
+  if (type === "card") cards = cards.filter(card => card.type === "character" && card.released)
 
   const card = cards[Math.floor(Math.random() * (cards.length + 1))]
   
@@ -143,6 +147,18 @@ function displayCard(card, type, isRandom) {
     if (card.evolved) {
       card.evolved = card.evolved.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
       card.evolved = card.evolved.replaceAll("Ongoing:", "<strong>Ongoing:</strong>")
+    }
+
+    let source = ''
+    if (card.series === "Season Pass") {
+      source = "Season Pass"
+    } else {
+      if (card.series) {
+        if (card.series === "NA") source = "Unreleased"
+        else source = `Series ${card.series}`
+      } else {
+        source = "Summon"
+      }
     }
 
     htmlStr = `
@@ -171,11 +187,9 @@ function displayCard(card, type, isRandom) {
       </div>
       <div class="search-result-info-source">
         <!-- card source -->
-        <p><span class="source-text">Source:</span> <span class="source-origin">${
-          card.source === "NA"
-            ? "Not Available"
-            : card.source === "Token" ? "Summon" : card.source
-        }</span></p>
+        <p>
+          <span class="source-text">Source:</span> <span class="source-origin">${source}</span>
+        </p>
       </div>
     `
   } else if (type === "location") {
@@ -205,7 +219,7 @@ function displayCard(card, type, isRandom) {
         <!-- card image -->
         <img 
           class="card-img card-img-${type}"
-          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.url}"
+          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image}"
           alt="${card.name}"
           title="${card.name}"
           loading="eager"
@@ -393,8 +407,8 @@ function levenshtein(s, t) {
 
 function countdown(seasonEnd) {
   let year = 2023
-  let month = 9
-  let date = 4
+  let month = 10
+  let date = 3
 
   let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T20:00:00-07:00`)
   const x = setInterval(_ => {      
