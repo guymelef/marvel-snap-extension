@@ -408,7 +408,7 @@ function levenshtein(s, t) {
 function countdown(seasonEnd) {
   let year = 2023
   let month = 10
-  let date = 3
+  let date = 2
 
   let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T20:00:00-07:00`)
   const x = setInterval(_ => {      
