@@ -407,10 +407,10 @@ function levenshtein(s, t) {
 
 function countdown(seasonEnd) {
   let year = 2023
-  let month = 10
-  let date = 2
+  let month = 11
+  let date = 6
 
-  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T20:00:00-07:00`)
+  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00:00.000`)
   const x = setInterval(_ => {      
     const difference = SEASON_END - new Date()
     
@@ -442,11 +442,11 @@ function resetSeason(year, month) {
   }
 
   let dateStart = 1
-  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T20:00:00.000-07:00`)
+  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00.000`)
   let weekday = date.getDay()
   if (weekday !== 1) {
     dateStart += weekday > 1 ? 8 - weekday : 1
-    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T20:00:00.000-07:00`)
+    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00.000`)
   }
 
   setTimeout(() => {
