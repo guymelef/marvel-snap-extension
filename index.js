@@ -410,7 +410,7 @@ function countdown(seasonEnd) {
   let month = 11
   let date = 6
 
-  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00:00.000`)
+  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00:00Z`)
   const x = setInterval(_ => {      
     const difference = SEASON_END - new Date()
     
@@ -442,11 +442,11 @@ function resetSeason(year, month) {
   }
 
   let dateStart = 1
-  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00.000`)
+  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
   let weekday = date.getDay()
   if (weekday !== 1) {
     dateStart += weekday > 1 ? 8 - weekday : 1
-    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00.000`)
+    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
   }
 
   setTimeout(() => {
