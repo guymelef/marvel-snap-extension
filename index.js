@@ -130,7 +130,7 @@ async function getRandomCard(type) {
 
   if (type === "card") cards = cards.filter(card => card.type === "character" && card.released)
 
-  const card = cards[Math.floor(Math.random() * (cards.length + 1))]
+  const card = cards[Math.floor(Math.random() * cards.length)]
   
   return displayCard(card, type, true)
 }
@@ -264,9 +264,10 @@ async function findClosest(str, type) {
   }
   
   let closestMatch = null
+  let partialMatch = null
+  let wordMatch = null
   const closestDistArr = []
   
-  let partialMatch = null
   for (const item of data) {
     const itemName = item.name.toLowerCase()
     closestDistArr.push(levenshtein(itemName, str))
@@ -280,9 +281,20 @@ async function findClosest(str, type) {
       partialMatch = item
       if (itemName > str) break
     }
+
+    const cardNameArr = itemName.split(' ')
+    const strArr = str.split(' ')
+    if (cardNameArr.length > 1 && strArr.length > 1) {
+      let match = 0
+      for (let word of strArr) {
+        if (cardNameArr.includes(word)) match++
+      }
+
+      if (match === strArr.length) wordMatch = item
+    }
   }
 
-  closestMatch = closestMatch || partialMatch
+  closestMatch = closestMatch || wordMatch || partialMatch
 
   if (!closestMatch) {
     const min = Math.min(...closestDistArr)
