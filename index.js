@@ -287,7 +287,7 @@ async function findClosest(str, type) {
     if (cardNameArr.length > 1 && strArr.length > 1) {
       let match = 0
       for (let word of strArr) {
-        if (cardNameArr.includes(word)) match++
+        if (itemName.includes(word)) match++
       }
 
       if (match === strArr.length) wordMatch = item
