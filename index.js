@@ -1,4 +1,5 @@
 let CATEGORY = 'card'
+let LAST_RANDOM_INDEX
 
 const searchBox = document.querySelector('.search-term')
 const searchResult = document.querySelector('.search-result-section')
@@ -130,8 +131,12 @@ async function getRandomCard(type) {
 
   if (type === "card") cards = cards.filter(card => card.type === "character" && card.released)
 
-  const card = cards[Math.floor(Math.random() * cards.length)]
+  const randomIndex = Math.floor(Math.random() * cards.length)
   
+  if (randomIndex === LAST_RANDOM_INDEX) return getRandomCard(type)
+  else LAST_RANDOM_INDEX = randomIndex
+  
+  const card = cards[randomIndex]
   return displayCard(card, type, true)
 }
 
