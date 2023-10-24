@@ -318,6 +318,10 @@ footer {
 
 .source-origin {
   color: #FBCA03;
+  font-family: 'Roboto Mono', monospace;
+  background: #800020;
+  padding: 0px 3px;
+  border-radius: 4px;
 }
 
 .btn-randomize {
@@ -397,6 +401,18 @@ footer {
   visibility: hidden;
 }
 
+.season-header {
+  cursor: pointer;
+  padding: 2.5px;
+  border-bottom: 2px solid greenyellow;
+  transition: all 0.5s ease;
+}
+
+.season-header:hover {
+  opacity: 0.9;
+  color: greenyellow;
+}
+
 .countdown {
   display: inline-block;
   transform-style: preserve-3d;
@@ -427,6 +443,83 @@ footer {
      0.5px  0.5px 0 rgb(255, 115, 0);
 }
 
+#modal {
+  display: none;
+  position: fixed; 
+  z-index: 1;
+  padding: 50px 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.85);
+}
+
+.modal-content {
+  position: relative;
+  color: #FCFCFC;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  background: #1d1d1d;
+  margin: auto;
+  padding: 12px;
+  border-radius: 6px;
+  border: 2px solid greenyellow;
+  width: 90%;
+  animation: slide 0.3s ease-out;
+}
+
+@keyframes slide {
+  from { bottom: -200px; opacity: 0 }
+  to { bottom: 0; opacity: 1 }
+}
+
+#modal h3,
+.date,
+.new-cards strong {
+  font-family: 'Roboto Mono', monospace;
+}
+
+#modal h3 {
+  text-transform: uppercase;
+  color: #2973C4;
+  margin-bottom: 0;
+}
+
+#modal ul {
+  list-style: none;
+  margin-top: 1px;
+}
+
+#modal .styled-list li::before {
+  content: "\2022";
+  color: gold;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.date {
+  color: rgb(255, 115, 0);
+}
+
+.list-item,
+.list-item-span {
+  color: #FCFCFC;
+  font-weight: bold;
+}
+
+.new-variants li {
+  color: orange;
+}
+
+.spotlight-caches {
+  list-style: none;
+  margin-left: -1em;
+}
+
 footer {
   background-color: #00000060;
   font-size: 14px;
@@ -443,7 +536,7 @@ footer p img {
 }
 
 .dev-link {
-  color: #F6F6F6;
+  color: #FCFCFC;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.8px;
@@ -463,4 +556,21 @@ footer p img {
   0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 
   40% {transform: translateY(-6px);} 
   60% {transform: translateY(-3px);} 
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2973C4;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #128eedce;
 }

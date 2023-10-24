@@ -5,6 +5,7 @@ const searchBox = document.querySelector('.search-term')
 const searchResult = document.querySelector('.search-result-section')
 const randomizeBtn = document.querySelector('.btn-randomize')
 const timerSpan = document.querySelector('.aside')
+const modal = document.querySelector('#modal')
 
 const borderColor = {
   "card": "#2973C4",
@@ -111,6 +112,17 @@ searchBox.addEventListener('click', _ => {
   searchBox.value = ''
   searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
 })
+
+document.onclick = ({ target }) => {
+  const classes = [...target.classList]
+
+  if (classes.includes('season-header')) {
+    modal.style.display = "block"
+  } else if (target === modal) {
+    modal.scrollTop = 0
+    modal.style.display = "none"
+  }
+}
 
 
 
@@ -441,7 +453,7 @@ function countdown(seasonEnd) {
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
     const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
     
-    document.querySelector(".countdown").innerHTML = `⏰ ${days}d ${hours}h ${minutes}m ${seconds}s`
+    document.querySelector(".countdown").innerHTML = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
   }, 1000)
 
   setTimeout(() => {
