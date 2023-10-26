@@ -249,7 +249,7 @@ function displayCard(card, type, isRandom) {
   `
   const cardImg = document.querySelector('.card-img')
   cardImg.style.animationPlayState = "paused"
-  cardImg.onerror = function() { this.src = `images/default-${type}.webp` }
+  cardImg.onerror = function() { this.src = `images/${type}.webp` }
   cardImg.onload = _ => cardImg.style.animationPlayState = "running"
 }
 
