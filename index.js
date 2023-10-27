@@ -1,12 +1,13 @@
-let CATEGORY = 'card'
-let LAST_RANDOM_INDEX
-
 const searchBox = document.querySelector('.search-term')
+const searchForm = document.querySelector('.search-form')
 const searchResult = document.querySelector('.search-result-section')
 const randomizeBtn = document.querySelector('.btn-randomize')
 const timerSpan = document.querySelector('.aside')
 const modal = document.querySelector('#modal')
+const countdownEl = document.querySelector(".countdown")
 
+let CATEGORY = 'card'
+let LAST_RANDOM_INDEX
 const borderColor = {
   "card": "#2973C4",
   "location": "#108800",
@@ -15,9 +16,65 @@ const borderColor = {
 
 
 
+// START THE APP
 startApp()
 
 randomizeBtn.onclick = _ => getRandomCard(CATEGORY)
+
+searchForm.onsubmit = async (event) => {
+  event.preventDefault()
+
+  if (!searchBox.value) return
+  
+  const searchTerm = searchBox.value.trim()
+
+  const cardToDisplay = await findClosest(searchTerm, CATEGORY)
+  
+  if (!cardToDisplay) {
+    searchBox.style.border = "4px ridge rgb(219, 206, 206)"
+    searchBox.animate([
+      { transform: "translateX(0)" },
+      { transform: "translateX(2px)" },
+      { transform: "translateX(-2px)" },
+      { transform: "translateX(2px)" },
+      { transform: "translateX(0)" }
+    ], {
+      duration: 400,
+      iterations: 1
+    })
+    searchBox.value = ""
+    searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
+
+    setTimeout(() => {
+      searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
+    }, 1500);
+  } else {
+    if (CATEGORY === "bot") {
+      searchBox.value = `🤖 [${cardToDisplay.type}*]`
+    } else {
+      displayCard(cardToDisplay, CATEGORY)
+      searchBox.value = ""
+      searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
+    }
+  }
+}
+
+searchBox.onclick = _ => {
+  searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
+  searchBox.value = ''
+  searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
+}
+
+document.onclick = ({ target }) => {
+  const classes = [...target.classList]
+
+  if (classes.includes('season-header')) {
+    modal.style.display = "block"
+  } else if (target === modal) {
+    modal.scrollTop = 0
+    modal.style.display = "none"
+  }
+}
 
 document.querySelectorAll('.btn-category').forEach(button => {
   button.onclick = function() {
@@ -69,77 +126,22 @@ document.querySelectorAll('.btn-category').forEach(button => {
   }
 })
 
-document.querySelector('.search-form').onsubmit = async (event) => {
-  event.preventDefault()
-
-  if (!searchBox.value) return
-  
-  const searchTerm = searchBox.value.trim()
-
-  const cardToDisplay = await findClosest(searchTerm, CATEGORY)
-  
-  if (!cardToDisplay) {
-    searchBox.style.border = "4px ridge rgb(219, 206, 206)"
-    searchBox.animate([
-      { transform: "translateX(0)" },
-      { transform: "translateX(2px)" },
-      { transform: "translateX(-2px)" },
-      { transform: "translateX(2px)" },
-      { transform: "translateX(0)" }
-    ], {
-      duration: 400,
-      iterations: 1
-    })
-    searchBox.value = ""
-    searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
-
-    setTimeout(() => {
-      searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
-    }, 1500);
-  } else {
-    if (CATEGORY === "bot") {
-      searchBox.value = `🤖 [${cardToDisplay.type}*]`
-    } else {
-      displayCard(cardToDisplay, CATEGORY)
-      searchBox.value = ""
-      searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
-    }
-  }
-}
-
-searchBox.addEventListener('click', _ => {
-  searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
-  searchBox.value = ''
-  searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
-})
-
-document.onclick = ({ target }) => {
-  const classes = [...target.classList]
-
-  if (classes.includes('season-header')) {
-    modal.style.display = "block"
-  } else if (target === modal) {
-    modal.scrollTop = 0
-    modal.style.display = "none"
-  }
-}
-
 
 
 // HELPER FUNCTIONS
 async function startApp() {
   countdown()
-  const res = await fetch(`./data/${CATEGORY}s.json`)
-  let cards = await res.json()
-  let card = cards.find(card => card.series === "Season Pass")
-  displayCard(card, CATEGORY, false)
+  const data = await fetch(`./data/cards.json`)
+  const cards = await data.json()
+  let cardToDisplay = cards.find(card => card.series === "Season Pass")
+  displayCard(cardToDisplay, CATEGORY, false)
   searchBox.focus()
 }
 
 async function getRandomCard(type) {
   searchBox.focus()
-  const res = await fetch(`./data/${type}s.json`)
-  let cards = await res.json()
+  const data = await fetch(`./data/${type}s.json`)
+  let cards = await data.json()
 
   if (type === "card") cards = cards.filter(card => card.type === "character" && card.released)
 
@@ -150,6 +152,90 @@ async function getRandomCard(type) {
   
   const card = cards[randomIndex]
   return displayCard(card, type, true)
+}
+
+async function findClosest(str, type) {
+  let data = []
+
+  if (type === "bot") {
+    data = await fetch('./data/bots.json')
+    data = await data.json()
+    
+    return data.find(bot => bot.name === str)
+  }
+
+  str = str.toLowerCase()
+
+  if (type === "location") {
+    data = await fetch('./data/locations.json')
+    data = await data.json()
+  }
+
+  if (type === "card") {
+    data = await fetch('./data/cards.json')
+    data = await data.json()
+
+    if (str.length < 3) return null
+    str = str.replace('dr ', 'doctor ')
+    str = str.replace('doc ', 'doctor ')
+    str = str.replace('prof ', 'professor ')
+  }
+  
+  let closestMatch = null
+  let partialMatch = null
+  let wordMatch = null
+  const closestDistArr = []
+  
+  for (const item of data) {
+    const itemName = item.name.toLowerCase()
+    closestDistArr.push(levenshtein(itemName, str))
+
+    if (itemName === str) {
+      closestMatch = item
+      break
+    }
+
+    if (itemName.includes(str)) {
+      partialMatch = item
+      if (itemName > str) break
+    }
+
+    const cardNameArr = itemName.split(' ')
+    const strArr = str.split(' ')
+    if (cardNameArr.length > 1 && strArr.length > 1) {
+      let match = 0
+      for (let word of strArr) {
+        if (itemName.includes(word)) match++
+      }
+
+      if (match === strArr.length) wordMatch = item
+    }
+  }
+
+  closestMatch = closestMatch || wordMatch || partialMatch
+
+  if (!closestMatch) {
+    const min = Math.min(...closestDistArr)
+    if (min === str.length) return
+
+    const minCount = []
+    closestDistArr.forEach((x, index) => {
+      if (x === min) minCount.push(index)
+    })
+
+    if (minCount.length === 1) {
+      closestMatch = data[closestDistArr.indexOf(min)]
+    }
+
+    if (minCount.length > 1) {
+      const nearest = minCount.find(i => 
+        data[i].name.toLowerCase()[0] === str[0]
+      )
+      if (nearest) closestMatch = data[nearest]
+    }
+  }
+
+  return closestMatch
 }
 
 function displayCard(card, type, isRandom) {
@@ -251,90 +337,6 @@ function displayCard(card, type, isRandom) {
   cardImg.style.animationPlayState = "paused"
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
   cardImg.onload = _ => cardImg.style.animationPlayState = "running"
-}
-
-async function findClosest(str, type) {
-  let data = []
-
-  if (type === "bot") {
-    data = await fetch('./data/bots.json')
-    data = await data.json()
-    
-    return data.find(bot => bot.name === str)
-  }
-
-  str = str.toLowerCase()
-
-  if (type === "location") {
-    data = await fetch('./data/locations.json')
-    data = await data.json()
-  }
-
-  if (type === "card") {
-    data = await fetch('./data/cards.json')
-    data = await data.json()
-
-    if (str.length < 3) return null
-    str = str.replace('dr ', 'doctor ')
-    str = str.replace('doc ', 'doctor ')
-    str = str.replace('prof ', 'professor ')
-  }
-  
-  let closestMatch = null
-  let partialMatch = null
-  let wordMatch = null
-  const closestDistArr = []
-  
-  for (const item of data) {
-    const itemName = item.name.toLowerCase()
-    closestDistArr.push(levenshtein(itemName, str))
-
-    if (itemName === str) {
-      closestMatch = item
-      break
-    }
-
-    if (itemName.includes(str)) {
-      partialMatch = item
-      if (itemName > str) break
-    }
-
-    const cardNameArr = itemName.split(' ')
-    const strArr = str.split(' ')
-    if (cardNameArr.length > 1 && strArr.length > 1) {
-      let match = 0
-      for (let word of strArr) {
-        if (itemName.includes(word)) match++
-      }
-
-      if (match === strArr.length) wordMatch = item
-    }
-  }
-
-  closestMatch = closestMatch || wordMatch || partialMatch
-
-  if (!closestMatch) {
-    const min = Math.min(...closestDistArr)
-    if (min === str.length) return
-
-    const minCount = []
-    closestDistArr.forEach((x, index) => {
-      if (x === min) minCount.push(index)
-    })
-
-    if (minCount.length === 1) {
-      closestMatch = data[closestDistArr.indexOf(min)]
-    }
-
-    if (minCount.length > 1) {
-      const nearest = minCount.find(i => 
-        data[i].name.toLowerCase()[0] === str[0]
-      )
-      if (nearest) closestMatch = data[nearest]
-    }
-  }
-
-  return closestMatch
 }
 
 function levenshtein(s, t) {
@@ -453,7 +455,7 @@ function countdown(seasonEnd) {
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
     const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
     
-    document.querySelector(".countdown").innerHTML = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
+    countdownEl.textContent  = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
   }, 1000)
 
   setTimeout(() => {
@@ -462,7 +464,7 @@ function countdown(seasonEnd) {
 }
 
 function resetSeason(year, month) {
-  document.querySelector(".countdown").innerHTML = "NEW SEASON BEGINS! 🎉"
+  countdownEl.textContent  = "NEW SEASON BEGINS! 🎉"
 
   month += 1
   if (month === 13) {
