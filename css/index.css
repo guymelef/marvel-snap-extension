@@ -135,8 +135,9 @@ main {
 
 .card-img-card {
   width: 230px;
-  animation: blur 400ms linear alternate, card-pulse 2.5s linear 400ms alternate infinite;
   transform-style: preserve-3d;
+  animation: blur 400ms linear alternate, card-pulse 2.5s linear 400ms alternate infinite;
+  animation-play-state: paused;
 }
 
 @keyframes card-pulse {
@@ -158,6 +159,7 @@ main {
   width: 200px;
   transform-style: preserve-3d;
   animation: rotate 300ms linear, loc-pulse 1s linear 300ms alternate infinite;
+  animation-play-state: paused;
 }
 
 @keyframes loc-pulse {
@@ -419,6 +421,14 @@ footer {
   animation: flipVertical 300ms ease-in 2s forwards;
   min-width: 205px;
   text-align: center;
+}
+
+.leaderboard-link,
+.leaderboard-link:link,
+.leaderboard-link:visited,
+.leaderboard-link:hover {
+  text-decoration: none;
+  color: inherit;
 }
 
 @keyframes flipVertical {

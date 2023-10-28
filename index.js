@@ -239,13 +239,13 @@ async function findClosest(str, type) {
 }
 
 function displayCard(card, type, isRandom) {
-  let htmlStr = ''
-
   card.ability = card.ability.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
   card.ability = card.ability.replaceAll("On Reveal", "<strong>On Reveal</strong>")
   card.ability = card.ability.replaceAll("Ongoing:", "<strong>Ongoing:</strong>")
   card.ability = card.ability.replaceAll("Ongoing", "<strong>Ongoing</strong>")
   
+  let htmlStr = ''
+
   if (type === "card") {
     if (card.evolved) {
       card.evolved = card.evolved.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
@@ -290,7 +290,7 @@ function displayCard(card, type, isRandom) {
       </div>
       <div class="search-result-info-source">
         <!-- card source -->
-        <p title="Card Source">
+        <p>
           <span class="source-text">Source:</span> <span class="source-origin">${source}</span>
         </p>
       </div>
@@ -320,20 +320,21 @@ function displayCard(card, type, isRandom) {
     <div class="${type}-result search-result" data-category="${type}">
       <div class="search-result-img">
         <!-- card image -->
-        <img 
+        <img
+          id="card-img"
           class="card-img card-img-${type}"
           src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image}"
           alt="${card.name}"
-          title="${card.name}"
           loading="eager"
         >
       </div>
-      <div class="search-result-info ${type}-search-result"> 
+      <div class="search-result-info ${type}-search-result">
         ${htmlStr}
       </div>
-  </div>
+    </div>
   `
-  const cardImg = document.querySelector('.card-img')
+
+  const cardImg = document.querySelector('#card-img')
   cardImg.style.animationPlayState = "paused"
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
   cardImg.onload = _ => cardImg.style.animationPlayState = "running"
@@ -455,7 +456,11 @@ function countdown(seasonEnd) {
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
     const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
     
-    countdownEl.textContent  = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
+    countdownEl.innerHTML = `
+      <a href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" class="leaderboard-link">
+        ⏰${days}d ${hours}h ${minutes}m ${seconds}s
+      </a>
+    `
   }, 1000)
 
   setTimeout(() => {
