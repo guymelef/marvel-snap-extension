@@ -3,7 +3,6 @@
   "version": "1.0",
   "name": "Marvel SNAP Search",
   "description": "Search for Marvel SNAP cards, locations, and check bot player names.",
-  "author": "sandvich@duck.com",
   "action": {
     "default_popup": "index.html",
     "default_icon": "images/icon48.png"
