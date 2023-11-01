@@ -424,9 +424,8 @@ footer {
 }
 
 .leaderboard-link,
-.leaderboard-link:link,
-.leaderboard-link:visited,
-.leaderboard-link:hover {
+.dev-link,
+.season-link {
   text-decoration: none;
   color: inherit;
 }
@@ -499,6 +498,17 @@ footer {
   animation: slide 0.3s ease-out;
 }
 
+.modal-content-header {
+  color: #fcf296;
+  background-color: #822e1a;
+  font-size: 24px;
+  text-align: center;
+  padding: 8px;
+  text-transform: uppercase;
+  border: 1px solid #fcf296;
+  border-radius: 4px;
+}
+
 @keyframes slide {
   from { bottom: -200px; opacity: 0 }
   to { bottom: 0; opacity: 1 }
@@ -565,16 +575,14 @@ footer p img {
 }
 
 .dev-link {
-  color: #FCFCFC;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.8px;
-  text-decoration: none;
   text-shadow:
-    -0.5px -0.5px 0 #9146FF,  
-     0.5px -0.5px 0 #9146FF,
+    -0.5px -0.5px 0 #9146FF,
+    0.5px -0.5px 0 #9146FF,
     -0.5px  0.5px 0 #9146FF,
-     0.5px  0.5px 0 #9146FF;
+    0.5px  0.5px 0 #9146FF;
 }
 
 .donate-svg:hover {
