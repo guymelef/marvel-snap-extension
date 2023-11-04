@@ -24,7 +24,7 @@ main {
   padding: 0 16px;
 }
 
-.buttons {
+.section-buttons {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
@@ -93,7 +93,7 @@ main {
   color: #e50a10;
 }
 
-.search-section {
+.section-search {
   margin-top: 18px;
 }
 
@@ -263,24 +263,20 @@ main {
 }
 
 @keyframes stretch {
-  from {
-    width: 80%;
-  }
-  to {
-    width: 65%;
-  }
+  from { width: 80% }
+  to { width: 65% }
 }
 
 .search-result-info-stats h3,
 .card-ability,
 .search-result-info-source p,
-.aside,
+.section-countdown,
 footer {
   text-shadow:
     -1px -1px 0 #000,  
-     1px -1px 0 #000,
+    1px -1px 0 #000,
     -1px  1px 0 #000,
-     1px  1px 0 #000;
+    1px  1px 0 #000;
 }
 
 .search-result-info-stats h3 {
@@ -292,9 +288,9 @@ footer {
 .card-stats {
   text-shadow:
     -1px -1px 0 #FCFCFC,  
-     1px -1px 0 #FCFCFC,
+    1px -1px 0 #FCFCFC,
     -1px  1px 0 #FCFCFC,
-     1px  1px 0 #FCFCFC;
+    1px  1px 0 #FCFCFC;
 }
 
 .cost {
@@ -393,7 +389,7 @@ footer {
   100% { background-position: 0 0; }
 }
 
-.aside {
+.section-countdown {
   height: 100%;
   display: flex;
   letter-spacing: 1px;
@@ -418,7 +414,7 @@ footer {
 .countdown {
   display: inline-block;
   transform-style: preserve-3d;
-  animation: flipVertical 300ms ease-in 2s forwards;
+  animation: flipVertical 300ms ease-in 1s forwards;
   min-width: 205px;
   text-align: center;
 }
@@ -447,12 +443,12 @@ footer {
   box-shadow: 3px 3px darkblue;
   text-shadow:
     -0.5px -0.5px 0 rgb(255, 115, 0),  
-     0.5px -0.5px 0 rgb(255, 115, 0),
+    0.5px -0.5px 0 rgb(255, 115, 0),
     -0.5px  0.5px 0 rgb(255, 115, 0),
-     0.5px  0.5px 0 rgb(255, 115, 0);
+    0.5px  0.5px 0 rgb(255, 115, 0);
 }
 
-#modal {
+.section-modal {
   display: none;
   position: fixed; 
   z-index: 1;
@@ -467,20 +463,20 @@ footer {
   scrollbar-width: 6px;
 }
 
-#modal::-webkit-scrollbar {
+.section-modal::-webkit-scrollbar {
   width: 6px;
 }
 
-#modal::-webkit-scrollbar-track {
+.section-modal::-webkit-scrollbar-track {
   background: #333;
 }
 
-#modal::-webkit-scrollbar-thumb {
+.section-modal::-webkit-scrollbar-thumb {
   background: #2973C4;
   border-radius: 6px;
 }
 
-#modal::-webkit-scrollbar-thumb:hover {
+.section-modal::-webkit-scrollbar-thumb:hover {
   background: #128eedce;
 }
 
@@ -499,13 +495,13 @@ footer {
 }
 
 .modal-content-header {
-  color: #fcf296;
-  background-color: #822e1a;
+  color: #ffde18;
+  background-color: #d31283;
   font-size: 24px;
   text-align: center;
   padding: 8px;
   text-transform: uppercase;
-  border: 1px solid #fcf296;
+  border: 1px solid #ffde18;
   border-radius: 4px;
 }
 
@@ -514,24 +510,24 @@ footer {
   to { bottom: 0; opacity: 1 }
 }
 
-#modal h3,
+.section-modal h3,
 .date,
 .new-cards strong {
   font-family: 'Roboto Mono', monospace;
 }
 
-#modal h3 {
+.section-modal h3 {
   text-transform: uppercase;
   color: #2973C4;
   margin-bottom: 0;
 }
 
-#modal ul {
+.section-modal ul {
   list-style: none;
   margin-top: 1px;
 }
 
-#modal .styled-list li::before {
+.section-modal .styled-list li::before {
   content: "\2022";
   color: gold;
   font-weight: bold;
@@ -590,7 +586,7 @@ footer p img {
 }
 
 @keyframes bounce { 
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 
-  40% {transform: translateY(-6px);} 
-  60% {transform: translateY(-3px);} 
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+  60% { transform: translateY(-3px); }
 }

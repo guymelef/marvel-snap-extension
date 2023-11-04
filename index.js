@@ -1,9 +1,9 @@
 const searchBox = document.querySelector('.search-term')
 const searchForm = document.querySelector('.search-form')
-const searchResult = document.querySelector('.search-result-section')
+const searchResult = document.querySelector('.section-search-result')
+const countdownSection = document.querySelector('.section-countdown')
+const modal = document.querySelector('.section-modal')
 const randomizeBtn = document.querySelector('.btn-randomize')
-const timerSpan = document.querySelector('.aside')
-const modal = document.querySelector('#modal')
 const countdownEl = document.querySelector(".countdown")
 
 let CATEGORY = 'card'
@@ -266,7 +266,6 @@ function displayCard(card, type, isRandom) {
 
     htmlStr = `
       <div class="search-result-info-title">
-        <!-- card title -->
         <h2 
           class="card-title"
           style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
@@ -275,11 +274,9 @@ function displayCard(card, type, isRandom) {
         </h2>
       </di1v>
       <div class="search-result-info-stats">
-        <!-- card stats -->
         <h3>Cost:<span class="cost card-stats">${card.cost}</span> Power:<span class="power card-stats">${card.power}</span></h3>
       </div>
       <div class="search-result-info-ability">
-        <!-- card ability -->
         <p class="card-ability">
           ${card.ability}
           ${card.evolved
@@ -289,7 +286,6 @@ function displayCard(card, type, isRandom) {
         </p>
       </div>
       <div class="search-result-info-source">
-        <!-- card source -->
         <p>
           <span class="source-text">Source:</span> <span class="source-origin">${source}</span>
         </p>
@@ -298,7 +294,6 @@ function displayCard(card, type, isRandom) {
   } else if (type === "location") {
     htmlStr = `
       <div class="search-result-info-title">
-        <!-- card title -->
         <h2 
           class="card-title"
           style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
@@ -307,7 +302,6 @@ function displayCard(card, type, isRandom) {
         </h2>
       </div>
       <div class="search-result-info-ability">
-        <!-- card ability -->
         <p class="card-ability">
           ${card.ability}
         </p>
@@ -319,7 +313,6 @@ function displayCard(card, type, isRandom) {
   searchResult.innerHTML = `
     <div class="${type}-result search-result" data-category="${type}">
       <div class="search-result-img">
-        <!-- card image -->
         <img
           id="card-img"
           class="card-img card-img-${type}"
@@ -439,8 +432,8 @@ function levenshtein(s, t) {
 
 function countdown(seasonEnd) {
   let year = 2023
-  let month = 11
-  let date = 7
+  let month = 12
+  let date = 8
 
   let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00:00Z`)
   const x = setInterval(_ => {      
@@ -464,8 +457,8 @@ function countdown(seasonEnd) {
   }, 1000)
 
   setTimeout(() => {
-    timerSpan.style.visibility = "visible"
-  }, 2000);
+    countdownSection.style.visibility = "visible"
+  }, 1000);
 }
 
 function resetSeason(year, month) {
@@ -486,11 +479,11 @@ function resetSeason(year, month) {
   }
 
   setTimeout(() => {
-    timerSpan.style.visibility = "hidden"
+    countdownSection.style.visibility = "hidden"
     countdown(date)
   }, 2500)
 
   setTimeout(() => {
-    timerSpan.style.visibility = "visible"
+    countdownSection.style.visibility = "visible"
   }, 3500)
 }

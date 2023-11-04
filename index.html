@@ -12,141 +12,95 @@
 </head>
 <body>
   <main>
-    <section class="buttons">
+    <section class="section-buttons">
       <button type="button" id="card" class="btn btn-category btn-card btn-card-select">Card</button>
       <button type="button" id="location" class="btn btn-category btn-location">Location</button>
       <button type="button" id="bot" class="btn btn-category btn-bot" title="Bot Check (Case-Sensitive)" aria-label="Bot Check (Case-Sensitive)">Bot</button>
     </section>
-    <section class="search-section">
+    <section class="section-search">
       <form class="search-form">
         <input name="search-term" class="search-term" placeholder="Card search..." type="text" autocomplete="off" aria-label="Search input">
       </form>
     </section>
-    <section class="search-result-section">
-      <!-- search result -->
+    <section class="section-search-result">
     </section>
     <section class="section-randomize">
       <button type="button" class="btn btn-randomize" aria-label="Random Search">Randomize <img src="images/shuffle.svg" alt="shuffle"></button>
     </section>
-    <section class="aside">
-      <!-- show season countdown -->
-      <h4 class="season-calendar"><span class="season-header" aria-label="View season calendar">📆Season End</span>:<span class="countdown" aria-label="Season Timer + Infinite Leaderboard Page"></span></h4>
+    <section class="section-countdown">
+      <h4 class="season-calendar"><span class="season-header" aria-label="View Season Calendar" title="View Season Calendar">📆Season End</span>:<span class="countdown" aria-label="Season Timer & Infinite Leaderboard Page" title="Check Infinite Leaderboard"></span></h4>
     </section>
-    <section id="modal">
+    <section class="section-modal">
       <div class="modal-content">
         <header>
-          <h2 class="modal-content-header"><a href="https://www.marvelsnap.com/newsdetail?id=7263303104648043269" target="_blank" class="season-link" aria-label="current season link">Bloodstone</a></h2>
+          <h2 class="modal-content-header"><a href="https://www.marvelsnap.com/newslist" target="_blank" class="season-link" aria-label="current season link">Higher, Further, Faster</a></h2>
         </header>
         <div>
-          <h3>⭐ New Cards</h3>
+          <h3>💥 New Cards</h3>
           <ul class="new-cards styled-list">
-            <li><span class="list-item-span">Elsa Bloodstone</span> (<span style="color: #FBCA03"><strong>Season Pass</strong></span>)</li>
-            <li><span class="list-item-span">Loki</span><span style="color: #FBCA03; font-weight: bold;">*</span> (<strong class="date">October 3</strong>)</li>
-            <li class="list-item">Man-Thing</li>
-            <li class="list-item">Black Knight</li>
-            <li class="list-item">Nico Minoru</li>
-            <li class="list-item">Werewolf by Night</li>
+            <li><span class="list-item-span">Ms. Marvel</span> (<span style="color: #FBCA03"><strong>Season Pass</strong></span>)</li>
+            <li><span class="list-item-span">Elsa Bloodstone</span><span style="color: #FBCA03; font-weight: bold;">*</span> (<strong class="date">November 8</strong>)</li>
+            <li class="list-item">Gladiator</li>
+            <li class="list-item">Annihilus</li>
+            <li class="list-item">Martyr</li>
           </ul>
         </div>
         <div>
           <h3>🗺️ New Locations</h3>
           <ul class="new-locations styled-list">
-            <li class="list-item">Hotel Inferno</li>
-            <li class="list-item">The Abbey</li>
+            <li class="list-item">Tarnax IV</li>
+            <li class="list-item">Noor Dimension</li>
           </ul>
         </div>
         <div>
-          <h3>🎁 Spotlight Caches</h3>
+          <h3>🗝️ Spotlight Caches</h3>
           <ul class="spotlight-caches">
             <li>
-              <strong class="date">October 3</strong>
+              <strong class="date">November 8</strong>
               <ul class="styled-list">
-                <li class="list-item">Thanos</li>
+                <li class="list-item">Alioth</li>
+                <li class="list-item">Knull</li>
+                <li class="list-item">Negasonic Teenage Warhead</li>
+              </ul>
+            </li>
+            <li>
+              <strong class="date">November 15</strong>
+              <ul class="styled-list">
+                <li class="list-item">Gladiator</li>
+                <li class="list-item">Mirage</li>
+                <li class="list-item">Loki</li>
+              </ul>
+            </li>
+            <li>
+              <strong class="date">November 22</strong>
+              <ul class="styled-list">
+                <li class="list-item">Annihilus</li>
+                <li class="list-item">Daken</li>
                 <li class="list-item">X-23</li>
-                <li class="list-item">Echo</li>
               </ul>
             </li>
             <li>
-              <strong class="date">October 10</strong>
+              <strong class="date">November 29</strong>
               <ul class="styled-list">
-                <li class="list-item">Man-Thing</li>
-                <li class="list-item">Silver Samurai</li>
-                <li class="list-item">Lady Deathstrike</li>
-              </ul>
-            </li>
-            <li>
-              <strong class="date">October 17</strong>
-              <ul class="styled-list">
-                <li class="list-item">Black Knight</li>
-                <li class="list-item">Stature</li>
-                <li class="list-item">Modok</li>
-              </ul>
-            </li>
-            <li>
-              <strong class="date">October 24</strong>
-              <ul class="styled-list">
-                <li class="list-item">Nico Minoru</li>
-                <li class="list-item">Kitty Pride</li>
-                <li class="list-item">The Phoenix Force</li>
-              </ul>
-            </li>
-            <li>
-              <strong class="date">October 31</strong>
-              <ul class="styled-list">
-                <li class="list-item">Werewolf by Night</li>
-                <li class="list-item">Silk</li>
-                <li class="list-item">Ghost Spider</li>
+                <li class="list-item">Martyr</li>
+                <li class="list-item">Jean Grey</li>
+                <li class="list-item">Spider-Man 2099</li>
               </ul>
             </li>
           </ul>
         </div>
         <div>
-          <h3>🎨 New Variants</h3>
-          <ul class="new-variants styled-list">
-            <li><span class="list-item-span">Angela</span> - Rendered</li>
-            <li><span class="list-item-span">Armor</span> - Venomized</li>
-            <li><span class="list-item-span">Arnim Zola</span> by Karg</li>
-            <li><span class="list-item-span">Black Knight</span> by Max Grecke</li>
-            <li><span class="list-item-span">Blade</span> by Dan Hipp</li>
-            <li><span class="list-item-span">Blade</span> - Darksiders</li>
-            <li><span class="list-item-span">Cable</span> - Post Apocalyptic</li>
-            <li><span class="list-item-span">Elsa Bloodstone</span> - Variant</li>
-            <li><span class="list-item-span">Elsa Bloodstone</span> by Dan Hipp</li>
-            <li><span class="list-item-span">Elsa Bloodstone</span> - Darksiders</li>
-            <li><span class="list-item-span">Galactus</span> - Pixel</li>
-            <li><span class="list-item-span">Gambit</span> - Venomized</li>
-            <li><span class="list-item-span">Ghost</span> - Steampunk</li>
-            <li><span class="list-item-span">Ghost Rider</span> - Darksiders</li>
-            <li><span class="list-item-span">Ghost Rider</span> - Pixel</li>
-            <li><span class="list-item-span">Goose</span> - Venomized</li>
-            <li><span class="list-item-span">Hawkeye</span> - 3099</li>
-            <li><span class="list-item-span">Hazmat</span> by Giulio</li>
-            <li><span class="list-item-span">Hulk</span> by Alex Horley</li>
-            <li><span class="list-item-span">Hulkbuster</span> by Eric</li>
-            <li><span class="list-item-span">Iron Fist</span> - Heart of the Dragon</li>
-            <li><span class="list-item-span">Iron Man</span> - Retro-y</li>
-            <li><span class="list-item-span">Ironheart</span> by Max Grecke</li>
-            <li><span class="list-item-span">Jessica Jones</span> by Dan Hipp</li>
-            <li><span class="list-item-span">Jubilee</span> - Pixel</li>
-            <li><span class="list-item-span">Juggernaut</span> - Pixel</li>
-            <li><span class="list-item-span">Ka-Zar</span> - Pixel</li>
-            <li><span class="list-item-span">Leader</span> by Dan Hipp</li>
-            <li><span class="list-item-span">Magik</span> by Tim Tsang</li>
-            <li><span class="list-item-span">Man-Thing</span> - Venomized</li>
-            <li><span class="list-item-span">Morbius</span> - Pixel</li>
-            <li><span class="list-item-span">Nico Minoru</span> - Variant</li>
-            <li><span class="list-item-span">Psylocke</span> by Mark Brooks</li>
-            <li><span class="list-item-span">Punisher</span> - Noir</li>
-            <li><span class="list-item-span">Quicksilver</span> - Venomized</li>
-            <li><span class="list-item-span">Sabretooth</span> - Variant</li>
-            <li><span class="list-item-span">Sentinel</span> by Eric</li>
-            <li><span class="list-item-span">Sera</span> by Flaviano</li>
-            <li><span class="list-item-span">Sunspot</span> by Dan Hipp</li>
-            <li><span class="list-item-span">Taskmaster</span> by Alex Garland</li>
-            <li><span class="list-item-span">The Hood</span> - Pixel</li>
-            <li><span class="list-item-span">The Thing</span> - Knullified</li>
-            <li><span class="list-item-span">Werewolf by Night</span> - Variant</li>
-          </ul>          
+          <h3>🦚 "Peach Momoko" Shop Takeover</h3>
+          <ul class="styled-list">
+            <li class="date">November 8</li>
+            <li class="date">November 15</li>
+          </ul>
+        </div>
+        <div>
+          <h3>🎁 Twitch Drops</h3>
+          <ul class="styled-list">
+            <li class="date">November 15 - November 22</li>
+          </ul>
         </div>
       </div>
     </section>
