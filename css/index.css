@@ -550,7 +550,8 @@ footer {
   color: orange;
 }
 
-.spotlight-caches {
+.spotlight-caches,
+.shop-takeover {
   list-style: none;
   margin-left: -1em;
 }
