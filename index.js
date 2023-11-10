@@ -333,6 +333,60 @@ function displayCard(card, type, isRandom) {
   cardImg.onload = _ => cardImg.style.animationPlayState = "running"
 }
 
+function countdown(seasonEnd) {
+  let year = 2023
+  let month = 12
+  let date = 5
+
+  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00Z`)
+  const x = setInterval(_ => {
+    const difference = SEASON_END - new Date()
+
+    if (difference < 0) {
+      resetSeason(year, month)
+      return clearInterval(x)
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
+    
+    countdownEl.textContent = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
+  }, 1000)
+
+  setTimeout(() => {
+    countdownSection.style.visibility = "visible"
+  }, 1000)
+}
+
+function resetSeason(year, month) {
+  countdownEl.textContent  = "NEW SEASON BEGINS! 🎉"
+
+  month += 1
+  if (month === 13) {
+    month = 1
+    year += 1
+  }
+
+  let dateStart = 1
+  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
+  let weekday = date.getDay()
+  if (weekday !== 1) {
+    dateStart += weekday > 1 ? 8 - weekday : 1
+    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
+  }
+
+  setTimeout(() => {
+    countdownSection.style.visibility = "hidden"
+    countdown(date)
+  }, 2500)
+
+  setTimeout(() => {
+    countdownSection.style.visibility = "visible"
+  }, 3500)
+}
+
 function levenshtein(s, t) {
   if (s === t) {
       return 0;
@@ -428,62 +482,4 @@ function levenshtein(s, t) {
   }
 
   return h;
-}
-
-function countdown(seasonEnd) {
-  let year = 2023
-  let month = 12
-  let date = 5
-
-  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00:00Z`)
-  const x = setInterval(_ => {      
-    const difference = SEASON_END - new Date()
-    
-    if (difference < 0) {
-      resetSeason(year, month)
-      return clearInterval(x)
-    }
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
-    
-    countdownEl.innerHTML = `
-      <a href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" class="leaderboard-link">
-        ⏰${days}d ${hours}h ${minutes}m ${seconds}s
-      </a>
-    `
-  }, 1000)
-
-  setTimeout(() => {
-    countdownSection.style.visibility = "visible"
-  }, 1000);
-}
-
-function resetSeason(year, month) {
-  countdownEl.textContent  = "NEW SEASON BEGINS! 🎉"
-
-  month += 1
-  if (month === 13) {
-    month = 1
-    year += 1
-  }
-
-  let dateStart = 1
-  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
-  let weekday = date.getDay()
-  if (weekday !== 1) {
-    dateStart += weekday > 1 ? 8 - weekday : 1
-    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
-  }
-
-  setTimeout(() => {
-    countdownSection.style.visibility = "hidden"
-    countdown(date)
-  }, 2500)
-
-  setTimeout(() => {
-    countdownSection.style.visibility = "visible"
-  }, 3500)
 }

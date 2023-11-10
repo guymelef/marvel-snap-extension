@@ -417,9 +417,17 @@ footer {
   animation: flipVertical 300ms ease-in 1s forwards;
   min-width: 205px;
   text-align: center;
+  background: #00000060;
+  padding: 6px;
+  box-shadow: 3px 3px darkblue;
+  text-shadow:
+    -0.5px -0.5px 0 rgb(255, 115, 0),  
+    0.5px -0.5px 0 rgb(255, 115, 0),
+    -0.5px  0.5px 0 rgb(255, 115, 0),
+    0.5px  0.5px 0 rgb(255, 115, 0);
 }
 
-.leaderboard-link,
+.countdown,
 .dev-link,
 .season-link {
   text-decoration: none;
@@ -435,17 +443,6 @@ footer {
     opacity: 1;
     transform: scaleY(1);;
   }
-}
-
-.countdown {
-  background: #00000060;
-  padding: 6px;
-  box-shadow: 3px 3px darkblue;
-  text-shadow:
-    -0.5px -0.5px 0 rgb(255, 115, 0),  
-    0.5px -0.5px 0 rgb(255, 115, 0),
-    -0.5px  0.5px 0 rgb(255, 115, 0),
-    0.5px  0.5px 0 rgb(255, 115, 0);
 }
 
 .section-modal {
