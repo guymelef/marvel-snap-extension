@@ -45,7 +45,7 @@ searchForm.onsubmit = async (event) => {
     searchBox.value = ""
     searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
 
-    setTimeout(() => {
+    setTimeout(_ => {
       searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
     }, 1500);
   } else {
@@ -335,27 +335,27 @@ function displayCard(card, type, isRandom) {
 
 function countdown(seasonEnd) {
   let year = 2023
-  let month = 12
-  let date = 5
+  let month = 11
+  let date = 4
 
-  let SEASON_END = seasonEnd || new Date(`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}T19:00Z`)
+  let SEASON_END = seasonEnd || new Date(Date.UTC(year, month, date, 19))
   const x = setInterval(_ => {
-    const difference = SEASON_END - new Date()
+    const timeDifference = SEASON_END - new Date()
 
-    if (difference < 0) {
+    if (timeDifference <= 0) {
       resetSeason(year, month)
       return clearInterval(x)
     }
 
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, 0)
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000).toString().padStart(2, 0)
     
     countdownEl.textContent = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
   }, 1000)
 
-  setTimeout(() => {
+  setTimeout(_ => {
     countdownSection.style.visibility = "visible"
   }, 1000)
 }
@@ -363,28 +363,28 @@ function countdown(seasonEnd) {
 function resetSeason(year, month) {
   countdownEl.textContent  = "NEW SEASON BEGINS! 🎉"
 
-  month += 1
-  if (month === 13) {
-    month = 1
-    year += 1
+  month++
+  if (month > 11) {
+    month = 0
+    year++
   }
 
+  let newSeasonDate = new Date(Date.UTC(year, month, 1, 19))
+  let dayOfWeek = newSeasonDate.getUTCDay()
   let dateStart = 1
-  let date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
-  let weekday = date.getDay()
-  if (weekday !== 1) {
-    dateStart += weekday > 1 ? 8 - weekday : 1
-    date = new Date(`${year}-${month.toString().padStart(2, 0)}-${dateStart.toString().padStart(2, 0)}T19:00:00Z`)
+  if (dayOfWeek !== 1) {
+    dateStart += dayOfWeek > 1 ? 8 - dayOfWeek : 1
+    newSeasonDate = new Date(Date.UTC(year, month, dateStart, 19))
   }
 
-  setTimeout(() => {
+  setTimeout(_ => {
     countdownSection.style.visibility = "hidden"
-    countdown(date)
+    countdown(newSeasonDate)
   }, 2500)
 
-  setTimeout(() => {
+  setTimeout(_ => {
     countdownSection.style.visibility = "visible"
-  }, 3500)
+  }, 3000)
 }
 
 function levenshtein(s, t) {
