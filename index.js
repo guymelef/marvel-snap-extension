@@ -280,7 +280,7 @@ function displayCard(card, type, isRandom) {
         <p class="card-ability">
           ${card.ability}
           ${card.evolved
-            ? `<br><br><strong class="evolved">Evolved:</strong> ${card.evolved}`
+            ? `<br><br><strong class="evolved">Evolved</strong>: ${card.evolved}`
             : ''
           }
         </p>
