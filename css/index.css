@@ -246,6 +246,7 @@ main {
   text-align: center;
   text-shadow: 2px 2px var(--h2-shadow);
   letter-spacing: 2px;
+  font-family: 'Roboto Flex', sans-serif;
 }
 
 .card-title::after {
