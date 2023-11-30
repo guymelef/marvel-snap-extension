@@ -239,10 +239,12 @@ async function findClosest(str, type) {
 }
 
 function displayCard(card, type, isRandom) {
-  card.ability = card.ability.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
-  card.ability = card.ability.replaceAll("On Reveal", "<strong>On Reveal</strong>")
-  card.ability = card.ability.replaceAll("Ongoing:", "<strong>Ongoing:</strong>")
-  card.ability = card.ability.replaceAll("Ongoing", "<strong>Ongoing</strong>")
+  if (card.ability) {
+    card.ability = card.ability.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
+    card.ability = card.ability.replaceAll("On Reveal", "<strong>On Reveal</strong>")
+    card.ability = card.ability.replaceAll("Ongoing:", "<strong>Ongoing:</strong>")
+    card.ability = card.ability.replaceAll("Ongoing", "<strong>Ongoing</strong>")
+  }
   
   let htmlStr = ''
 
@@ -278,7 +280,7 @@ function displayCard(card, type, isRandom) {
       </div>
       <div class="search-result-info-ability">
         <p class="card-ability">
-          ${card.ability}
+          ${card.ability || `<i>${card.text}</i>`}
           ${card.evolved
             ? `<br><br><strong class="evolved">Evolved</strong>: ${card.evolved}`
             : ''
