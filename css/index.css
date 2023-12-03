@@ -495,14 +495,20 @@ footer {
 }
 
 .modal-content-header {
-  color: #ffde18;
-  background-color: #d31283;
-  font-size: 24px;
+  font-family: 'Roboto Flex', sans-serif;
+  font-size: 22px;
   text-align: center;
-  padding: 8px;
   text-transform: uppercase;
-  border: 1px solid #ffde18;
+  background-color: #d31283;
+  color: #ffde18;
+  border: 2px solid #ffde18;
   border-radius: 4px;
+  padding: 8px;
+  transition: scale 0.25s ease-in;
+}
+
+.modal-content-header:hover {
+  transform: scale(1.02);
 }
 
 @keyframes slide {
