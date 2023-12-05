@@ -335,17 +335,17 @@ function displayCard(card, type, isRandom) {
   cardImg.onload = _ => cardImg.style.animationPlayState = "running"
 }
 
-function countdown(seasonEnd) {
-  let year = 2023
-  let month = 11
-  let date = 5
+function countdown() {
+  let year = 2024
+  let month = 0
+  let date = 2
 
-  let SEASON_END = seasonEnd || new Date(Date.UTC(year, month, date, 19))
+  let SEASON_END = new Date(Date.UTC(year, month, date, 19))
   const x = setInterval(_ => {
     const timeDifference = SEASON_END - new Date()
 
     if (timeDifference <= 0) {
-      resetSeason(year, month)
+      countdownEl.textContent = "NEW SEASON BEGINS!🎉"
       return clearInterval(x)
     }
 
@@ -360,33 +360,6 @@ function countdown(seasonEnd) {
   setTimeout(_ => {
     countdownSection.style.visibility = "visible"
   }, 1000)
-}
-
-function resetSeason(year, month) {
-  countdownEl.textContent  = "NEW SEASON BEGINS! 🎉"
-
-  month++
-  if (month > 11) {
-    month = 0
-    year++
-  }
-
-  let newSeasonDate = new Date(Date.UTC(year, month, 1, 19))
-  let dayOfWeek = newSeasonDate.getUTCDay()
-  let dateStart = 1
-  if (dayOfWeek !== 1) {
-    dateStart += dayOfWeek > 1 ? 8 - dayOfWeek : 1
-    newSeasonDate = new Date(Date.UTC(year, month, dateStart, 19))
-  }
-
-  setTimeout(_ => {
-    countdownSection.style.visibility = "hidden"
-    countdown(newSeasonDate)
-  }, 2500)
-
-  setTimeout(_ => {
-    countdownSection.style.visibility = "visible"
-  }, 3000)
 }
 
 function levenshtein(s, t) {

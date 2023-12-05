@@ -496,12 +496,12 @@ footer {
 
 .modal-content-header {
   font-family: 'Roboto Flex', sans-serif;
-  font-size: 22px;
+  font-size: 26px;
   text-align: center;
   text-transform: uppercase;
-  background-color: #d31283;
-  color: #ffde18;
-  border: 2px solid #ffde18;
+  background-color: #471018;
+  color: #c2d1d5;
+  border: 2px solid #c2d1d5;
   border-radius: 4px;
   padding: 8px;
   transition: scale 0.25s ease-in;
