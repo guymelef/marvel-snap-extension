@@ -562,9 +562,15 @@ footer {
 }
 
 .spotlight-caches,
-.shop-takeover {
+.shop-takeover,
+.twitch-drops {
   list-style: none;
   margin-left: -1em;
+}
+
+.twitch-drop {
+  color: #e50a10;
+  font-family: 'Roboto Mono', monospace;
 }
 
 footer {
