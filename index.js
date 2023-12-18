@@ -240,18 +240,18 @@ async function findClosest(str, type) {
 
 function displayCard(card, type, isRandom) {
   if (card.ability) {
-    card.ability = card.ability.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
-    card.ability = card.ability.replaceAll("On Reveal", "<strong>On Reveal</strong>")
-    card.ability = card.ability.replaceAll("Ongoing:", "<strong>Ongoing:</strong>")
-    card.ability = card.ability.replaceAll("Ongoing", "<strong>Ongoing</strong>")
+    card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
+    card.ability = card.ability.replaceAll("On Reveal", "<b>On Reveal</b>")
+    card.ability = card.ability.replaceAll("Ongoing:", "<b>Ongoing:</b>")
+    card.ability = card.ability.replaceAll("Ongoing", "<b>Ongoing</b>")
   }
   
   let htmlStr = ''
 
   if (type === "card") {
     if (card.evolved) {
-      card.evolved = card.evolved.replaceAll("On Reveal:", "<strong>On Reveal:</strong>")
-      card.evolved = card.evolved.replaceAll("Ongoing:", "<strong>Ongoing:</strong>")
+      card.evolved = card.evolved.replaceAll("On Reveal:", "<b>On Reveal:</b>")
+      card.evolved = card.evolved.replaceAll("Ongoing:", "<b>Ongoing:</b>")
     }
 
     let source = ''
@@ -282,7 +282,7 @@ function displayCard(card, type, isRandom) {
         <p class="card-ability">
           ${card.ability || `<i>${card.text}</i>`}
           ${card.evolved
-            ? `<br><br><strong class="evolved">Evolved</strong>: ${card.evolved}`
+            ? `<br><br><b class="evolved">Evolved</b>: ${card.evolved}`
             : ''
           }
         </p>
