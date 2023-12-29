@@ -49,12 +49,12 @@ main {
   background-color: #2973C4;
 }
 
-.btn-card:hover {
+.btn-card:hover,
+.btn-card:focus {
   box-shadow: 0px 7px 0px 0px #108800;
 }
 
 .btn-card:active,
-.btn-card:focus,
 .btn-card-select {
   box-shadow: 0px 7px 0px 0px #108800;
   background: #FCFCFC;
@@ -65,12 +65,12 @@ main {
   background-color: #108800;
 }
 
-.btn-location:hover {
+.btn-location:hover,
+.btn-location:focus {
   box-shadow: 0px -7px 0px 0px #e50a10;
 }
 
 .btn-location:active,
-.btn-location:focus,
 .btn-location-select {
   box-shadow: 0px -7px 0px 0px #e50a10;
   background: #FCFCFC;
@@ -81,12 +81,12 @@ main {
   background-color: #e50a10;
 }
 
-.btn-bot:hover {
+.btn-bot:hover,
+.btn-bot:focus {
   box-shadow: 0px 7px 0px 0px #2973C4;
 }
 
 .btn-bot:active,
-.btn-bot:focus,
 .btn-bot-select {
   box-shadow: 0px 7px 0px 0px #2973C4;
   background: #FCFCFC;
@@ -347,7 +347,8 @@ footer {
   background: transparent;
 }
 
-.btn-randomize:hover:before {
+.btn-randomize:hover:before,
+.btn-randomize:focus:before {
   opacity: 1;
 }
 
@@ -361,10 +362,6 @@ footer {
   left: 0;
   top: 0;
   border-radius: 26px;
-}
-
-.btn-randomize:focus {
-  transform: scale(1.05);
 }
 
 @keyframes glowing {
