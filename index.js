@@ -178,7 +178,6 @@ async function findClosest(str, type) {
     if (str.length < 3) return null
     str = str.replace('dr','doctor')
     str = str.replace('dr.','doctor')
-    str = str.replace('modok', 'M.O.D.O.K.')
   }
   
   let closestMatch = null
@@ -190,7 +189,7 @@ async function findClosest(str, type) {
     const itemName = item.name.toLowerCase()
     closestDistArr.push(levenshtein(itemName, str))
 
-    if (itemName === str) {
+    if (itemName === str || itemName.replace(/[\W_]/g, '') === str.replace(/[\W_]/g, '')) {
       closestMatch = item
       break
     }
