@@ -289,7 +289,7 @@ function displayCard(card, type, isRandom) {
       </div>
       <div class="search-result-info-source">
         <p>
-          <span class="source-text">Source:</span> <span class="source-origin">${source}</span>
+          <span class="source-text">Source</span>: <span class="source-origin">${source}</span>
         </p>
       </div>
     `

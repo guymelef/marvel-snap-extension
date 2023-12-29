@@ -5,7 +5,7 @@
 }
 
 body {
-  background: url("../images/bg.webp") center center no-repeat fixed;
+  background: url("../images/bg.webp") center fixed;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   color: #FCFCFC;
@@ -126,7 +126,7 @@ main {
 }
 
 .card-result {
-  margin-left: -34px;
+  margin-left: -30px;
 }
 
 .location-result {
@@ -204,6 +204,7 @@ main {
 
 .card-search-result {
   min-width: 192px;
+  margin-left: -15px;
 }
 
 .location-search-result {
