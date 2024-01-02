@@ -336,8 +336,8 @@ function displayCard(card, type, isRandom) {
 
 function countdown() {
   let year = 2024
-  let month = 0
-  let date = 2
+  let month = 1
+  let date = 6
 
   let SEASON_END = new Date(Date.UTC(year, month, date, 19))
   const x = setInterval(_ => {

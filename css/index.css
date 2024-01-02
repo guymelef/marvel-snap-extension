@@ -483,6 +483,7 @@ footer {
   border: 2px solid #010200;
   border-radius: 4px;
   padding: 6px;
+  margin-top: 4px;
   transition: scale 0.25s ease-in;
 }
 
@@ -548,7 +549,7 @@ footer {
 }
 
 .twitch-drop {
-  color: #e50a10;
+  color: #108800;
   font-family: 'Roboto Mono', monospace;
 }
 
