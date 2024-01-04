@@ -176,8 +176,8 @@ async function findClosest(str, type) {
     data = await data.json()
 
     if (str.length < 3) return null
-    str = str.replace('dr','doctor')
-    str = str.replace('dr.','doctor')
+    str = str.replace('dr ','doctor ')
+    str = str.replace('dr. ','doctor ')
   }
   
   let closestMatch = null
