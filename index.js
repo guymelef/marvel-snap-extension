@@ -181,6 +181,7 @@ async function findClosest(str, type) {
   }
   
   let closestMatch = null
+  let strippedMatch = null
   let partialMatch = null
   let wordMatch = null
   const closestDistArr = []
@@ -189,9 +190,13 @@ async function findClosest(str, type) {
     const itemName = item.name.toLowerCase()
     closestDistArr.push(levenshtein(itemName, str))
 
-    if (itemName === str || itemName.replace(/[\W_]/g, '') === str.replace(/[\W_]/g, '')) {
+    if (itemName === str) {
       closestMatch = item
       break
+    }
+
+    if (itemName.replace(/[\W_]/g, '') === str.replace(/[\W_]/g, '')) {
+      strippedMatch = item
     }
 
     if (itemName.includes(str)) {
@@ -211,7 +216,7 @@ async function findClosest(str, type) {
     }
   }
 
-  closestMatch = closestMatch || wordMatch || partialMatch
+  closestMatch = closestMatch || strippedMatch || wordMatch || partialMatch
 
   if (!closestMatch) {
     const min = Math.min(...closestDistArr)
@@ -317,7 +322,7 @@ function displayCard(card, type, isRandom) {
         <img
           id="card-img"
           class="card-img card-img-${type}"
-          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image}"
+          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image}.webp"
           alt="${card.name}"
           loading="eager"
         >
