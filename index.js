@@ -335,10 +335,10 @@ function displayCard(card, type, isRandom) {
     </div>
   `
 
-  const cardImg = document.querySelector('#card-img')
   const cardImgDiv = document.querySelector('.search-result-img')
-  if (!cardImg.complete) cardImgDiv.classList.add('spinner-background')
+  cardImgDiv.classList.add('spinner-background')
   
+  const cardImg = document.querySelector('#card-img')
   cardImg.style.animationPlayState = "paused"
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
   cardImg.onload = () => {
