@@ -1,11 +1,9 @@
-# Marvel SNAP Search
-
+# Marvel SNAP Search Browser Extension
 Marvel SNAP Search extension lets you conveniently search for cards, locations, and check for bot player names straight from any browser tab!
 
 ## Features
-
 - 100% FREE
-- lightweight ( < 1 MB size)
+- lightweight (< 1 MB size)
 - works offline
 - no ads, tracking or extra permission required
 - season timer countdown & more!
