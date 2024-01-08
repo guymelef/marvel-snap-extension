@@ -243,6 +243,8 @@ async function findClosest(str, type) {
 }
 
 function displayCard(card, type, isRandom) {
+  const imgFolder = `/Marvel SNAP/${type.charAt(0).toUpperCase() + type.slice(1)}s/`
+
   if (card.ability) {
     card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
     card.ability = card.ability.replaceAll("On Reveal", "<b>On Reveal</b>")
@@ -322,7 +324,7 @@ function displayCard(card, type, isRandom) {
         <img
           id="card-img"
           class="card-img card-img-${type}"
-          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image}.webp"
+          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}.webp"
           alt="${card.name}"
           loading="eager"
         >
@@ -334,9 +336,15 @@ function displayCard(card, type, isRandom) {
   `
 
   const cardImg = document.querySelector('#card-img')
+  const cardImgDiv = document.querySelector('.search-result-img')
+  if (!cardImg.complete) cardImgDiv.classList.add('spinner-background')
+  
   cardImg.style.animationPlayState = "paused"
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
-  cardImg.onload = _ => cardImg.style.animationPlayState = "running"
+  cardImg.onload = () => {
+    cardImgDiv.classList.remove('spinner-background')
+    cardImg.style.animationPlayState = "running"
+  }
 }
 
 function countdown() {
