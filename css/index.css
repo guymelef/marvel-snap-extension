@@ -299,10 +299,10 @@ footer {
 
 .text-cost {
   text-shadow:
-    -1px -1px 0 #2A52FD,  
-    1px -1px 0 #2A52FD,
-    -1px  1px 0 #2A52FD,
-    1px  1px 0 #2A52FD;
+    -1px -1px 0 #4567ff,  
+    1px -1px 0 #4567ff,
+    -1px  1px 0 #4567ff,
+    1px  1px 0 #4567ff;
 }
 
 .cost {
@@ -316,10 +316,10 @@ footer {
 
 .text-power {
   text-shadow:
-    -1px -1px 0 #FF7F24,  
-    1px -1px 0 #FF7F24,
-    -1px  1px 0 #FF7F24,
-    1px  1px 0 #FF7F24;
+    -1px -1px 0 #ff9549,  
+    1px -1px 0 #ff9549,
+    -1px  1px 0 #ff9549,
+    1px  1px 0 #ff9549;
 }
 
 .power {
