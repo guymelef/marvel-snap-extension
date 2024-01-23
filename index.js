@@ -282,7 +282,10 @@ function displayCard(card, type, isRandom) {
         </h2>
       </di1v>
       <div class="search-result-info-stats">
-        <h3>Cost:<span class="cost card-stats">${card.cost}</span> Power:<span class="power card-stats">${card.power}</span></h3>
+        <h3>
+          <span class="stats-text text-cost">Cost</span>:<span class="card-stats cost">${card.cost}</span> 
+          <span class="stats-text text-power">Power</span>:<span class="card-stats power">${card.power}</span>
+        </h3>
       </div>
       <div class="search-result-info-ability">
         <p class="card-ability">

@@ -246,7 +246,7 @@ main {
   margin-bottom: 12px;
   padding-bottom: 6px;
   text-align: center;
-  text-shadow: 2px 2px var(--h2-shadow);
+  text-shadow: 3px 2px var(--h2-shadow);
   letter-spacing: 2px;
   font-family: 'Roboto Flex', sans-serif;
 }
@@ -271,7 +271,6 @@ main {
   to { width: 65% }
 }
 
-.search-result-info-stats h3,
 .card-ability,
 .search-result-info-source p,
 .section-countdown,
@@ -290,19 +289,46 @@ footer {
 }
 
 .card-stats {
+  margin-left: 1px;
+}
+
+.stats-text {
+  letter-spacing: 1px;
+  color: #FCFCFC;
+}
+
+.text-cost {
   text-shadow:
-    -1px -1px 0 #FCFCFC,  
-    1px -1px 0 #FCFCFC,
-    -1px  1px 0 #FCFCFC,
-    1px  1px 0 #FCFCFC;
+    -1px -1px 0 #2A52FD,  
+    1px -1px 0 #2A52FD,
+    -1px  1px 0 #2A52FD,
+    1px  1px 0 #2A52FD;
 }
 
 .cost {
-  color: #2A52FD;
+  color: #2447feff;
+  text-shadow:
+    -1px -1px 0 lightblue,  
+    1px -1px 0 lightblue,
+    -1px  1px 0 lightblue,
+    1px  1px 0 lightblue;
+}
+
+.text-power {
+  text-shadow:
+    -1px -1px 0 #FF7F24,  
+    1px -1px 0 #FF7F24,
+    -1px  1px 0 #FF7F24,
+    1px  1px 0 #FF7F24;
 }
 
 .power {
-  color: #FF7F24;
+  color: #fe7122ff;
+  text-shadow:
+    -1px -1px 0 wheat,  
+    1px -1px 0 wheat,
+    -1px  1px 0 wheat,
+    1px  1px 0 wheat;
 }
 
 .card-ability {
