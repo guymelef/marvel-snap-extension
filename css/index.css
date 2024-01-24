@@ -520,8 +520,6 @@ footer {
   height: 100%;
   background-color: rgba(36, 0, 56, 0.85);
   overflow: auto;
-  scrollbar-color: #2973C4 #333;
-  scrollbar-width: 6px;
 }
 
 .section-modal::-webkit-scrollbar {
