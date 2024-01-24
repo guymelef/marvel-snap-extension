@@ -261,14 +261,22 @@ function displayCard(card, type, isRandom) {
     }
 
     let source = ''
+    let sourceClass = ''
     if (card.series === "Season Pass") {
       source = "Season Pass"
+      sourceClass = "season-pass"
     } else {
       if (card.series) {
-        if (card.series === "NA") source = "Unreleased"
-        else source = `Series ${card.series}`
+        if (card.series === "NA") {
+          source = "Unreleased"
+          sourceClass = "unreleased"
+        } else {
+          source = `Series ${card.series}`
+          sourceClass = `series${card.series}`
+        }
       } else {
         source = "Summon"
+        sourceClass = 'summon'
       }
     }
 
@@ -297,9 +305,7 @@ function displayCard(card, type, isRandom) {
         </p>
       </div>
       <div class="search-result-info-source">
-        <p>
-          <span class="source-text">Source</span>: <span class="source-origin">${source}</span>
-        </p>
+        <p><span class="source-origin ${sourceClass}">${source}</span></p>
       </div>
     `
   } else if (type === "location") {

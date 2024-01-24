@@ -24,6 +24,17 @@ main {
   padding: 0 16px;
 }
 
+.search-term,
+.search-result-info-stats,
+.search-result-info-source,
+.section-countdown,
+.twitch-drop,
+.section-modal h3,
+.date,
+.new-cards strong {
+  font-family: 'Roboto Mono', monospace;
+}
+
 .section-buttons {
   display: grid;
   grid-auto-flow: column;
@@ -102,7 +113,6 @@ main {
   height: 60px;
   border-radius: 28px;
   border: 4px ridge #2973C4;
-  font-family: 'Roboto Mono', monospace;
   font-size: 16px;
   text-align: center;
   transition: all 0.5s ease-in;
@@ -272,7 +282,6 @@ main {
 }
 
 .card-ability,
-.search-result-info-source p,
 .section-countdown,
 footer {
   text-shadow:
@@ -284,7 +293,6 @@ footer {
 
 .search-result-info-stats h3 {
   margin: 0;
-  font-family: 'Roboto Mono', monospace;
   text-align: center;
 }
 
@@ -299,7 +307,7 @@ footer {
 
 .text-cost {
   text-shadow:
-    -1px -1px 0 #4567ff,  
+    -1px -1px 0 #4567ff,
     1px -1px 0 #4567ff,
     -1px  1px 0 #4567ff,
     1px  1px 0 #4567ff;
@@ -308,7 +316,7 @@ footer {
 .cost {
   color: #2447feff;
   text-shadow:
-    -1px -1px 0 lightblue,  
+    -1px -1px 0 lightblue,
     1px -1px 0 lightblue,
     -1px  1px 0 lightblue,
     1px  1px 0 lightblue;
@@ -316,7 +324,7 @@ footer {
 
 .text-power {
   text-shadow:
-    -1px -1px 0 #ff9549,  
+    -1px -1px 0 #ff9549,
     1px -1px 0 #ff9549,
     -1px  1px 0 #ff9549,
     1px  1px 0 #ff9549;
@@ -325,7 +333,7 @@ footer {
 .power {
   color: #fe7122ff;
   text-shadow:
-    -1px -1px 0 wheat,  
+    -1px -1px 0 wheat,
     1px -1px 0 wheat,
     -1px  1px 0 wheat,
     1px  1px 0 wheat;
@@ -340,16 +348,44 @@ footer {
   font-weight: 700;
 }
 
-.source-text {
-  color: #A7A0FB;
+.source-origin {
+  padding: 0 16px 0 12px;
+  text-transform: uppercase;
+  font-style: italic;
+  clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+  text-shadow:
+    -.5px -.5px 0 darkgray,
+    .5px -.5px 0 darkgray,
+    -.5px  .5px 0 darkgray,
+    .5px  .5px 0 darkgray;
 }
 
-.source-origin {
-  color: #FBCA03;
-  font-family: 'Roboto Mono', monospace;
-  background: #800020;
-  padding: 0px 3px;
-  border-radius: 4px;
+.series1, .series2 {
+  background-image: linear-gradient(#85ccd8, #658089);
+}
+
+.series3 {
+  background-image: linear-gradient(#2d7e56, #8df289);
+}
+
+.series4 {
+  background-image: linear-gradient(#0c7bfc, #00bce1);
+}
+
+.series5 {
+  background-image: linear-gradient(#d93758, #b62b84);
+}
+
+.season-pass {
+  background-image: linear-gradient(#cb28e1, #7e80df);
+}
+
+.summon {
+  background-image: linear-gradient(#8d2f1d, #ad5017);
+}
+
+.unreleased {
+  background-image: linear-gradient(#192929, #1a5564);
 }
 
 .btn-randomize {
@@ -423,7 +459,6 @@ footer {
   letter-spacing: 1px;
   padding: 12px 0;
   font-size: 16px;
-  font-family: 'Roboto Mono', monospace;
   visibility: hidden;
 }
 
@@ -543,12 +578,6 @@ footer {
   to { bottom: 0; opacity: 1 }
 }
 
-.section-modal h3,
-.date,
-.new-cards strong {
-  font-family: 'Roboto Mono', monospace;
-}
-
 .section-modal h3 {
   text-transform: uppercase;
   color: #2973C4;
@@ -570,7 +599,6 @@ footer {
 }
 
 .styled-list {
-  font-family: 'Roboto', sans-serif;
   letter-spacing: 1.5px;
 }
 
@@ -597,7 +625,6 @@ footer {
 
 .twitch-drop {
   color: #108800;
-  font-family: 'Roboto Mono', monospace;
 }
 
 footer {
