@@ -329,8 +329,9 @@ function displayCard(card, type, isRandom) {
   searchResult.innerHTML = ""
   searchResult.innerHTML = `
     <div class="${type}-result search-result" data-category="${type}">
-      <div class="search-result-img">
+      <div class="search-result-img spinner-background">
         <img
+          style="animation-play-state: paused"
           id="card-img"
           class="card-img card-img-${type}"
           src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}.webp"
@@ -344,16 +345,9 @@ function displayCard(card, type, isRandom) {
     </div>
   `
 
-  const cardImgDiv = document.querySelector('.search-result-img')
-  cardImgDiv.classList.add('spinner-background')
-  
   const cardImg = document.querySelector('#card-img')
-  cardImg.style.animationPlayState = "paused"
+  cardImg.onload = () => cardImg.style.animationPlayState = "running"
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
-  cardImg.onload = () => {
-    cardImgDiv.classList.remove('spinner-background')
-    cardImg.style.animationPlayState = "running"
-  }
 }
 
 function countdown() {
