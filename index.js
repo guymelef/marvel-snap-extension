@@ -188,18 +188,19 @@ async function findClosest(str, type) {
   
   for (const item of data) {
     const itemName = item.name.toLowerCase()
-    closestDistArr.push(levenshtein(itemName, str))
+    const strippedItemName = itemName.replace(/[\W_]/g, '')
+    const strippedKeyword = str.replace(/[\W_]/g, '')
 
     if (itemName === str) {
       closestMatch = item
       break
     }
 
-    if (itemName.replace(/[\W_]/g, '') === str.replace(/[\W_]/g, '')) {
+    if (strippedItemName === strippedKeyword) {
       strippedMatch = item
     }
 
-    if (itemName.includes(str)) {
+    if (!partialMatch && strippedItemName.includes(strippedKeyword)) {
       partialMatch = item
       if (itemName > str) break
     }
@@ -214,9 +215,13 @@ async function findClosest(str, type) {
 
       if (match === strArr.length) wordMatch = item
     }
+
+    if (!closestMatch && !strippedMatch && !partialMatch && !wordMatch) {
+      closestDistArr.push(levenshtein(itemName, str))
+    }
   }
 
-  closestMatch = closestMatch || strippedMatch || wordMatch || partialMatch
+  closestMatch = closestMatch || strippedMatch || partialMatch || wordMatch
 
   if (!closestMatch) {
     const min = Math.min(...closestDistArr)
