@@ -164,7 +164,7 @@ async function findClosest(str, type) {
     return data.find(bot => bot.name === str)
   }
 
-  str = str.toLowerCase()
+  str = str.trim().replace(/ +/g, ' ').toLowerCase()
 
   if (type === "location") {
     data = await fetch('./data/locations.json')
@@ -204,9 +204,9 @@ async function findClosest(str, type) {
       if (itemName > str) break
     }
 
-    const cardNameArr = itemName.split(' ')
-    const strArr = str.split(' ')
-    if (cardNameArr.length > 1 && strArr.length > 1) {
+    const cardNameArr = itemName.split(/[\W_]/)
+    const strArr = str.split(/[\W_]/)
+    if (!wordMatch && cardNameArr.length > 1 && strArr.length > 1) {
       let match = 0
       for (let word of strArr) {
         if (itemName.includes(word)) match++
