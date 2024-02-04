@@ -285,10 +285,10 @@ main {
 .section-countdown,
 footer {
   text-shadow:
-    -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px  1px 0 #000,
-    1px  1px 0 #000;
+    -1px -1px #000,  
+    1px -1px #000,
+    -1px  1px #000,
+    1px  1px #000;
 }
 
 .search-result-info-stats h3 {
@@ -307,36 +307,36 @@ footer {
 
 .text-cost {
   text-shadow:
-    -1px -1px 0 #4567ff,
-    1px -1px 0 #4567ff,
-    -1px  1px 0 #4567ff,
-    1px  1px 0 #4567ff;
+    -1px -1px #4567ff,
+    1px -1px #4567ff,
+    -1px  1px #4567ff,
+    1px  1px #4567ff;
 }
 
 .cost {
   color: #2447feff;
   text-shadow:
-    -1px -1px 0 lightblue,
-    1px -1px 0 lightblue,
-    -1px  1px 0 lightblue,
-    1px  1px 0 lightblue;
+    -1px -1px lightblue,
+    1px -1px lightblue,
+    -1px  1px lightblue,
+    1px  1px lightblue;
 }
 
 .text-power {
   text-shadow:
-    -1px -1px 0 #ff9549,
-    1px -1px 0 #ff9549,
-    -1px  1px 0 #ff9549,
-    1px  1px 0 #ff9549;
+    -1px -1px #ff9549,
+    1px -1px #ff9549,
+    -1px  1px #ff9549,
+    1px  1px #ff9549;
 }
 
 .power {
   color: #fe7122ff;
   text-shadow:
-    -1px -1px 0 wheat,
-    1px -1px 0 wheat,
-    -1px  1px 0 wheat,
-    1px  1px 0 wheat;
+    -1px -1px wheat,
+    1px -1px wheat,
+    -1px  1px wheat,
+    1px  1px wheat;
 }
 
 .card-ability {
@@ -354,10 +354,10 @@ footer {
   font-style: italic;
   clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
   text-shadow:
-    -.5px -.5px 0 darkgray,
-    .5px -.5px 0 darkgray,
-    -.5px  .5px 0 darkgray,
-    .5px  .5px 0 darkgray;
+    -.5px -.5px darkgray,
+    .5px -.5px darkgray,
+    -.5px  .5px darkgray,
+    .5px  .5px darkgray;
 }
 
 .series1, .series2 {
@@ -484,10 +484,10 @@ footer {
   padding: 6px;
   box-shadow: 3px 3px darkblue;
   text-shadow:
-    -0.5px -0.5px 0 rgb(255, 115, 0),  
-    0.5px -0.5px 0 rgb(255, 115, 0),
-    -0.5px  0.5px 0 rgb(255, 115, 0),
-    0.5px  0.5px 0 rgb(255, 115, 0);
+    -0.5px -0.5px rgb(255, 115, 0),  
+    0.5px -0.5px rgb(255, 115, 0),
+    -0.5px  0.5px rgb(255, 115, 0),
+    0.5px  0.5px rgb(255, 115, 0);
 }
 
 .countdown,
@@ -555,16 +555,22 @@ footer {
 
 .modal-content-header {
   font-family: 'Roboto Flex', sans-serif;
-  font-size: 30px;
+  font-size: 28px;
   text-align: center;
   text-transform: uppercase;
-  background-image: linear-gradient(#fbe703, #4fbb03);
-  color: #010200;
-  border: 2px solid #010200;
+  letter-spacing: 2px;
+  background-color: #010200;
+  color: #f9ebdd;
+  border: 2px solid #190002;
   border-radius: 4px;
   padding: 6px;
   margin-top: 4px;
   transition: scale 0.25s ease-in;
+  text-shadow: 
+    1px 0 #dc96ab,
+    0 1px #dc96ab,
+    -1px 0 #dc96ab,
+    0 -1px #dc96ab;
 }
 
 .modal-content-header:hover {
@@ -645,10 +651,10 @@ footer p img {
   font-weight: 700;
   letter-spacing: 0.8px;
   text-shadow:
-    -0.5px -0.5px 0 #9146FF,
-    0.5px -0.5px 0 #9146FF,
-    -0.5px  0.5px 0 #9146FF,
-    0.5px  0.5px 0 #9146FF;
+    -0.5px -0.5px #9146FF,
+    0.5px -0.5px #9146FF,
+    -0.5px  0.5px #9146FF,
+    0.5px  0.5px #9146FF;
 }
 
 .donate-svg:hover {
