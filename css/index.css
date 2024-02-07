@@ -622,12 +622,12 @@ footer {
 
 .spotlight-caches,
 .shop-takeover,
-.twitch-drops {
+.event {
   list-style: none;
   margin-left: -1em;
 }
 
-.twitch-drop {
+.event-list {
   color: #108800;
 }
 
