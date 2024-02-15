@@ -21,7 +21,6 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 16px;
 }
 
 .search-term,
@@ -106,6 +105,10 @@ main {
 
 .section-search {
   margin-top: 18px;
+}
+
+.section-search-result {
+  padding: 0 16px;
 }
 
 .search-term {
@@ -511,14 +514,12 @@ footer {
 
 .section-modal {
   display: none;
-  position: fixed; 
+  position: fixed;
   z-index: 1;
   padding: 50px 0;
-  left: 0;
-  top: 0;
-  width: 100%;
+  width: 420px;
   height: 100%;
-  background-color: rgba(36, 0, 56, 0.85);
+  background-color: #120020e7;
   overflow: auto;
 }
 
@@ -544,13 +545,36 @@ footer {
   color: #FCFCFC;
   font-size: 14px;
   letter-spacing: 0.8px;
-  background: #1d1d1d;
+  background: #1b1b1b;
   margin: auto;
   padding: 12px;
+  padding-top: 9px;
   border-radius: 6px;
-  border: 4px solid rgb(36, 36, 36);
+  /* border: 4px solid rgb(36, 36, 36); */
   width: 90%;
   animation: slide 0.3s ease-out;
+}
+
+.modal-close {
+  text-align: right;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-right: -5px;
+}
+
+.modal-close-btn {
+  color: #1d1d1d;
+  background-color: #555555;
+  border-radius: 50%;
+  padding: 2px 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  transform: scale(0.2);
+  background-color: #0a0a0a;
+  color: #6d6d6d;
 }
 
 .modal-content-header {
@@ -629,6 +653,10 @@ footer {
 
 .event-list {
   color: #108800;
+}
+
+.couple-power {
+  color: #e50a10;
 }
 
 footer {

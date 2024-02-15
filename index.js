@@ -3,6 +3,7 @@ const searchForm = document.querySelector('.search-form')
 const searchResult = document.querySelector('.section-search-result')
 const countdownSection = document.querySelector('.section-countdown')
 const modal = document.querySelector('.section-modal')
+const modalCloseBtn = document.querySelector('.modal-close-btn')
 const randomizeBtn = document.querySelector('.btn-randomize')
 const countdownEl = document.querySelector(".countdown")
 
@@ -70,7 +71,7 @@ document.onclick = ({ target }) => {
 
   if (classes.includes('season-header')) {
     modal.style.display = "block"
-  } else if (target === modal) {
+  } else if (target === modal || target === modalCloseBtn) {
     modal.scrollTop = 0
     modal.style.display = "none"
   }
@@ -331,15 +332,16 @@ function displayCard(card, type, isRandom) {
     `
   }
 
+  const imgSrc = `https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}.webp?_=${String(Math.random()).substring(2)}`
   searchResult.innerHTML = ""
   searchResult.innerHTML = `
     <div class="${type}-result search-result" data-category="${type}">
-      <div class="search-result-img spinner-background">
+      <div class="search-result-img spinner-background" id="${type}-result-div">
         <img
           style="animation-play-state: paused"
           id="card-img"
           class="card-img card-img-${type}"
-          src="https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}.webp"
+          src="${imgSrc}"
           alt="${card.name}"
           loading="eager"
         >
@@ -351,7 +353,10 @@ function displayCard(card, type, isRandom) {
   `
 
   const cardImg = document.querySelector('#card-img')
-  cardImg.onload = () => cardImg.style.animationPlayState = "running"
+  cardImg.onload = () => {
+    type === 'location' && document.querySelector('#location-result-div').classList.remove('spinner-background')
+    cardImg.style.animationPlayState = "running"
+  }
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
 }
 
