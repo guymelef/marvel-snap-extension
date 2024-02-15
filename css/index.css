@@ -562,18 +562,17 @@ footer {
 }
 
 .modal-close-btn {
-  color: #1d1d1d;
-  background-color: #555555;
+  color: #6d6d6d;
+  background-color: #0a0a0a;
   border-radius: 50%;
   padding: 2px 4px;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .modal-close-btn:hover {
-  transform: scale(0.2);
-  background-color: #0a0a0a;
-  color: #6d6d6d;
+  color: #1d1d1d;
+  background-color: #555555;
 }
 
 .modal-content-header {
