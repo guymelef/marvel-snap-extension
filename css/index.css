@@ -550,7 +550,6 @@ footer {
   padding: 12px;
   padding-top: 9px;
   border-radius: 6px;
-  /* border: 4px solid rgb(36, 36, 36); */
   width: 90%;
   animation: slide 0.3s ease-out;
 }
