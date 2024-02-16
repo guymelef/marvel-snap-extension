@@ -548,7 +548,6 @@ footer {
   background: #1b1b1b;
   margin: auto;
   padding: 12px;
-  padding-top: 9px;
   border-radius: 6px;
   width: 90%;
   animation: slide 0.3s ease-out;
@@ -557,13 +556,13 @@ footer {
 .modal-close {
   text-align: right;
   margin: 0;
-  margin-bottom: 8px;
-  margin-right: -5px;
+  margin-top: -22px;
+  margin-right: -22px;
 }
 
 .modal-close-btn {
-  color: #6d6d6d;
-  background-color: #0a0a0a;
+  color: darkgray;
+  background-color: #00335e;
   border-radius: 50%;
   padding: 2px 4px;
   font-weight: bold;
@@ -571,8 +570,8 @@ footer {
 }
 
 .modal-close-btn:hover {
-  color: #1d1d1d;
-  background-color: #555555;
+  color: midnightblue;
+  background-color: darkred;
 }
 
 .modal-content-header {
@@ -586,7 +585,7 @@ footer {
   border: 2px solid #190002;
   border-radius: 4px;
   padding: 6px;
-  margin-top: 4px;
+  margin-top: 6px;
   transition: scale 0.25s ease-in;
   text-shadow: 
     1px 0 #dc96ab,
