@@ -556,15 +556,15 @@ footer {
 .modal-close {
   text-align: right;
   margin: 0;
-  margin-top: -20px;
-  margin-right: -20px;
+  margin-top: -22px;
+  margin-right: -22px;
 }
 
 .modal-close-btn {
   color: darkgray;
   background-color: #00335e;
   border-radius: 50%;
-  padding: 2px 4px;
+  padding: 3px 6px;
   font-weight: bold;
   cursor: pointer;
 }
