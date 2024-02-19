@@ -27,10 +27,9 @@ main {
 .search-result-info-stats,
 .search-result-info-source,
 .section-countdown,
-.twitch-drop,
 .section-modal h3,
 .date,
-.new-cards strong {
+.event-list {
   font-family: 'Roboto Mono', monospace;
 }
 
@@ -545,10 +544,11 @@ footer {
   color: #FCFCFC;
   font-size: 14px;
   letter-spacing: 0.8px;
+  line-height: normal;
   background: #1b1b1b;
   margin: auto;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   width: 90%;
   animation: slide 0.3s ease-out;
 }
@@ -631,18 +631,16 @@ footer {
   color: rgb(255, 115, 0);
 }
 
-.list-item,
-.list-item-span {
+.list-item {
   color: #FCFCFC;
   font-weight: bold;
 }
 
-.new-variants li {
-  color: orange;
+.shop-card {
+  padding: 1px 3px;
+  line-height: 1.6;
 }
 
-.spotlight-caches,
-.shop-takeover,
 .event {
   list-style: none;
   margin-left: -1em;
@@ -650,6 +648,7 @@ footer {
 
 .event-list {
   color: #108800;
+  letter-spacing: normal;
 }
 
 .couple-power {
