@@ -288,11 +288,6 @@ function displayCard(card, type, isRandom) {
       }
     }
 
-    const timeDiff = new Date() - new Date("2024-02-20T10:00:00-08:00")
-    if (card.couple && timeDiff < 0) {
-      card.ability += `<br><span class="couple-power">+${card['couple-power']} Power Couple:</span> <b>${card.couple}</b>`
-    }
-
     htmlStr = `
       <div class="search-result-info-title">
         <h2 
