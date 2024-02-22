@@ -548,6 +548,7 @@ footer {
   background: #1b1b1b;
   margin: auto;
   padding: 12px;
+  border: 3px solid  #202020;
   border-radius: 4px;
   width: 90%;
   animation: slide 0.3s ease-out;
@@ -556,8 +557,8 @@ footer {
 .modal-close {
   text-align: right;
   margin: 0;
-  margin-top: -21px;
-  margin-right: -23px;
+  margin-top: -24px;
+  margin-right: -26px;
 }
 
 .modal-close-btn {
@@ -651,7 +652,7 @@ footer {
 }
 
 .event-list {
-  color: cyan;
+  color: #00ced1;
   letter-spacing: normal;
 }
 
