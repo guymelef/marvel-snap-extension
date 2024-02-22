@@ -2,6 +2,7 @@ const searchBox = document.querySelector('.search-term')
 const searchForm = document.querySelector('.search-form')
 const searchResult = document.querySelector('.section-search-result')
 const countdownSection = document.querySelector('.section-countdown')
+const seasonHeader = document.querySelector('.season-header')
 const modal = document.querySelector('.section-modal')
 const modalCloseBtn = document.querySelector('.modal-close-btn')
 const randomizeBtn = document.querySelector('.btn-randomize')
@@ -66,17 +67,6 @@ searchBox.onclick = _ => {
   searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
 }
 
-document.onclick = ({ target }) => {
-  const classes = [...target.classList]
-
-  if (classes.includes('season-header')) {
-    modal.style.display = "block"
-  } else if (target === modal || target === modalCloseBtn) {
-    modal.scrollTop = 0
-    modal.style.display = "none"
-  }
-}
-
 document.querySelectorAll('.btn-category').forEach(button => {
   button.onclick = function() {
     if (this.id === "bot") {
@@ -126,6 +116,10 @@ document.querySelectorAll('.btn-category').forEach(button => {
     searchBox.focus()
   }
 })
+
+seasonHeader.onclick = _ => showModal()
+modal.onclick = ({ target }) => (target === modal || target === modalCloseBtn) && showModal(false)
+modalCloseBtn.onkeydown = ({ key }) => key === "Enter" && showModal(false)
 
 
 
@@ -360,6 +354,15 @@ function displayCard(card, type, isRandom) {
     cardImg.style.animationPlayState = "running"
   }
   cardImg.onerror = function() { this.src = `images/${type}.webp` }
+}
+
+function showModal(show = true) {
+  if (show) {
+    modal.style.display = "block"
+  } else {
+    modal.scrollTop = 0
+    modal.style.display = "none"
+  }
 }
 
 function countdown() {
