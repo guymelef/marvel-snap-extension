@@ -118,8 +118,8 @@ document.querySelectorAll('.btn-category').forEach(button => {
 })
 
 seasonHeader.onclick = _ => showModal()
-modal.onclick = ({ target }) => (target === modal || target === modalCloseBtn) && showModal(false)
-modalCloseBtn.onkeydown = ({ key }) => key === "Enter" && showModal(false)
+modalCloseBtn.onclick = _ => showModal(false)
+modal.onclick = ({ target }) => { target === modal && showModal(false) }
 
 
 

@@ -465,15 +465,18 @@ footer {
 }
 
 .season-header {
+  all: unset;
   cursor: pointer;
   padding: 2.5px;
   border-bottom: 2px solid greenyellow;
-  transition: all 0.5s ease;
+  transition: all 0.2s ease-in;
 }
 
-.season-header:hover {
-  opacity: 0.9;
+.season-header:hover,
+.season-header:focus {
+  opacity: 0.8;
   color: greenyellow;
+  border-bottom: 4px solid greenyellow;
 }
 
 .countdown {
@@ -557,20 +560,22 @@ footer {
 .modal-close {
   text-align: right;
   margin: 0;
-  margin-top: -24px;
+  margin-top: -26px;
   margin-right: -26px;
 }
 
 .modal-close-btn {
+  all: unset;
   color: darkgray;
   background-color: #00335e;
   border-radius: 50%;
-  padding: 3px 6px;
+  padding: 2px 6px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.modal-close-btn:hover {
+.modal-close-btn:hover,
+.modal-close-btn:focus {
   color: midnightblue;
   background-color: darkred;
 }
