@@ -582,22 +582,22 @@ footer {
 
 .modal-content-header {
   font-family: 'Roboto Flex', sans-serif;
-  font-size: 28px;
+  font-size: 27px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
-  background-color: #010200;
-  color: #f9ebdd;
-  border: 2px solid #190002;
+  background-color: #021319;
+  color: #050e01;
+  border: 1px solid #eccd50;
   border-radius: 4px;
   padding: 6px;
   margin-top: 6px;
   transition: scale 0.25s ease-in;
   text-shadow: 
-    1px 0 #dc96ab,
-    0 1px #dc96ab,
-    -1px 0 #dc96ab,
-    0 -1px #dc96ab;
+    1px 0 #eccd50,
+    0 1px #eccd50,
+    -1px 0 #eccd50,
+    0 -1px #eccd50;
 }
 
 .modal-content-header:hover {
