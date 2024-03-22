@@ -1,0 +1,384 @@
+:root {
+  --ff-primary: 'Roboto', sans-serif;
+  --ff-secondary: 'Roboto Mono', monospace;
+  --ff-title: 'Roboto Flex', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: url("../images/bg.webp") center fixed;
+  background-size: cover;
+  width: 420px;
+  height: 600px;
+  margin: 0 auto;
+  font-family: var(--ff-primary);
+}
+
+body::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-color: #081c77d8;
+  z-index: 1;
+  background-image: url('../images/spinner.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100px;
+}
+
+.hide-before::before {
+  display: none;
+}
+
+main {
+  background-color: #1e3b8a;
+  height: 100%;
+  position: relative;
+}
+
+button, select, input {
+  border: none;
+}
+
+/* DECK VIEW */
+.deck-view {
+  height: 155px;
+  padding-top: 6px;
+  background-color: #1e3fae;
+  text-align: center;
+  transition: all .3s linear;
+}
+
+.deck-card {
+  width: 70px;
+  margin: 0 -6px;
+  transition: all .2s ease-in;
+}
+
+.card-added:hover {
+  cursor: pointer;
+  transform: scale(1.15);
+}
+
+.complete {
+  animation: complete .3s linear forwards;
+}
+
+@keyframes complete {
+  70% { background-color: #981b1b00; }
+  80%, 100% { background: url("../images/space.webp"); }
+}
+
+.cards-view {
+  height: 320px;
+  overflow: auto;
+  background-color: #191970;
+  padding: 5px 0;
+  border-top: 2px solid #18181b;
+  border-bottom: 2px solid #18181b;
+  scrollbar-width: thin;
+  scrollbar-color: #C82922 #708090;
+}
+
+.no-cards {
+  text-align: center;
+  color: #a1a1aad0;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.card-image {
+  width: 97px;
+  transition: all .2s ease-in;
+}
+
+.card-image:hover {
+  cursor:pointer;
+  transform: scale(1.17)
+}
+
+.card-image.selected {
+  opacity: 0.3;
+}
+
+.card-info {
+  position: fixed;
+  z-index: 1;
+  transform: translate(9px, 280px);
+  width: 250px;
+  font-size: 14px;
+  background-color: #010b13;
+  border-radius: 3px;
+  padding: 8px;
+  color: #e0ffff;
+  display: none;
+}
+
+.card-info h3, h4, p {
+  padding: 0;
+  margin: 0;
+}
+
+.card-info h3 {
+  color: #ffd700;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-family: var(--ff-title);
+}
+
+.card-info h4 {
+  font-family: var(--ff-secondary);
+  color: #00a8ff;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.card-info-text {
+  font-weight: 500;
+}
+
+.card-info span {
+  color: #ef4343;
+}
+
+.deck-generator {
+  color: #e0ffff;
+}
+
+.deck-generator option {
+  font-weight: bold;
+  color: #fff;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filters span {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.filters select {
+  color: #010b13;
+  font-weight: 500;
+  font-family: var(--ff-secondary);
+}
+
+#card-ability {
+  background-color: #21c45d;
+}
+
+#card-energy {
+  background-color: #3c83f6;
+  width: 70px;
+}
+
+#card-power {
+  background-color: #fb923c;
+  width: 65px;
+}
+
+#card-series {
+  background-color: #bf83fc;
+}
+
+.sorter {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.sorter select {
+  background-color: #4682b4;
+  color: #010b13;
+  font-weight: 500;
+  font-family: var(--ff-secondary);
+}
+
+.sorter span {
+  letter-spacing: .9px;
+  font-weight: bold;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+  color: #010b13;
+}
+
+.sr-only { 
+  border: 0;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap
+}
+
+.controls input {
+  padding: 3px 8px;
+  background-color: #f0ffff;
+  font-size: 16px;
+}
+
+.controls input::placeholder {
+  color: #aaa9ad;
+}
+
+.controls-div {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-control {
+  all: unset;
+  display: flex;
+}
+
+.btn-control img {
+  filter:drop-shadow(2px 1px);
+}
+
+.btn-control:hover,
+.btn-control:focus {
+  cursor: pointer;
+  transform:scale(1.1)
+}
+
+#exit-deck-builder {
+  margin-left: 65px;
+}
+
+#exit-deck-builder:hover,
+#exit-deck-builder:focus {
+  color: #dc143c;
+}
+
+.builder-modal {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #1e3b8ae3;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  animation: fade-in .3s ease-in;
+  display: none;
+}
+
+.builder-modal-content {
+  background-color: #151E3F;
+  width: 300px;
+  text-align: center;
+  padding: 10px 15px;
+  margin: auto;
+  border-radius: 8px;
+  position: relative;
+  animation: slide-in .3s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.builder-modal-content span {
+  position: absolute;
+  top: -22px;
+  color: #a1a1aa70;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.builder-modal-content label {
+  font-weight: bold;
+  color: #e0ffff;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin: 5px 0;
+}
+
+.builder-modal-content textarea {
+  width: 100%;
+  padding: 5px;
+  resize: none;
+  color: #080808;
+  background-color: #CBCBD4;
+}
+
+.builder-modal-content textarea::placeholder {
+  color: #808080;
+  font-size: 14px;
+}
+
+.builder-modal-content button {
+  padding: 6px 15px;
+  background-color: #FF9B42;
+  color: #e0ffff;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+.builder-modal-content button:hover {
+  cursor: pointer;
+  background-color: #e6e6e6;
+  color: #f97415;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in {
+  from { top: 300px; opacity: 0; }
+  to { top: 150px; opacity: 1; }
+}
+
+.toast-msg {
+  position:absolute;
+  z-index: 1;
+  padding: 5px 15px;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #010b13;
+  transform: translate(8px, -18px);
+  animation: slide-toast .1s ease-in-out forwards;
+}
+
+@keyframes slide-toast {
+  from { left: -200px }
+  to { left: 8px }  
+}

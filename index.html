@@ -1,158 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700;800&family=Roboto:wght@400;500;700;800&family=Roboto+Flex:wght@900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/index.css">
-  <title>Marvel SNAP Searcher</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700;800&family=Roboto:wght@400;500;700;800&family=Roboto+Flex:wght@900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/index.css">
+	<title>Marvel SNAP Search</title>
 </head>
-<body>
-  <main>
-    <section class="section-buttons">
-      <button type="button" id="card" class="btn btn-category btn-card btn-card-select">Card</button>
-      <button type="button" id="location" class="btn btn-category btn-location">Location</button>
-      <button type="button" id="bot" class="btn btn-category btn-bot" title="Bot Check (Case-Sensitive)" aria-label="Bot Check (Case-Sensitive)">Bot</button>
-    </section>
-    <section class="section-search">
-      <form class="search-form">
-        <input name="search-term" class="search-term" placeholder="Card search..." type="text" autocomplete="off" aria-label="Search input">
-      </form>
-    </section>
-    <section class="section-search-result">
-    </section>
-    <section class="section-randomize">
-      <button type="button" class="btn btn-randomize" aria-label="Random Search">Randomize <img src="images/shuffle.svg" alt="shuffle"></button>
-    </section>
-    <section class="section-countdown">
-      <h4 class="season-calendar">
-        <button class="season-header" aria-label="View Season Calendar" title="View Season Calendar">📆Season End</button>:<a class="countdown" href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" aria-label="Season Timer & Infinite Leaderboard Page" title="Check Infinite Leaderboard"></a>
-      </h4>
-    </section>
-    <section class="section-modal">
-      <div class="modal-content">
-        <div class="modal-close"><button class="modal-close-btn">&#10005;</button></div>
-        <header>
-          <h2 class="modal-content-header"><a href="https://www.marvelsnap.com/newsdetail?id=7296750522168531718" target="_blank" class="season-link" aria-label="current season link">Avengers vs X-Men</a></h2>
-        </header>
-        <div>
-          <h3>☄️ New Characters</h3>
-          <ul class="styled-list">
-            <li class="list-item" aria-label="season pass card"><span class="list-padding season-pass">Hope Summers</span></li>
-            <li class="list-item"><span class="list-padding series5">Pixie</span></li>
-            <li class="list-item"><span class="list-padding series5">Mockingbird</span></li>
-            <li class="list-item"><span class="list-padding series5">Cannonball</span></li>
-            <li class="list-item"><span class="list-padding series5">War Machine</span></li>
-            <li class="list-item"><span class="list-padding series5">Black Swan</span>*</li>
-          </ul>
-        </div>
-        <div>
-          <h3>🗺️ New Locations</h3>
-          <ul class="styled-list">
-            <li class="list-item"><span class="list-padding highlight-location">Krakoa</span></li>
-            <li class="list-item"><span class="list-padding highlight-location">Utopia</span></li>
-          </ul>
-        </div>
-        <div>
-          <h3>🗝️ Spotlight Caches</h3>
-          <ul class="event">
-            <li>
-              <strong class="date">March 5</strong>
-              <ul class="styled-list">
-                <li class="list-item"><span class="list-padding series5">Pixie</span></li>
-                <li class="list-item"><span class="list-padding series4">Mobius M. Mobius</span></li>
-                <li class="list-item"><span class="list-padding series4">Spider-Ham</span></li>
-              </ul>
-            </li>
-            <li>
-              <strong class="date">March 12</strong>
-              <ul class="styled-list">
-                <li class="list-item"><span class="list-padding series5">Mockingbird</span></li>
-                <li class="list-item"><span class="list-padding series4">Ghost-Spider</span></li>
-                <li class="list-item"><span class="list-padding series4">Man-Thing</span></li>
-              </ul>
-            </li>
-            <li>
-              <strong class="date">March 19</strong>
-              <ul class="styled-list">
-                <li class="list-item"><span class="list-padding series5">Cannonball</span></li>
-                <li class="list-item"><span class="list-padding series4">Kitty Pryde</span></li>
-                <li class="list-item"><span class="list-padding series5">Ms. Marvel</span></li>
-              </ul>
-            </li>
-            <li>
-              <strong class="date">March 26</strong>
-              <ul class="styled-list">
-                <li class="list-item"><span class="list-padding series5">War Machine</span></li>
-                <li class="list-item"><span class="list-padding series5">Silk</span></li>
-                <li class="list-item"><span class="list-padding series4">Silver Samurai</span></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3>🎨 Shop: Max Grecke</h3>
-          <ul class="event">
-            <li>
-              <strong class="date">March 20 - March 21</strong>
-              <ul class="styled-list">
-                <li class="list-item">Debrii</li>
-                <li class="list-item">Galactus</li>
-                <li class="list-item">Scarlet Witch</li>
-                <li class="list-item">Killmonger</li>
-                <li class="list-item">Black Widow</li>
-                <li class="list-item">Mister Fantastic</li>
-                <li class="list-item">Human Torch</li>
-                <li class="list-item">Invisible Woman</li>
-                <li class="list-item">The Thing</li>
-                <li class="list-item">Silver Surfer</li>
-                <li class="list-item">Hulk</li>
-                <li class="list-item">Ironheart</li>
-                <li class="list-item">Carnage</li>
-                <li class="list-item">Bishop</li>
-                <li class="list-item">Black Panther</li>
-                <li class="list-item">Blue Marvel</li>
-                <li class="list-item">Wolverine</li>
-                <li class="list-item">Dr. Doom</li>
-                <li class="list-item">Deadpool</li>
-                <li class="list-item">Captain America</li>
-                <li class="list-item">Thor</li>
-                <li class="list-item">Vision</li>
-                <li class="list-item">Sera</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3>🎁 Twitch Drops</h3>
-          <ul class="event">
-            <li>
-              <strong class="date">March 19 - March 26</strong>
-              <ul class="styled-list">
-                <li class="list-item">Watch 2 hours: <span class="event-list">65 Random Boosters</span></li>
-                <li class="list-item">Watch 4 hours: <span class="event-list">350 Credits</span></li>
-                <li class="list-item">Watch 6 hours: <span class="event-list">Mystery Variant</span></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <p>
-      <img src="images/twitch.svg" alt="shuffle search">
-      <a class="dev-link" href="https://twitch.tv/thesandvich" target="_blank" aria-label="Extension Author">TheSandvich</a> made this.
-    </p>
-    <a href="https://www.paypal.me/thesandvich" target="_blank" title="Support the Developer" aria-label="Support the Developer">
-      <img src="images/donate.svg" alt="donate" class="donate-svg">
-    </a>
-  </footer>
+<body class="content">
+	<main>
+		<section class="section-buttons">
+			<button type="button" id="card" class="btn btn-category btn-card btn-card-select">Card</button>
+			<button type="button" id="location" class="btn btn-category btn-location">Location</button>
+			<button type="button" id="bot" class="btn btn-category btn-bot" aria-label="Bot Check (Case-Sensitive)">Bot</button>
+		</section>
+		<section class="section-search secondary-text">
+			<form class="search-form">
+				<input name="search-term" class="search-term" placeholder="Card search..." type="text" autocomplete="off" aria-label="Search input">
+			</form>
+		</section>
+		<section class="section-search-result">
+		</section>
+		<section class="section-controls">
+			<button type="button" class="btn btn-randomize" aria-label="Random Search">Randomize <img src="images/shuffle.svg" alt=""></button>
+			<a class="btn btn-deck-builder" href="builder.html" aria-label="Go to deck builder">
+				<img src="images/enter.svg" alt="">
+			</a>
+		</section>
+		<section class="section-countdown secondary-text">
+			<h4>
+				<button class="season-calendar" aria-label="View Season Calendar" title="View Season Calendar">📆Season End</button>:<a class="countdown" href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" aria-label="Season Timer & Infinite Leaderboard Page" title="Check Infinite Leaderboard"></a>
+			</h4>
+		</section>
+		<section class="section-modal">
+			<div class="modal-content">
+				<div class="modal-close"><button class="btn modal-close-btn">&#10005;</button></div>
+				<header>
+					<h2 class="modal-content-header"><a href="https://www.marvelsnap.com/newsdetail?id=7296750522168531718" target="_blank" class="season-link" aria-label="current season link">Avengers vs X-Men</a></h2>
+				</header>
+				<div>
+					<h3>☄️ New Characters</h3>
+					<ul class="styled-list">
+						<li class="list-item" aria-label="season pass card"><span class="list-padding season-pass">Hope Summers</span></li>
+						<li class="list-item"><span class="list-padding series5">Pixie</span></li>
+						<li class="list-item"><span class="list-padding series5">Mockingbird</span></li>
+						<li class="list-item"><span class="list-padding series5">Cannonball</span></li>
+						<li class="list-item"><span class="list-padding series5">War Machine</span></li>
+						<li class="list-item"><span class="list-padding series5">Black Swan</span>*</li>
+					</ul>
+				</div>
+				<div>
+					<h3>🗺️ New Locations</h3>
+					<ul class="styled-list">
+						<li class="list-item"><span class="list-padding highlight-location">Krakoa</span></li>
+						<li class="list-item"><span class="list-padding highlight-location">Utopia</span></li>
+					</ul>
+				</div>
+				<div>
+					<h3>🗝️ Spotlight Caches</h3>
+					<ul class="event">
+						<li>
+							<strong class="date">March 5</strong>
+							<ul class="styled-list">
+								<li class="list-item"><span class="list-padding series5">Pixie</span></li>
+								<li class="list-item"><span class="list-padding series4">Mobius M. Mobius</span></li>
+								<li class="list-item"><span class="list-padding series4">Spider-Ham</span></li>
+							</ul>
+						</li>
+						<li>
+							<strong class="date">March 12</strong>
+							<ul class="styled-list">
+								<li class="list-item"><span class="list-padding series5">Mockingbird</span></li>
+								<li class="list-item"><span class="list-padding series4">Ghost-Spider</span></li>
+								<li class="list-item"><span class="list-padding series4">Man-Thing</span></li>
+							</ul>
+						</li>
+						<li>
+							<strong class="date">March 19</strong>
+							<ul class="styled-list">
+								<li class="list-item"><span class="list-padding series5">Cannonball</span></li>
+								<li class="list-item"><span class="list-padding series4">Kitty Pryde</span></li>
+								<li class="list-item"><span class="list-padding series5">Ms. Marvel</span></li>
+							</ul>
+						</li>
+						<li>
+							<strong class="date">March 26</strong>
+							<ul class="styled-list">
+								<li class="list-item"><span class="list-padding series5">War Machine</span></li>
+								<li class="list-item"><span class="list-padding series5">Silk</span></li>
+								<li class="list-item"><span class="list-padding series4">Silver Samurai</span></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h3>🎨 Shop Takeover: Max Grecke</h3>
+					<ul class="event">
+						<li>
+							<details>
+								<summary><strong class="date">March 20 - March 21</strong></summary>
+								<ul class="styled-list">
+									<li class="list-item">Debrii</li>
+									<li class="list-item">Galactus</li>
+									<li class="list-item">Scarlet Witch</li>
+									<li class="list-item">Killmonger</li>
+									<li class="list-item">Black Widow</li>
+									<li class="list-item">Mister Fantastic</li>
+									<li class="list-item">Human Torch</li>
+									<li class="list-item">Invisible Woman</li>
+									<li class="list-item">The Thing</li>
+									<li class="list-item">Silver Surfer</li>
+									<li class="list-item">Hulk</li>
+									<li class="list-item">Ironheart</li>
+									<li class="list-item">Carnage</li>
+									<li class="list-item">Bishop</li>
+									<li class="list-item">Black Panther</li>
+									<li class="list-item">Blue Marvel</li>
+									<li class="list-item">Wolverine</li>
+									<li class="list-item">Dr. Doom</li>
+									<li class="list-item">Deadpool</li>
+									<li class="list-item">Captain America</li>
+									<li class="list-item">Thor</li>
+									<li class="list-item">Vision</li>
+									<li class="list-item">Sera</li>
+								</ul>
+							</details>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h3>💥 AvX: Avengers vs X-Men</h3>
+					<ul class="event">
+						<li>
+							<details>
+								<summary class="event-summary secondary-text">Locations with 3 <span class="avengers">Avengers</span> have +3 Power.</summary>
+								<ul class="styled-list avx-avengers">
+									<li class="list-item">Ant-Man</li>
+									<li class="list-item">Black Panther</li>
+									<li class="list-item">Black Widow</li>
+									<li class="list-item">Bucky Barnes (and Winter Soldier!)</li>
+									<li class="list-item">Captain America</li>
+									<li class="list-item">Captain Marvel</li>
+									<li class="list-item">Daredevil</li>
+									<li class="list-item">Doctor Strange</li>
+									<li class="list-item">Echo</li>
+									<li class="list-item">Falcon</li>
+									<li class="list-item">Hawkeye</li>
+									<li class="list-item">Hercules</li>
+									<li class="list-item">Hulk</li>
+									<li class="list-item">Iron Fist</li>
+									<li class="list-item">Iron Lad</li>
+									<li class="list-item">Iron Man</li>
+									<li class="list-item">Jessica Jones</li>
+									<li class="list-item">Luke Cage</li>
+									<li class="list-item">Mockingbird</li>
+									<li class="list-item">Moon Knight</li>
+									<li class="list-item">Ms. Marvel</li>
+									<li class="list-item">Nova</li>
+									<li class="list-item">Quake</li>
+									<li class="list-item">Quicksilver</li>
+									<li class="list-item">Rescue</li>
+									<li class="list-item">Scarlet Witch</li>
+									<li class="list-item">Shang-Chi</li>
+									<li class="list-item">She-Hulk</li>
+									<li class="list-item">Spider-Man</li>
+									<li class="list-item">Spider-Woman</li>
+									<li class="list-item">Stature</li>
+									<li class="list-item">Thor</li>
+									<li class="list-item">Vision</li>
+									<li class="list-item">Wasp</li>
+									<li class="list-item">Wong</li>
+								</ul>
+							</details>
+						</li>
+						<li>
+							<details>
+								<summary class="event-summary secondary-text">Once you play 4, <span class="xmen">X-Men</span> have +1 Power.</summary>
+								<ul class="styled-list avx-xmen">
+									<li class="list-item">Angel</li>
+									<li class="list-item">Armor</li>
+									<li class="list-item">Beast</li>
+									<li class="list-item">Bishop</li>
+									<li class="list-item">Cable</li>
+									<li class="list-item">Cannonball</li>
+									<li class="list-item">Colossus</li>
+									<li class="list-item">Cyclops</li>
+									<li class="list-item">Dazzler</li>
+									<li class="list-item">Forge</li>
+									<li class="list-item">Gambit</li>
+									<li class="list-item">Havok</li>
+									<li class="list-item">Hope Summers</li>
+									<li class="list-item">Iceman</li>
+									<li class="list-item">Jean Grey</li>
+									<li class="list-item">Jubilee</li>
+									<li class="list-item">Kitty Pryde</li>
+									<li class="list-item">Magik</li>
+									<li class="list-item">Mirage</li>
+									<li class="list-item">Multiple Man</li>
+									<li class="list-item">Namor</li>
+									<li class="list-item">Negasonic Teenage Warhead</li>
+									<li class="list-item">Nightcrawler</li>
+									<li class="list-item">Pixie</li>
+									<li class="list-item">Polaris</li>
+									<li class="list-item">Professor X</li>
+									<li class="list-item">Psylocke</li>
+									<li class="list-item">Rogue</li>
+									<li class="list-item">Storm</li>
+									<li class="list-item">Strong Guy</li>
+									<li class="list-item">Sunspot</li>
+									<li class="list-item">White Queen</li>
+									<li class="list-item">Wolfsbane</li>
+									<li class="list-item">Wolverine</li>
+									<li class="list-item">X-23</li>
+								</ul>                
+							</details>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h3>📅 7-Day Login</h3>
+					<ul class="event">
+						<li>
+							<details>
+								<summary class="event-summary"><span class="date">March 15 - March 21</span></summary>
+								<ul class="styled-list">
+									<li class="list-item">Day 1: <span class="event-list secondary-text">65 Thor Boosters</span></li>
+									<li class="list-item">Day 2: <span class="event-list secondary-text">150 Collector's Tokens</span></li>
+									<li class="list-item">Day 3: <span class="event-list secondary-text">Thor Avatar</span></li>
+									<li class="list-item">Day 4: <span class="event-list secondary-text">"Eatin' Schwarma" Title</span></li>
+									<li class="list-item">Day 5: <span class="event-list secondary-text">300 Credits</span></li>
+									<li class="list-item">Day 6: <span class="event-list secondary-text">250 Collector's Tokens</span></li>
+									<li class="list-item">Day 7: <span class="event-list secondary-text">Thor Variant (Mateus Manhanini)</span></li>
+								</ul>
+							</details>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h3>🎁 Twitch Drops</h3>
+					<ul class="event">
+						<li>
+							<details>
+								<summary><strong class="date">March 19 - March 26</strong></summary>
+								<ul class="styled-list">
+									<li class="list-item">Watch 2 hours: <span class="event-list secondary-text">65 Random Boosters</span></li>
+									<li class="list-item">Watch 4 hours: <span class="event-list secondary-text">350 Credits</span></li>
+									<li class="list-item">Watch 6 hours: <span class="event-list secondary-text">Mystery Variant</span></li>
+								</ul>
+							</details>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<p>
+			<img src="images/twitch.svg" alt="twitch logo">
+			<a class="dev-link" href="https://twitch.tv/thesandvich" target="_blank" aria-label="Extension Author">TheSandvich</a> made this.
+		</p>
+		<a href="https://www.paypal.me/thesandvich" target="_blank" title="Support the Developer" aria-label="Support the Developer">
+			<img src="images/donate.svg" alt="donate" class="donate-svg">
+		</a>
+	</footer>
 
-  <script type="text/javascript" src="index.js"></script>
+	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>

@@ -1,490 +1,479 @@
-const searchBox = document.querySelector('.search-term')
+const buttonsSection = document.querySelector('.section-buttons')
+const categoryButtons = document.querySelectorAll('.btn-category')
 const searchForm = document.querySelector('.search-form')
+const searchBox = document.querySelector('.search-term')
 const searchResult = document.querySelector('.section-search-result')
+const controlsSection = document.querySelector('.section-controls')
+const randomizeBtn = document.querySelector('.btn-randomize')
+const deckBuilderBtn = document.querySelector('.btn-deck-builder')
 const countdownSection = document.querySelector('.section-countdown')
-const seasonHeader = document.querySelector('.season-header')
+const seasonHeader = document.querySelector('.season-calendar')
+const countdownEl = document.querySelector('.countdown')
 const modal = document.querySelector('.section-modal')
 const modalCloseBtn = document.querySelector('.modal-close-btn')
-const randomizeBtn = document.querySelector('.btn-randomize')
-const countdownEl = document.querySelector(".countdown")
 
-let CATEGORY = 'card'
-let LAST_RANDOM_INDEX
 const borderColor = {
-  "card": "#2973C4",
-  "location": "#108800",
-  "bot": "#e50a10"
+	card: "#2973C4",
+	location: "#108800",
+	bot: "#e50a10"
 }
+let controlsAreHidden = false
+let CATEGORY = 'card'
+let CARD_TO_DISPLAY = {}
+let LAST_RANDOM_INDEX = 0
+let MODIFIER = Date.now()
 
-
-
-// START THE APP
-startApp()
-
-randomizeBtn.onclick = _ => getRandomCard(CATEGORY)
-
-searchForm.onsubmit = async (event) => {
-  event.preventDefault()
-
-  if (!searchBox.value) return
-  
-  const searchTerm = searchBox.value.trim()
-
-  const cardToDisplay = await findClosest(searchTerm, CATEGORY)
-  
-  if (!cardToDisplay) {
-    searchBox.style.border = "4px ridge rgb(219, 206, 206)"
-    searchBox.animate([
-      { transform: "translateX(0)" },
-      { transform: "translateX(2px)" },
-      { transform: "translateX(-2px)" },
-      { transform: "translateX(2px)" },
-      { transform: "translateX(0)" }
-    ], {
-      duration: 400,
-      iterations: 1
-    })
-    searchBox.value = ""
-    searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
-
-    setTimeout(_ => {
-      searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
-    }, 1500);
-  } else {
-    if (CATEGORY === "bot") {
-      searchBox.value = `🤖 [${cardToDisplay.type}*]`
-    } else {
-      displayCard(cardToDisplay, CATEGORY)
-      searchBox.value = ""
-      searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
-    }
-  }
-}
-
-searchBox.onclick = _ => {
-  searchBox.style.border = `4px ridge ${borderColor[CATEGORY]}`
-  searchBox.value = ''
-  searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
-}
-
-document.querySelectorAll('.btn-category').forEach(button => {
-  button.onclick = function() {
-    if (this.id === "bot") {
-      randomizeBtn.disabled = true
-      randomizeBtn.animate([
-        { opacity: 1 },
-        { opacity: 0 }
-      ], {
-        duration: 300,
-        fill: "forwards",
-        easing: "ease-out"
-      })
-      randomizeBtn.style.visibility = "hidden"
-    } else {
-      randomizeBtn.disabled = false
-      if (randomizeBtn.style.visibility === "hidden") {
-        randomizeBtn.animate([
-          { opacity: 0 },
-          { opacity: 1 }
-        ], {
-          duration: 300,
-          fill: "forwards",
-          easing: "ease-in"
-        })
-      }
-      randomizeBtn.style.visibility = "visible"
-      randomizeBtn.style.setProperty('--btn-color', borderColor[this.id])
-    }
-
-    CATEGORY = this.id
-    
-    document.querySelectorAll('.btn-category').forEach(btn => {
-      if (btn.id !== CATEGORY) {
-        btn.style.backgroundColor = borderColor[btn.id]
-        btn.style.color = "#FCFCFC"
-        btn.classList.remove(`btn-${btn.id}-select`)
-      } else {
-        btn.style.color = borderColor[btn.id]
-        btn.style.backgroundColor = "#FCFCFC"
-        btn.classList.add(`btn-${btn.id}-select`)
-      }
-    })
-
-    searchBox.style.border = `4px ridge ${borderColor[this.id]}`
-    searchBox.style.caretColor = `${borderColor[this.id]}`
-    searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
-    searchBox.focus()
-  }
-})
-
-seasonHeader.onclick = _ => showModal()
+buttonsSection.onclick = handleCategoryBtnClick
+searchBox.onclick = handleSearchBoxClick
+searchForm.onsubmit = handleFormSubmit
+randomizeBtn.onclick = getRandomCard
+deckBuilderBtn.onclick = redirectToDeckBuilder
+seasonHeader.onclick = showModal
 modalCloseBtn.onclick = _ => showModal(false)
 modal.onclick = ({ target }) => { target === modal && showModal(false) }
 
+startApp()
 
-
-// HELPER FUNCTIONS
-async function startApp() {
-  countdown()
-  const data = await fetch(`./data/cards.json`)
-  const cards = await data.json()
-  let cardToDisplay = cards.find(card => card.series === "Season Pass")
-  displayCard(cardToDisplay, CATEGORY, false)
-  searchBox.focus()
+function startApp() {
+	countdown()
+	fetch(`./data/cards.json`)
+		.then(async (cards) => {
+			cards = await cards.json()
+			let cardToDisplay = cards.find(card => card.series === "Season Pass")
+			displayCard(cardToDisplay)
+			searchBox.focus()
+		})
+		.catch(err => console.error("ERROR:", err))
 }
 
-async function getRandomCard(type) {
-  searchBox.focus()
-  const data = await fetch(`./data/${type}s.json`)
-  let cards = await data.json()
+function handleCategoryBtnClick(event) {
+	const classList = [...event.target.classList]
+	if (classList.includes('btn-category')) {
+		CATEGORY = event.target.id
 
-  if (type === "card") cards = cards.filter(card => card.type === "character" && card.released)
+		if (CATEGORY === "bot") {
+			randomizeBtn.disabled = true
+			deckBuilderBtn.disabled = true
+			controlsSection.classList.remove('show-controls')
+			controlsSection.classList.add('hide-controls')
+			controlsAreHidden = true
+		} else {
+			randomizeBtn.disabled = false
+			deckBuilderBtn.disabled = false
+			if (controlsAreHidden) {
+				controlsSection.classList.remove('hide-controls')
+				controlsSection.classList.add('show-controls')
+			} else {
+				controlsAreHidden = false
+			}
+			randomizeBtn.style.setProperty('--btn-color', borderColor[CATEGORY])
+		}
 
-  const randomIndex = Math.floor(Math.random() * cards.length)
-  
-  if (randomIndex === LAST_RANDOM_INDEX) return getRandomCard(type)
-  else LAST_RANDOM_INDEX = randomIndex
-  
-  const card = cards[randomIndex]
-  return displayCard(card, type, true)
+		categoryButtons.forEach(btn => {
+			if (btn.id !== CATEGORY) {
+				btn.style.backgroundColor = borderColor[btn.id]
+				btn.style.color = "#FCFCFC"
+				btn.classList.remove(`btn-${btn.id}-select`)
+			} else {
+				btn.style.color = borderColor[btn.id]
+				btn.style.backgroundColor = "#FCFCFC"
+				btn.classList.add(`btn-${btn.id}-select`)
+			}
+		})
+
+		searchBox.style.borderColor = borderColor[CATEGORY]
+		searchBox.style.caretColor = borderColor[CATEGORY]
+		searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
+		searchBox.focus()
+	}
 }
 
-async function findClosest(str, type) {
-  let data = []
-
-  if (type === "bot") {
-    data = await fetch('./data/bots.json')
-    data = await data.json()
-    
-    return data.find(bot => bot.name === str)
-  }
-
-  str = str.trim().replace(/ +/g, ' ').toLowerCase()
-
-  if (type === "location") {
-    data = await fetch('./data/locations.json')
-    data = await data.json()
-  }
-
-  if (type === "card") {
-    data = await fetch('./data/cards.json')
-    data = await data.json()
-
-    if (str.length < 3) return null
-    str = str.replace('dr ','doctor ')
-    str = str.replace('dr. ','doctor ')
-    str = str.replace('mr ','mister ')
-    str = str.replace('mr. ','mister ')
-  }
-  
-  let closestMatch = null
-  let strippedMatch = null
-  let partialMatch = null
-  let wordMatch = null
-  const closestDistArr = []
-  
-  for (const item of data) {
-    const itemName = item.name.toLowerCase()
-    const strippedItemName = itemName.replace(/[\W_]/g, '')
-    const strippedKeyword = str.replace(/[\W_]/g, '')
-
-    if (itemName === str) {
-      closestMatch = item
-      break
-    }
-
-    if (strippedItemName === strippedKeyword) {
-      strippedMatch = item
-    }
-
-    if (!partialMatch && strippedItemName.includes(strippedKeyword)) {
-      partialMatch = item
-      if (itemName > str) break
-    }
-
-    const cardNameArr = itemName.split(/[\W_]/)
-    const strArr = str.split(/[\W_]/)
-    if (!wordMatch && cardNameArr.length > 1 && strArr.length > 1) {
-      let match = 0
-      for (let word of strArr) {
-        if (itemName.includes(word)) match++
-      }
-
-      if (match === strArr.length) wordMatch = item
-    }
-
-    if (!closestMatch && !strippedMatch && !partialMatch && !wordMatch) {
-      closestDistArr.push(levenshtein(itemName, str))
-    }
-  }
-
-  closestMatch = closestMatch || strippedMatch || partialMatch || wordMatch
-
-  if (!closestMatch) {
-    const min = Math.min(...closestDistArr)
-    if (min === str.length) return
-
-    const minCount = []
-    closestDistArr.forEach((x, index) => {
-      if (x === min) minCount.push(index)
-    })
-
-    if (minCount.length === 1) {
-      closestMatch = data[closestDistArr.indexOf(min)]
-    }
-
-    if (minCount.length > 1) {
-      const nearest = minCount.find(i => 
-        data[i].name.toLowerCase()[0] === str[0]
-      )
-      if (nearest) closestMatch = data[nearest]
-    }
-  }
-
-  return closestMatch
+function handleSearchBoxClick() {
+	searchBox.value = ""
+	let placeholderText = ""
+	if (CATEGORY === "bot") placeholderText = "Bot check (case-sensitive)"
+	searchBox.placeholder = placeholderText
 }
 
-function displayCard(card, type, isRandom) {
-  const imgFolder = `/Marvel SNAP/${type.charAt(0).toUpperCase() + type.slice(1)}s/`
+function handleFormSubmit(event) {
+  event.preventDefault()
+  const searchTerm = searchBox.value.trim()
+  if (!searchTerm || searchTerm.length < 3) return
 
-  if (card.ability) {
-    card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
-    card.ability = card.ability.replaceAll("On Reveal", "<b>On Reveal</b>")
-    card.ability = card.ability.replaceAll("Ongoing:", "<b>Ongoing:</b>")
-    card.ability = card.ability.replaceAll("Ongoing", "<b>Ongoing</b>")
-  }
-  
-  let htmlStr = ''
+  findClosest(searchTerm)
+    .then((cardToDisplay) => {
+      if (!cardToDisplay) {
+        searchBox.style.borderColor = "#dbcece"
+        searchBox.classList.toggle('animate-searchbox')
+        searchBox.value = ""
+        searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
 
-  if (type === "card") {
-    if (card.evolved) {
-      card.evolved = card.evolved.replaceAll("On Reveal:", "<b>On Reveal:</b>")
-      card.evolved = card.evolved.replaceAll("Ongoing:", "<b>Ongoing:</b>")
-    }
-
-    let source = ''
-    let sourceClass = ''
-    if (card.series === "Season Pass") {
-      source = "Season Pass"
-      sourceClass = "season-pass"
-    } else {
-      if (card.series) {
-        if (card.series === "NA") {
-          source = "Unreleased"
-          sourceClass = "unreleased"
-        } else {
-          source = `Series ${card.series}`
-          sourceClass = `series${card.series}`
-        }
+        setTimeout(() => {
+          searchBox.classList.toggle('animate-searchbox')
+          searchBox.style.borderColor = borderColor[CATEGORY]
+        }, 1200)
       } else {
-        source = "Summon"
-        sourceClass = 'summon'
+        if (CATEGORY === "bot") {
+          searchBox.value = `🤖 [${cardToDisplay.type}]`
+        } else {
+          displayCard(cardToDisplay)
+          searchBox.value = ""
+          searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
+        }
       }
-    }
+    })
+    .catch(err => console.error("ERROR:", err))
+}
 
-    htmlStr = `
-      <div class="search-result-info-title">
-        <h2 
-          class="card-title"
-          style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
-        >
-          ${card.name}
-        </h2>
-      </di1v>
-      <div class="search-result-info-stats">
-        <h3>
-          <span class="stats-text text-cost">Cost</span>:<span class="card-stats cost">${card.cost}</span> 
-          <span class="stats-text text-power">Power</span>:<span class="card-stats power">${card.power}</span>
-        </h3>
-      </div>
-      <div class="search-result-info-ability">
-        <p class="card-ability">
-          ${card.ability || `<i>${card.text}</i>`}
-          ${card.evolved
-            ? `<br><br><b class="evolved">Evolved</b>: ${card.evolved}`
-            : ''
-          }
-        </p>
-      </div>
-      <div class="search-result-info-source">
-        <p><span class="source-origin ${sourceClass}">${source}</span></p>
-      </div>
-    `
-  } else if (type === "location") {
-    htmlStr = `
-      <div class="search-result-info-title">
-        <h2 
-          class="card-title"
-          style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
-        >
-          ${card.name}
-        </h2>
-      </div>
-      <div class="search-result-info-ability">
-        <p class="card-ability">
-          ${card.ability}
-        </p>
-      </div>
-    `
-  }
+function getRandomCard() {
+  let type = CATEGORY
+  searchBox.focus()
 
-  const imgSrc = `https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}.webp?_=${String(Math.random()).substring(2)}`
-  searchResult.innerHTML = ""
-  searchResult.innerHTML = `
-    <div class="${type}-result search-result" data-category="${type}">
-      <div class="search-result-img spinner-background" id="${type}-result-div">
-        <img
-          style="animation-play-state: paused"
-          id="card-img"
-          class="card-img card-img-${type}"
-          src="${imgSrc}"
-          alt="${card.name}"
-          loading="eager"
-        >
-      </div>
-      <div class="search-result-info ${type}-search-result">
-        ${htmlStr}
-      </div>
-    </div>
-  `
+  fetch(`./data/${type}s.json`)
+    .then((data) => data.json())
+    .then((cards) => {
+      if (type === "card") cards = cards.filter((card) => card.type === "character" && card.released)
 
-  const cardImg = document.querySelector('#card-img')
-  cardImg.onload = () => {
-    type === 'location' && document.querySelector('#location-result-div').classList.remove('spinner-background')
-    cardImg.style.animationPlayState = "running"
-  }
-  cardImg.onerror = function() { this.src = `images/${type}.webp` }
+      const randomIndex = Math.floor(Math.random() * cards.length)
+
+      if (randomIndex === LAST_RANDOM_INDEX) return getRandomCard(type)
+      else LAST_RANDOM_INDEX = randomIndex
+
+      const card = cards[randomIndex]
+      displayCard(card, true)
+    })
+    .catch(err => console.error("ERROR:", err))
+}
+
+function displayCard(card, isRandom) {
+	let type = CATEGORY
+	let htmlStr = ''
+	let source = ''
+	let sourceClass = ''
+	CARD_TO_DISPLAY = card.name
+	const imgFolder = `/Marvel SNAP/${type.charAt(0).toUpperCase() + type.slice(1)}s/`
+	let imgSrc = `https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}`
+	imgSrc += `.webp?_=${MODIFIER}`
+
+	if (card.ability) {
+		card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
+		card.ability = card.ability.replaceAll("On Reveal", "<b>On Reveal</b>")
+		card.ability = card.ability.replaceAll("Ongoing:", "<b>Ongoing:</b>")
+		card.ability = card.ability.replaceAll("Ongoing", "<b>Ongoing</b>")
+	}
+
+	if (type === "card") {
+		if (card.evolved) {
+			card.evolved = card.evolved.replaceAll("On Reveal:", "<b>On Reveal:</b>")
+			card.evolved = card.evolved.replaceAll("Ongoing:", "<b>Ongoing:</b>")
+		}
+
+		if (card.series === "Season Pass") {
+			source = "Season Pass"
+			sourceClass = "season-pass"
+		} else {
+			if (card.series) {
+				if (card.series === "NA") {
+					source = "Unreleased"
+					sourceClass = "unreleased"
+				} else {
+					source = `Series ${card.series}`
+					sourceClass = `series${card.series}`
+				}
+			} else {
+				source = "Summon"
+				sourceClass = 'summon'
+			}
+		}
+		
+		if (card.text) card.ability = `<span><i>${card.text}</i></span>`
+		htmlStr = `
+			<h2 
+				class="card-title"
+				style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
+			>
+				${card.name}
+			</h2>
+			<h3 class="secondary-text">
+				<span class="stats-text text-cost">Cost</span>:<span class="card-stats cost">${card.cost}</span> 
+				<span class="stats-text text-power">Power</span>:<span class="card-stats power">${card.power}</span>
+			</h3>
+			<p class="card-ability ${card.evolved ? 'evolved-card' : ''}">
+				${card.ability}
+				${card.evolved ? `<b class="evolved-text">Evolved</b>: ${card.evolved}` : ''}
+			</p>
+		`
+	} else if (type === "location") {
+		htmlStr = `
+			<h2 
+				class="card-title"
+				style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
+			>
+				${card.name}
+			</h2>
+			<p class="card-ability">
+				${card.ability}
+			</p>
+		`
+	}
+
+	searchResult.innerHTML = ""
+	searchResult.innerHTML = `
+		<div class="search-result-img" id="${type}-img-div">
+			<img
+				class="card-img card-img-${type}"
+				src="${imgSrc}"
+				alt="${card.name}"
+				loading="eager"
+			>
+			<p class="search-result-info-source">
+				<span class="secondary-text source-origin ${sourceClass}">${source}</span>
+			</p>
+		</div>
+		<div class="search-result-info ${type}-search-result">
+			${htmlStr}
+		</div>
+	`
+
+	const cardImg = document.querySelector('.card-img')
+	cardImg.onload = () => {
+		cardImg.classList.add(`animate-${type}`)
+		document.querySelector('.search-result-info-source').style.animation = "fade-in 300ms ease-in-out 200ms forwards"
+	}
+	cardImg.onerror = function() { this.src = `images/${type}.webp` }
 }
 
 function showModal(show = true) {
-  if (show) {
-    modal.style.display = "block"
-  } else {
-    modal.scrollTop = 0
-    modal.style.display = "none"
-  }
+	if (show) {
+		modal.style.display = "block"
+	} else {
+		modal.scrollTop = 0
+		modal.style.display = "none"
+	}
 }
 
 function countdown() {
-  let year = 2024
-  let month = 3
-  let date = 2
+	let year = 2024
+	let month = 3
+	let date = 2
 
-  let SEASON_END = new Date(Date.UTC(year, month, date, 19))
-  const x = setInterval(_ => {
-    const timeDifference = SEASON_END - new Date()
+	let SEASON_END = new Date(Date.UTC(year, month, date, 19))
+	const x = setInterval(_ => {
+		const timeDifference = SEASON_END - new Date()
 
-    if (timeDifference <= 0) {
-      countdownEl.textContent = "NEW SEASON BEGINS!🎉"
-      return clearInterval(x)
-    }
+		if (timeDifference <= 0) {
+			countdownEl.textContent = "NEW SEASON BEGINS!🎉"
+			return clearInterval(x)
+		}
 
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
-    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
-    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000).toString().padStart(2, 0)
-    
-    countdownEl.textContent = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
-  }, 1000)
+		const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)
+		const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, 0)
+		const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
+		const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000).toString().padStart(2, 0)
+		
+		countdownEl.textContent = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
+	}, 1000)
 
-  setTimeout(_ => {
-    countdownSection.style.visibility = "visible"
-  }, 1000)
+	setTimeout(_ => countdownSection.style.visibility = "visible", 1000)
+}
+
+function redirectToDeckBuilder(event) {
+	event.preventDefault()
+	document.querySelector('.content').classList.add('fade-out')
+	setTimeout(() => {
+		window.location.href = `builder.html?card=${CARD_TO_DISPLAY}`
+	}, 250)
 }
 
 function levenshtein(s, t) {
-  if (s === t) {
-      return 0;
-  }
-  var n = s.length, m = t.length;
-  if (n === 0 || m === 0) {
-      return n + m;
-  }
-  var x = 0, y, a, b, c, d, g, h;
-  var p = new Uint16Array(n);
-  var u = new Uint32Array(n);
-  for (y = 0; y < n;) {
-      u[y] = s.charCodeAt(y);
-      p[y] = ++y;
-  }
+	if (s === t) {
+			return 0;
+	}
+	var n = s.length, m = t.length;
+	if (n === 0 || m === 0) {
+			return n + m;
+	}
+	var x = 0, y, a, b, c, d, g, h;
+	var p = new Uint16Array(n);
+	var u = new Uint32Array(n);
+	for (y = 0; y < n;) {
+			u[y] = s.charCodeAt(y);
+			p[y] = ++y;
+	}
 
-  for (; (x + 3) < m; x += 4) {
-      var e1 = t.charCodeAt(x);
-      var e2 = t.charCodeAt(x + 1);
-      var e3 = t.charCodeAt(x + 2);
-      var e4 = t.charCodeAt(x + 3);
-      c = x;
-      b = x + 1;
-      d = x + 2;
-      g = x + 3;
-      h = x + 4;
-      for (y = 0; y < n; y++) {
-          a = p[y];
-          if (a < c || b < c) {
-              c = (a > b ? b + 1 : a + 1);
-          }
-          else {
-              if (e1 !== u[y]) {
-                  c++;
-              }
-          }
+	for (; (x + 3) < m; x += 4) {
+			var e1 = t.charCodeAt(x);
+			var e2 = t.charCodeAt(x + 1);
+			var e3 = t.charCodeAt(x + 2);
+			var e4 = t.charCodeAt(x + 3);
+			c = x;
+			b = x + 1;
+			d = x + 2;
+			g = x + 3;
+			h = x + 4;
+			for (y = 0; y < n; y++) {
+					a = p[y];
+					if (a < c || b < c) {
+							c = (a > b ? b + 1 : a + 1);
+					}
+					else {
+							if (e1 !== u[y]) {
+									c++;
+							}
+					}
 
-          if (c < b || d < b) {
-              b = (c > d ? d + 1 : c + 1);
-          }
-          else {
-              if (e2 !== u[y]) {
-                  b++;
-              }
-          }
+					if (c < b || d < b) {
+							b = (c > d ? d + 1 : c + 1);
+					}
+					else {
+							if (e2 !== u[y]) {
+									b++;
+							}
+					}
 
-          if (b < d || g < d) {
-              d = (b > g ? g + 1 : b + 1);
-          }
-          else {
-              if (e3 !== u[y]) {
-                  d++;
-              }
-          }
+					if (b < d || g < d) {
+							d = (b > g ? g + 1 : b + 1);
+					}
+					else {
+							if (e3 !== u[y]) {
+									d++;
+							}
+					}
 
-          if (d < g || h < g) {
-              g = (d > h ? h + 1 : d + 1);
-          }
-          else {
-              if (e4 !== u[y]) {
-                  g++;
-              }
-          }
-          p[y] = h = g;
-          g = d;
-          d = b;
-          b = c;
-          c = a;
-      }
-  }
+					if (d < g || h < g) {
+							g = (d > h ? h + 1 : d + 1);
+					}
+					else {
+							if (e4 !== u[y]) {
+									g++;
+							}
+					}
+					p[y] = h = g;
+					g = d;
+					d = b;
+					b = c;
+					c = a;
+			}
+	}
 
-  for (; x < m;) {
-      var e = t.charCodeAt(x);
-      c = x;
-      d = ++x;
-      for (y = 0; y < n; y++) {
-          a = p[y];
-          if (a < c || d < c) {
-              d = (a > d ? d + 1 : a + 1);
-          }
-          else {
-              if (e !== u[y]) {
-                  d = c + 1;
-              }
-              else {
-                  d = c;
-              }
-          }
-          p[y] = d;
-          c = a;
-      }
-      h = d;
-  }
+	for (; x < m;) {
+			var e = t.charCodeAt(x);
+			c = x;
+			d = ++x;
+			for (y = 0; y < n; y++) {
+					a = p[y];
+					if (a < c || d < c) {
+							d = (a > d ? d + 1 : a + 1);
+					}
+					else {
+							if (e !== u[y]) {
+									d = c + 1;
+							}
+							else {
+									d = c;
+							}
+					}
+					p[y] = d;
+					c = a;
+			}
+			h = d;
+	}
 
-  return h;
+	return h;
+}
+
+async function findClosest(str) {
+	let type = CATEGORY
+	let data = []
+
+	if (type === "bot") {
+		data = await fetch('./data/bots.json')
+		data = await data.json()
+		
+		return data.find(bot => bot.name === str)
+	}
+
+	str = str.trim().replace(/ +/g, ' ').toLowerCase()
+
+	if (type === "location") {
+		data = await fetch('./data/locations.json')
+		data = await data.json()
+	}
+
+	if (type === "card") {
+		data = await fetch('./data/cards.json')
+		data = await data.json()
+
+		if (str.length < 3) return null
+		str = str.replace('dr ','doctor ')
+		str = str.replace('dr. ','doctor ')
+		str = str.replace('mr ','mister ')
+		str = str.replace('mr. ','mister ')
+	}
+	
+	let closestMatch = null
+	let strippedMatch = null
+	let partialMatch = null
+	let wordMatch = null
+	const closestDistArr = []
+	
+	for (const item of data) {
+		const itemName = item.name.toLowerCase()
+		const strippedItemName = itemName.replace(/[\W_]/g, '')
+		const strippedKeyword = str.replace(/[\W_]/g, '')
+
+		if (itemName === str) {
+			closestMatch = item
+			break
+		}
+
+		if (strippedItemName === strippedKeyword) {
+			strippedMatch = item
+		}
+
+		if (!partialMatch && strippedItemName.includes(strippedKeyword)) {
+			partialMatch = item
+			if (itemName > str) break
+		}
+
+		const cardNameArr = itemName.split(/[\W_]/)
+		const strArr = str.split(/[\W_]/)
+		if (!wordMatch && cardNameArr.length > 1 && strArr.length > 1) {
+			let match = 0
+			for (let word of strArr) {
+				if (itemName.includes(word)) match++
+			}
+
+			if (match === strArr.length) wordMatch = item
+		}
+
+		if (!closestMatch && !strippedMatch && !partialMatch && !wordMatch) {
+			closestDistArr.push(levenshtein(itemName, str))
+		}
+	}
+
+	closestMatch = closestMatch || strippedMatch || partialMatch || wordMatch
+
+	if (!closestMatch) {
+		const min = Math.min(...closestDistArr)
+		if (min === str.length) return
+
+		const minCount = []
+		closestDistArr.forEach((x, index) => {
+			if (x === min) minCount.push(index)
+		})
+
+		if (minCount.length === 1) {
+			closestMatch = data[closestDistArr.indexOf(min)]
+		}
+
+		if (minCount.length > 1) {
+			const nearest = minCount.find(i => 
+				data[i].name.toLowerCase()[0] === str[0]
+			)
+			if (nearest) closestMatch = data[nearest]
+		}
+	}
+
+	return closestMatch
 }

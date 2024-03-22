@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "version": "1.0",
   "name": "Marvel SNAP Search",
-  "description": "Search for Marvel SNAP cards, locations, and check bot player names.",
+  "description": "Build a Marvel SNAP deck, lookup game info (card, location, bot) and find out what's new every season straight from any browser tab!",
   "action": {
     "default_popup": "index.html",
     "default_icon": "images/icon48.png"

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700;800&family=Roboto:wght@400;500;700;800&family=Roboto+Flex:wght@900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/builder.css">
+	<title>Marvel SNAP Deck Builder</title>
+</head>
+<body>
+	<main class="content">
+		<section class="deck-view" aria-label="cards in your deck">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+			<img class="deck-card" src="images/blank.webp" alt="blank card">
+		</section>
+		
+		<aside class="toast">
+		</aside>
+
+		<section class="cards-view">
+			<div class="card-info">
+			</div>
+			<div class="all-cards">
+			</div>
+		</section>
+
+		<section class="deck-generator">
+			<div class="filters">
+				<label for="card-ability">
+					<span>Ability</span>
+					<select name="ability" id="card-ability">
+						<option></option>
+						<option value="on reveal">On Reveal</option>
+						<option value="ongoing">Ongoing</option>
+						<option value="discard">Discard</option>
+						<option value="move">Move</option>
+						<option value="destroy">Destroy</option>
+						<option value="no ability">No Ability</option>
+						<option value="others">Others</option>
+					</select>
+				</label>
+				<label for="card-energy">
+					<span>Energy</span>
+					<select name="cost" id="card-energy">
+						<option></option>
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6+">6+</option>
+					</select>
+				</label>
+				<label for="card-power">
+					<span>Power</span>
+					<select name="power" id="card-power">
+						<option></option>
+						<option value="1-">1-</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6+">6+</option>
+					</select>
+				</label>
+				<label for="card-series">
+					<span>Series</span>
+					<select name="series" id="card-series">
+						<option></option>
+						<option value="Season Pass">Season Pass</option>
+						<option value="1">Series 1</option>
+						<option value="2">Series 2</option>
+						<option value="3">Series 3</option>
+						<option value="4">Series 4</option>
+						<option value="5">Series 5</option>
+					</select>
+				</label>
+			</div>
+			<div class="sorter">
+				<label for="sort-category">
+					<span>Sort Property</span>
+					<select name="field" id="sort-category">
+						<option value="name" selected>Name</option>
+						<option value="cost">Energy</option>
+						<option value="power">Power</option>
+					</select>
+				</label>
+				<label for="sort-order">
+					<span>Sort Order</span>
+					<select name="order" id="sort-order">
+						<option value="ascending" selected>Ascending</option>
+						<option value="descending">Descending</option>
+					</select>
+				</label>
+			</div>
+			<div class="controls">
+				<label class="sr-only" for="keyword-searcher">Search By Keyword</label>
+				<input id="keyword-searcher"
+					type="text"
+					placeholder="keyword"
+					autocomplete="off"
+				>
+				<div class="controls-div">
+					<button class="btn-control" id="save-deck-btn" aria-label="Copy Deck Code" title="Copy Deck Code">
+						<img src='./images/save.svg'>
+					</button>
+					<button class="btn-control" id="import-deck-btn" aria-label="Import Deck Code" title="Import Deck Code">
+						<img src='./images/import.svg'>
+					</button>
+					<button class="btn-control" id="reset-all-btn" aria-label="Reset All" title="Reset All">
+						<img src='./images/reset.svg'>
+					</button>
+					<a class="btn-control" id="exit-deck-builder" aria-label="Exit Deck Builder" title="Exit Deck Builder" href="index.html">
+						<img src='./images/exit.svg'>
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="builder-modal">
+			<div class="builder-modal-content">
+				<span>■ Click on a blank area to close ■</span>
+				<label for="deck-code">Import Deck Code</label>
+				<textarea id="deck-code"
+					placeholder="Paste your deck code here..."
+					rows=9
+				></textarea>
+				<button class="submit-deck-code-btn">Submit</button>
+			</div>
+		</section>
+	</main>
+	
+	<script type="text/javascript" src="builder.js"></script>
+</body>
+</html>
