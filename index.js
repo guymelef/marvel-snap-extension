@@ -52,14 +52,10 @@ function handleCategoryBtnClick(event) {
 		CATEGORY = event.target.id
 
 		if (CATEGORY === "bot") {
-			randomizeBtn.disabled = true
-			deckBuilderBtn.disabled = true
 			controlsSection.classList.remove('show-controls')
 			controlsSection.classList.add('hide-controls')
 			controlsAreHidden = true
 		} else {
-			randomizeBtn.disabled = false
-			deckBuilderBtn.disabled = false
 			if (controlsAreHidden) {
 				controlsSection.classList.remove('hide-controls')
 				controlsSection.classList.add('show-controls')
