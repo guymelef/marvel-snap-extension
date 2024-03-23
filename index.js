@@ -35,7 +35,7 @@ modal.onclick = ({ target }) => { target === modal && showModal(false) }
 startApp()
 
 function startApp() {
-	countdown()
+	startCountdown()
 	fetch(`./data/cards.json`)
 		.then(async (cards) => {
 			cards = await cards.json()
@@ -248,7 +248,7 @@ function showModal(show = true) {
 	}
 }
 
-function countdown() {
+function startCountdown() {
 	let year = 2024
 	let month = 3
 	let date = 2
