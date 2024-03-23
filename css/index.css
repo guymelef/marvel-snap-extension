@@ -779,13 +779,13 @@ footer {
 	font-weight: 800;
 	letter-spacing: 1px;
 	padding: 0 10px;
-	background-color: #00000060;
+	background-color: #00000070;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-.dev-link {
+.twitch-link {
 	font-size: 14px;
 	font-weight: 700;
 	letter-spacing: 0.8px;
@@ -800,7 +800,11 @@ footer p img {
 	vertical-align: middle;
 }
 
-.donate-svg:hover {
+.kofi-svg {
+	display: block;
+}
+
+.kofi-svg:hover {
 	animation: bounce 1s ease-in;
 }
 
