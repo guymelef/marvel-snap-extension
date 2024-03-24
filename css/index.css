@@ -772,13 +772,14 @@ summary::marker {
 
 footer {
 	position: fixed;
+	overflow: hidden;
 	bottom: 0;
 	height: 40px;
 	width: 100%;
 	font-size: 14px;
 	font-weight: 800;
 	letter-spacing: 1px;
-	padding: 0 16px;
+	padding: 0 12px;
 	background-color: #0000009f;
 	display: flex;
 	align-items: center;
@@ -803,7 +804,7 @@ footer img {
 	gap: 4px;
 	padding: 0;
 	opacity: 0;
-	transform: translateX(-50%);
+	transform: translateX(50%);
 	animation: showSocials .3s ease-out .3s forwards;
 }
 
@@ -811,25 +812,19 @@ footer img {
 	transition: all .2s ease-in;
 }
 
-.circle,
+.round,
 .news {
 	background-color: #080808;
 	border: 1px solid #ffffff21;
 }
 
-.circle {
+.round {
 	border-radius: 50%;
 	padding: 2.5px;
 }
 
-.circle:hover {
+.round:hover {
 	filter: brightness(115%);
-}
-
-.news {
-	margin-right: 8px;
-	padding: 0 2px;
-	border-radius: 4px;
 }
 
 .news:hover {
