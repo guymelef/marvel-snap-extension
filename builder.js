@@ -12,7 +12,7 @@ const keywordSearcher = document.querySelector('#keyword-searcher')
 const saveDeckBtn = document.querySelector('#save-deck-btn')
 const importDeckBtn = document.querySelector('#import-deck-btn')
 const resetAllBtn = document.querySelector('#reset-all-btn')
-const toastMsg = document.querySelector('aside')
+const toastMsg = document.querySelector('.toast-msg')
 const modal = document.querySelector('.builder-modal')
 const submitBtn = document.querySelector('.submit-deck-code-btn')
 
@@ -33,7 +33,7 @@ resetAllBtn.onclick = resetDeckBuilder
 modal.onclick = handleModalClick
 submitBtn.onclick = importDeckCode
 
-let CARDS = []
+let ALL_CARDS = []
 let cardsToDisplay = []
 let selectedKeyword = ""
 let selectedAbility = ""
@@ -52,13 +52,12 @@ function startDeckBuilder() {
   fetch('./data/cards.json')
     .then(async (cards) => {
       cards = await cards.json()
-      cards = cards.filter(card => card.released && card.type === "character")
-      CARDS = cards
-      cardsToDisplay = cards
+      ALL_CARDS = cards
+      cardsToDisplay = ALL_CARDS
       
       const urlParams = new URLSearchParams(window.location.search)
       let cardInDeck = urlParams.get('card')
-      cardInDeck = CARDS.find(card => card.name === cardInDeck)
+      cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck)
       if (cardInDeck) cardsInDeck = [cardInDeck]
       
       renderCardsInDeck()
@@ -70,6 +69,8 @@ function startDeckBuilder() {
 function addOrRemoveCardToDeck(event) {
   const elClasses = [...event.target.classList]
 
+  if (elClasses.includes('non-deck-card')) return
+  
   if (elClasses.includes('snap-card')) {
     if (elClasses.includes('deck-card')) {
       removeCardFromDeck(event.target.alt)
@@ -118,9 +119,15 @@ function showCardInfo(event) {
     else cardAbility = `
       <p class="card-info-text">
         <i>${cardInfo.text}</i>
-        <br>
-        <br>
-        <b>Evolved:</b> ${cardInfo.evolved}
+        ${cardInfo.evolved ?
+          `
+            <br>
+            <br>
+            <b>Evolved:</b> ${cardInfo.evolved}
+          `
+          : ''
+        }
+        
       </p>
     `
     
@@ -154,21 +161,46 @@ function handleFilterChange(event) {
 function filterCards() {
   let cardPool = []
 		
-  if (!selectedAbility && !selectedKeyword) cardPool = [...CARDS]
+  if (!selectedAbility && !selectedKeyword) cardPool = [...ALL_CARDS]
 
   if (selectedKeyword) {
-    for (const card of CARDS) {
+    for (const card of ALL_CARDS) {
       const cardName = card.name.toLowerCase()
       const keyword = selectedKeyword.toLowerCase()
-      const ability =  card.ability && card.ability.toLowerCase()
+      const cardAbility = card.ability ? card.ability.toLowerCase() : ''
+      const evolvedAbility = card.evolved ? card.evolved.toLowerCase() : ''
       
-      if (ability) { if (ability.includes(keyword) || cardName.includes(keyword)) cardPool.push(card) }
+      if (cardAbility && cardAbility.includes(keyword) ||
+        evolvedAbility && cardAbility.includes(keyword) ||
+        cardName.includes(keyword)
+      ) {
+        cardPool.push(card)
+      }
     }
   }
 
   if (selectedAbility) {
-    if (selectedKeyword) cardPool = cardPool.filter(card => card.tags.includes(selectedAbility))
-    else cardPool = CARDS.filter(card => card.tags.includes(selectedAbility))
+    let cardsToFilter = []
+    const filteredCards = []
+    
+    if (selectedKeyword) cardsToFilter = [...cardPool]
+    else cardsToFilter = ALL_CARDS
+
+    for (const card of cardsToFilter) {
+      if (selectedAbility === 'no ability' || selectedAbility === 'others') {
+        if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
+      } else if (selectedAbility === 'unreleased') {
+        if (!card.released && card.type === "character") filteredCards.push(card)
+      } else if (selectedAbility === 'summon') {
+        if (card.type === selectedAbility) filteredCards.push(card)
+      } else if (card.ability) {
+        if (card.ability.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
+      } else if (card.evolved) {
+        if (card.evolved.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
+      }
+    }
+
+    cardPool = filteredCards
   }
 
   if (selectedEnergy) {
@@ -196,7 +228,7 @@ function filterCards() {
     cardPool = foundCards
   }
 
-  sortCards(cardPool)
+  if (cardPool.length > 1) sortCards(cardPool)
   cardsToDisplay = cardPool
   renderCardsInPool()
   scrollToTop()
@@ -282,7 +314,7 @@ function importDeckCode() {
     
     let foundCards = []
     for (const cardName of cardsInDeckCode) {
-      for (const card of CARDS) {
+      for (const card of ALL_CARDS) {
         const name = card.name.toLowerCase().replace(/[^\w^_]/g, '')
         if (name === cardName || card.code === cardName) foundCards.push(card)
       }
@@ -295,7 +327,7 @@ function importDeckCode() {
 }
 
 function resetDeckBuilder() {
-  cardsToDisplay = CARDS
+  cardsToDisplay = ALL_CARDS
   cardsInDeck = []
   selectedKeyword = ""
   selectedAbility = ""
@@ -329,11 +361,16 @@ function toggleModal() {
 }
 
 function showToastMsg(toast) {
+  toastMsg.style.color = toast.color
+  toastMsg.style.boxShadow = `-3px 0 ${toast.color}`
+  toastMsg.innerHTML = toast.msg
   toastMsg.style.display = "block"
-  toastMsg.innerHTML = `
-    <p class="toast-msg" style="color:${toast.color}; box-shadow:-3px 0 ${toast.color}">${toast.msg}</p>
-  `
-  setTimeout(() => toastMsg.style.display = "none", 1200)
+  toastMsg.classList.add('slide-toast')
+  setTimeout(_ => {
+    toastMsg.classList.remove('slide-toast')
+    toastMsg.style.display = "none"
+    toastMsg.innerHTML = ""
+  }, 1200)
 }
 
 function renderCardsInPool() {
@@ -345,8 +382,10 @@ function renderCardsInPool() {
   } else {
     cardsToDisplay.forEach((card, index) => {
       const isCardInDeck = cardsInDeck.find(deckCard => card.name === deckCard.name)
+      let cardImgClasses = isCardInDeck ? 'selected ' : ''
+      if (!card.released || card.type !== 'character') cardImgClasses += 'non-deck-card'
       cardsDiv.innerHTML += `
-        <img class="snap-card card-image ${isCardInDeck ? 'selected' : ''}"
+        <img class="snap-card card-image ${cardImgClasses}"
           src=${createImgLink(card.image)}
           alt="${card.name}"
           data-index=${index}

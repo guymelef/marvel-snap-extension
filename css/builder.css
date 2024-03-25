@@ -111,12 +111,17 @@ button, select, input {
   opacity: 0.3;
 }
 
+.card-image.non-deck-card {
+  cursor: not-allowed;
+}
+
 .card-info {
   position: fixed;
   z-index: 1;
   transform: translate(9px, 280px);
   width: 250px;
   font-size: 14px;
+  letter-spacing: .6px;
   background-color: #010b13;
   border-radius: 3px;
   padding: 8px;
@@ -367,18 +372,30 @@ button, select, input {
   to { top: 150px; opacity: 1; }
 }
 
+.toast {
+  position: relative;
+}
+
 .toast-msg {
-  position:absolute;
+  position: absolute;
   z-index: 1;
+  left: -50px;
+  top: -20px;
+  display: none;
+  opacity: 0;
   padding: 5px 15px;
-  font-weight: bold;
   font-size: 14px;
+  font-weight: bold;
   background-color: #010b13;
-  transform: translate(8px, -18px);
-  animation: slide-toast .1s ease-in-out forwards;
+}
+
+.slide-toast {
+  animation: slide-toast .2s ease-in-out forwards;
 }
 
 @keyframes slide-toast {
-  from { left: -200px }
-  to { left: 8px }  
+  to {
+    opacity: 1;
+    left: 20px;
+  }
 }
