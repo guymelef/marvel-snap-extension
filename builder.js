@@ -319,7 +319,7 @@ function importDeckCode() {
         if (name === cardName || card.code === cardName) foundCards.push(card)
       }
     }
-    cardsInDeck = foundCards
+    cardsInDeck = foundCards.filter(card => card.released && card.type === "character")
     renderCardsInDeck()
   } catch {
     showToastMsg({color:'#ef4343', msg:"Invalid deck code!"})
