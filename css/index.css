@@ -592,6 +592,8 @@ a {
 	display: inline-block;
 	box-shadow: 3px 3px #00008b;
 	transform-style: preserve-3d;
+	opacity: 0;
+	transform: scaleY(-1);
 	animation: flipVertical 300ms ease-in 1s forwards;
 	text-shadow:
 		-0.5px -0.5px var(--clr-orange),
@@ -601,10 +603,6 @@ a {
 }
 
 @keyframes flipVertical {
-	from {
-		opacity: 0;
-		transform: scaleY(-1);
-	}
 	to {
 		opacity: 1;
 		transform: scaleY(1);
