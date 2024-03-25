@@ -346,7 +346,7 @@ function renderCardsInPool() {
     cardsToDisplay.forEach((card, index) => {
       const isCardInDeck = cardsInDeck.find(deckCard => card.name === deckCard.name)
       cardsDiv.innerHTML += `
-        <img class="snap-card card-image ${isCardInDeck && 'selected'}"
+        <img class="snap-card card-image ${isCardInDeck ? 'selected' : ''}"
           src=${createImgLink(card.image)}
           alt="${card.name}"
           data-index=${index}
