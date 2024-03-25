@@ -801,7 +801,7 @@ footer img {
 }
 
 .socials {
-	gap: 4px;
+	gap: 3px;
 	padding: 0;
 	opacity: 0;
 	transform: translateX(50%);
