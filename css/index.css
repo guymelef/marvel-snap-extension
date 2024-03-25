@@ -504,16 +504,16 @@ a {
 
 .btn-deck-builder {
 	position: relative;
-	display: inline-block;
+	display: block;
 	height: 100%;
+	border-radius: 3px;
+	background-color: #a5a5a5a4;
 	box-shadow: 0px 6px 6px 0px #00000096;
 	transition: transform .2s ease-out;
 }
 
 .btn-deck-builder img {
 	display: block;
-	border-radius: 2px;
-	background-color: #a5a5a5a4;
 }
 
 .btn-deck-builder:hover {
