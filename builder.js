@@ -288,7 +288,7 @@ function saveDeckToClipboard() {
     navigator.clipboard
       .writeText(deckCode)
       .then(() => {
-        showToastMsg({ color: "#21c45d", msg: "Deck code copied to the clipboard!" })
+        showToastMsg({ color: "#21c45d", msg: "Deck copied to clipboard!" })
       })
       .catch((error) => {
         showToastMsg({ color: "#e7b008", msg: "Can't copy to clipboard!" })
