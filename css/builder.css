@@ -121,7 +121,7 @@ button, select, input {
   transform: translate(9px, 280px);
   width: 250px;
   font-size: 14px;
-  letter-spacing: .6px;
+  letter-spacing: .5px;
   background-color: #010b13;
   border-radius: 3px;
   padding: 8px;
