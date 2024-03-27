@@ -21,7 +21,6 @@ let controlsAreHidden = false
 let CATEGORY = 'card'
 let CARD_TO_DISPLAY = {}
 let LAST_RANDOM_INDEX = 0
-let MODIFIER = Date.now()
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
@@ -147,9 +146,9 @@ function displayCard(card, isRandom) {
 	let source = ''
 	let sourceClass = ''
 	CARD_TO_DISPLAY = card.name
-	const imgFolder = `/Marvel SNAP/${type.charAt(0).toUpperCase() + type.slice(1)}s/`
-	let imgSrc = `https://res.cloudinary.com/dekvdfhbv/image/upload/${card.image.replace('/', imgFolder)}`
-	imgSrc += `.webp?_=${MODIFIER}`
+	const imgFolder = type.charAt(0).toUpperCase() + type.slice(1)
+	const [imgId, imgVersion, imgName] = card.image.split('/')
+	let imgSrc = `https://res.cloudinary.com/dekvdfhbv/image/upload/${imgId}/${imgVersion}/Marvel%20SNAP/${imgFolder}s/${imgName}.webp`
 
 	if (card.ability) {
 		card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
