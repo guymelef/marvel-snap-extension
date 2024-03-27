@@ -561,12 +561,14 @@ a {
 	font-size: 16px;
 	visibility: hidden;
 	letter-spacing: 1px;
-	text-align: center;
 	padding: 16px 0;
 }
 
 .section-countdown h4 {
 	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .section-countdown img {
@@ -579,15 +581,14 @@ a {
 	cursor: pointer;
 	padding: 2.5px;
 	display: inline-flex;
-	border-bottom: 2px solid #adff2f;
-	transition: all 0.2s ease-in;
+	border-bottom: 4px solid #adff2f;
+	transition: all 0.3s ease-in;
 }
 
 .season-calendar:hover,
 .season-calendar:focus {
-	opacity: 0.8;
 	color: #adff2f;
-	border-bottom: 4px solid #adff2f;
+	border-color: var(--clr-white);
 }
 
 .countdown {
