@@ -57,7 +57,7 @@ function startDeckBuilder() {
       
       const urlParams = new URLSearchParams(window.location.search)
       let cardInDeck = urlParams.get('card')
-      cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck)
+      cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck && card.released && card.type === 'character')
       if (cardInDeck) cardsInDeck = [cardInDeck]
       
       renderCardsInDeck()
