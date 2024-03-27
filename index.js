@@ -267,7 +267,7 @@ function startCountdown() {
 		const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
 		const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000).toString().padStart(2, 0)
 		
-		countdownEl.textContent = `⏰${days}d ${hours}h ${minutes}m ${seconds}s`
+		countdownEl.innerHTML = `<img src="images/alarm.svg">${days}d ${hours}h ${minutes}m ${seconds}s`
 	}, 1000)
 
 	setTimeout(_ => countdownSection.style.visibility = "visible", 1000)

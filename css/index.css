@@ -569,10 +569,16 @@ a {
 	margin: 0;
 }
 
+.section-countdown img {
+	margin-right: 4px;
+	filter: contrast(150%);
+}
+
 .season-calendar {
 	all: unset;
 	cursor: pointer;
 	padding: 2.5px;
+	display: inline-flex;
 	border-bottom: 2px solid #adff2f;
 	transition: all 0.2s ease-in;
 }
@@ -589,7 +595,8 @@ a {
 	min-width: 205px;
 	text-align: center;
 	background: #00000060;
-	display: inline-block;
+	display: inline-flex;
+	justify-content: center;
 	box-shadow: 3px 3px #00008b;
 	transform-style: preserve-3d;
 	opacity: 0;
