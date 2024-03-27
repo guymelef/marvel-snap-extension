@@ -581,7 +581,7 @@ a {
 	cursor: pointer;
 	padding: 2.5px;
 	display: inline-flex;
-	border-bottom: 4px solid #adff2f;
+	border-bottom: 3px solid #adff2f;
 	transition: all 0.3s ease-in;
 }
 
