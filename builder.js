@@ -29,7 +29,7 @@ orderSorter.onchange = handleSortChange
 keywordSearcher.oninput = debounce(handleKeywordInput, 300)
 saveDeckBtn.onclick = throttle(saveDeckToClipboard, 1100)
 importDeckBtn.onclick = toggleModal
-resetAllBtn.onclick = resetDeckBuilder
+resetAllBtn.onclick = throttle(resetDeckBuilder, 1000)
 modal.onclick = handleModalClick
 submitBtn.onclick = importDeckCode
 
