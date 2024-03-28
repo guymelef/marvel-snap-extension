@@ -19,8 +19,12 @@ const borderColor = {
 }
 let controlsAreHidden = false
 let CATEGORY = 'card'
-let CARD_TO_DISPLAY = {}
+let CARD_TO_DISPLAY = ""
 let LAST_RANDOM_INDEX = 0
+let BOTS = []
+let CARDS = []
+let LOCATIONS = []
+const FEATURED_LOCATIONS = ['Krakoa', 'Utopia']
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
@@ -33,28 +37,44 @@ modal.onclick = ({ target }) => { target === modal && showModal(false) }
 
 startApp()
 
-function startApp() {
+async function startApp() {
 	startCountdown()
-	fetch(`./data/cards.json`)
-		.then(async (cards) => {
-			cards = await cards.json()
-			let cardToDisplay = cards.find(card => card.series === "Season Pass")
-			displayCard(cardToDisplay)
-			searchBox.focus()
-		})
-		.catch(err => console.error("ERROR:", err))
+
+	try {
+		let allCards = await fetch(`./data/cards.json`)
+		allCards = await allCards.json()
+		CARDS = allCards
+	
+		let allLocations = await fetch(`./data/locations.json`)
+		allLocations = await allLocations.json()
+		LOCATIONS = allLocations
+
+		let allBots = await fetch(`./data/bots.json`)
+		allBots = await allBots.json()
+		BOTS = allBots
+
+		displayFeaturedCard()
+		searchBox.focus()
+	} catch(err) {
+		console.error("ERROR FETCHING DATA:", err)
+	}
 }
 
 function handleCategoryBtnClick(event) {
 	const classList = [...event.target.classList]
 	if (classList.includes('btn-category')) {
+		const prevCategory = CATEGORY
 		CATEGORY = event.target.id
+		if (prevCategory === CATEGORY) return searchBox.focus()
 
+		searchBox.value = ""
 		if (CATEGORY === "bot") {
 			controlsSection.classList.remove('show-controls')
 			controlsSection.classList.add('hide-controls')
 			controlsAreHidden = true
 		} else {
+			if (prevCategory !== CATEGORY) displayFeaturedCard()
+
 			if (controlsAreHidden) {
 				controlsSection.classList.remove('hide-controls')
 				controlsSection.classList.add('show-controls')
@@ -95,49 +115,41 @@ function handleFormSubmit(event) {
   const searchTerm = searchBox.value.trim()
   if (!searchTerm || searchTerm.length < 3) return
 
-  findClosest(searchTerm)
-    .then((cardToDisplay) => {
-      if (!cardToDisplay) {
-        searchBox.style.borderColor = "#dbcece"
-        searchBox.classList.toggle('animate-searchbox')
-        searchBox.value = ""
-        searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
+  const cardToDisplay = findClosest(searchTerm)
+	if (!cardToDisplay) {
+		searchBox.style.borderColor = "#dbcece"
+		searchBox.classList.toggle('animate-searchbox')
+		searchBox.value = ""
+		searchBox.placeholder = `${['😓','😩','😵'][Math.floor(Math.random() * 3)]} Snap, ${CATEGORY} not found!`
 
-        setTimeout(() => {
-          searchBox.classList.toggle('animate-searchbox')
-          searchBox.style.borderColor = borderColor[CATEGORY]
-        }, 1200)
-      } else {
-        if (CATEGORY === "bot") {
-          searchBox.value = `🤖 [${cardToDisplay.type}]`
-        } else {
-          displayCard(cardToDisplay)
-          searchBox.value = ""
-          searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
-        }
-      }
-    })
-    .catch(err => console.error("ERROR:", err))
+		setTimeout(() => {
+			searchBox.classList.toggle('animate-searchbox')
+			searchBox.style.borderColor = borderColor[CATEGORY]
+		}, 1200)
+	} else {
+		if (CATEGORY === "bot") {
+			searchBox.value = `🤖 [${cardToDisplay.type}]`
+		} else {
+			displayCard(cardToDisplay)
+			searchBox.value = ""
+			searchBox.placeholder = `${CATEGORY.charAt(0).toUpperCase() + CATEGORY.slice(1)} search...`
+		}
+	}
 }
 
 function getRandomCard() {
-  let type = CATEGORY
   searchBox.focus()
 
-  fetch(`./data/${type}s.json`)
-    .then((data) => data.json())
-    .then((cards) => {
-      if (type === "card") cards = cards.filter((card) => card.type === "character" && card.released)
+	let cardPool = []
+	if (CATEGORY === 'card') cardPool = CARDS.filter(card => card.type === "character" && card.released)
+	else cardPool = LOCATIONS
 
-      const randomIndex = Math.floor(Math.random() * cards.length)
+	const randomIndex = Math.floor(Math.random() * cardPool.length)
+	if (CARD_TO_DISPLAY === cardPool[randomIndex].name) return getRandomCard()
+	else LAST_RANDOM_INDEX = randomIndex
 
-      if (randomIndex === LAST_RANDOM_INDEX) return getRandomCard(type)
-      else LAST_RANDOM_INDEX = randomIndex
-
-      const card = cards[randomIndex]
-      displayCard(card, true)
-    })
-    .catch(err => console.error("ERROR:", err))
+	const cardToDisplay = cardPool[randomIndex]
+	displayCard(cardToDisplay, true)
 }
 
 function displayCard(card, isRandom) {
@@ -238,6 +250,27 @@ function displayCard(card, isRandom) {
 	cardImg.onerror = function() { this.src = `images/${type}.webp` }
 }
 
+function displayFeaturedCard() {
+	if (CATEGORY === 'card') {
+		const featuredCard = CARDS.find((card, index) => {
+			if (card.series === "Season Pass") {
+				LAST_RANDOM_INDEX = index
+				return card
+			}
+		})
+		displayCard(featuredCard)
+	} else if (CATEGORY === 'location') {
+		const randomIndex = Math.floor(Math.random() * 2)
+		const featuredLocation = LOCATIONS.find((card, index) => {
+			if (card.name === FEATURED_LOCATIONS[randomIndex]) {
+				LAST_RANDOM_INDEX = index
+				return card
+			}
+		})
+		displayCard(featuredLocation)
+	}
+}
+
 function showModal(show = true) {
 	if (show) {
 		modal.style.display = "block"
@@ -275,9 +308,95 @@ function startCountdown() {
 function redirectToDeckBuilder(event) {
 	event.preventDefault()
 	document.querySelector('.content').classList.add('fade-out')
-	setTimeout(() => {
-		window.location.href = `builder.html?card=${CARD_TO_DISPLAY}`
-	}, 250)
+	setTimeout(() => window.location.href = `builder.html?card=${CARD_TO_DISPLAY}`, 250)
+}
+
+function findClosest(str) {
+	const type = CATEGORY
+	let data = []
+	if (type === "location") data = LOCATIONS
+
+	if (type === "bot") {
+		data = BOTS
+		return data.find(bot => bot.name === str)
+	}
+
+	str = str.trim().replace(/ +/g, ' ').toLowerCase()
+	if (type === "card") {
+		data = CARDS
+
+		if (str.length < 3) return null
+		str = str.replace('dr ','doctor ')
+		str = str.replace('dr. ','doctor ')
+		str = str.replace('mr ','mister ')
+		str = str.replace('mr. ','mister ')
+	}
+	
+	let closestMatch = null
+	let strippedMatch = null
+	let partialMatch = null
+	let wordMatch = null
+	const closestDistArr = []
+	
+	for (const item of data) {
+		const itemName = item.name.toLowerCase()
+		const strippedItemName = itemName.replace(/[\W_]/g, '')
+		const strippedKeyword = str.replace(/[\W_]/g, '')
+
+		if (itemName === str) {
+			closestMatch = item
+			break
+		}
+
+		if (strippedItemName === strippedKeyword) {
+			strippedMatch = item
+		}
+
+		if (!partialMatch && strippedItemName.includes(strippedKeyword)) {
+			partialMatch = item
+			if (itemName > str) break
+		}
+
+		const cardNameArr = itemName.split(/[\W_]/)
+		const strArr = str.split(/[\W_]/)
+		if (!wordMatch && cardNameArr.length > 1 && strArr.length > 1) {
+			let match = 0
+			for (let word of strArr) {
+				if (itemName.includes(word)) match++
+			}
+
+			if (match === strArr.length) wordMatch = item
+		}
+
+		if (!closestMatch && !strippedMatch && !partialMatch && !wordMatch) {
+			closestDistArr.push(levenshtein(itemName, str))
+		}
+	}
+
+	closestMatch = closestMatch || strippedMatch || partialMatch || wordMatch
+
+	if (!closestMatch) {
+		const min = Math.min(...closestDistArr)
+		if (min === str.length) return
+
+		const minCount = []
+		closestDistArr.forEach((x, index) => {
+			if (x === min) minCount.push(index)
+		})
+
+		if (minCount.length === 1) {
+			closestMatch = data[closestDistArr.indexOf(min)]
+		}
+
+		if (minCount.length > 1) {
+			const nearest = minCount.find(i => 
+				data[i].name.toLowerCase()[0] === str[0]
+			)
+			if (nearest) closestMatch = data[nearest]
+		}
+	}
+
+	return closestMatch
 }
 
 function levenshtein(s, t) {
@@ -375,100 +494,4 @@ function levenshtein(s, t) {
 	}
 
 	return h;
-}
-
-async function findClosest(str) {
-	let type = CATEGORY
-	let data = []
-
-	if (type === "bot") {
-		data = await fetch('./data/bots.json')
-		data = await data.json()
-		
-		return data.find(bot => bot.name === str)
-	}
-
-	str = str.trim().replace(/ +/g, ' ').toLowerCase()
-
-	if (type === "location") {
-		data = await fetch('./data/locations.json')
-		data = await data.json()
-	}
-
-	if (type === "card") {
-		data = await fetch('./data/cards.json')
-		data = await data.json()
-
-		if (str.length < 3) return null
-		str = str.replace('dr ','doctor ')
-		str = str.replace('dr. ','doctor ')
-		str = str.replace('mr ','mister ')
-		str = str.replace('mr. ','mister ')
-	}
-	
-	let closestMatch = null
-	let strippedMatch = null
-	let partialMatch = null
-	let wordMatch = null
-	const closestDistArr = []
-	
-	for (const item of data) {
-		const itemName = item.name.toLowerCase()
-		const strippedItemName = itemName.replace(/[\W_]/g, '')
-		const strippedKeyword = str.replace(/[\W_]/g, '')
-
-		if (itemName === str) {
-			closestMatch = item
-			break
-		}
-
-		if (strippedItemName === strippedKeyword) {
-			strippedMatch = item
-		}
-
-		if (!partialMatch && strippedItemName.includes(strippedKeyword)) {
-			partialMatch = item
-			if (itemName > str) break
-		}
-
-		const cardNameArr = itemName.split(/[\W_]/)
-		const strArr = str.split(/[\W_]/)
-		if (!wordMatch && cardNameArr.length > 1 && strArr.length > 1) {
-			let match = 0
-			for (let word of strArr) {
-				if (itemName.includes(word)) match++
-			}
-
-			if (match === strArr.length) wordMatch = item
-		}
-
-		if (!closestMatch && !strippedMatch && !partialMatch && !wordMatch) {
-			closestDistArr.push(levenshtein(itemName, str))
-		}
-	}
-
-	closestMatch = closestMatch || strippedMatch || partialMatch || wordMatch
-
-	if (!closestMatch) {
-		const min = Math.min(...closestDistArr)
-		if (min === str.length) return
-
-		const minCount = []
-		closestDistArr.forEach((x, index) => {
-			if (x === min) minCount.push(index)
-		})
-
-		if (minCount.length === 1) {
-			closestMatch = data[closestDistArr.indexOf(min)]
-		}
-
-		if (minCount.length > 1) {
-			const nearest = minCount.find(i => 
-				data[i].name.toLowerCase()[0] === str[0]
-			)
-			if (nearest) closestMatch = data[nearest]
-		}
-	}
-
-	return closestMatch
 }
