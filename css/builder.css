@@ -48,13 +48,11 @@ button, select, input {
   border: none;
 }
 
-/* DECK VIEW */
 .deck-view {
   height: 155px;
   padding-top: 6px;
   background-color: #1e3fae;
   text-align: center;
-  transition: all .3s linear;
 }
 
 .deck-card {
@@ -69,7 +67,7 @@ button, select, input {
 }
 
 .complete {
-  animation: complete .3s linear forwards;
+  animation: complete .2s ease-in forwards;
 }
 
 @keyframes complete {

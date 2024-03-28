@@ -346,9 +346,9 @@ function resetDeckBuilder() {
   orderSorter.value = "ascending"
   keywordSearcher.value = ""
   
-  setTimeout(() => renderCardsInDeck(), 100)
-  setTimeout(() => renderCardsInPool(), 300)
-  setTimeout(() => scrollToTop(), 500)
+  renderCardsInDeck()
+  renderCardsInPool()
+  setTimeout(() => scrollToTop(), 300)
 }
 
 function handleModalClick(event) {
