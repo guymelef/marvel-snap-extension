@@ -543,7 +543,7 @@ a {
 .btn-deck-builder:hover::after {
 	content: "";
 	position: absolute;
-	top: -11px;
+	top: -12px;
 	left: 50%;
 	transform: translateX(-50%);
 	border-style: solid;
