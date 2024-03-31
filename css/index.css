@@ -504,8 +504,7 @@ a {
 
 .btn-deck-builder {
 	position: relative;
-	display: block;
-	height: 100%;
+	padding: 0 2px;
 	border-radius: 3px;
 	background-color: #a5a5a5a4;
 	box-shadow: 0px 6px 6px 0px #00000096;
@@ -513,7 +512,8 @@ a {
 }
 
 .btn-deck-builder img {
-	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .btn-deck-builder:hover {
@@ -549,12 +549,6 @@ a {
 	border-style: solid;
 	border-width: 8px 8px 0;
 	border-color: #000 transparent transparent;
-}
-
-.btn-deck-builder {
-	color: #f0ffff;
-	display: inline-block;
-	font-weight: bold;
 }
 
 .section-countdown {
