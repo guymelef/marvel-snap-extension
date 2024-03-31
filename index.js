@@ -8,7 +8,7 @@ const randomizeBtn = document.querySelector('.btn-randomize')
 const deckBuilderBtn = document.querySelector('.btn-deck-builder')
 const countdownSection = document.querySelector('.section-countdown')
 const seasonHeader = document.querySelector('.season-calendar')
-const countdownEl = document.querySelector('.countdown')
+const countdownTimer = document.querySelector('.countdown-timer')
 const modal = document.querySelector('.section-modal')
 const modalCloseBtn = document.querySelector('.modal-close-btn')
 
@@ -290,7 +290,7 @@ function startCountdown() {
 		const timeDifference = SEASON_END - new Date()
 
 		if (timeDifference <= 0) {
-			countdownEl.textContent = "NEW SEASON BEGINS!🎉"
+			countdownTimer.textContent = "NEW SEASON BEGINS!🎉"
 			return clearInterval(x)
 		}
 
@@ -299,7 +299,7 @@ function startCountdown() {
 		const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, 0)
 		const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000).toString().padStart(2, 0)
 		
-		countdownEl.innerHTML = `<img src="images/alarm.svg">${days}d ${hours}h ${minutes}m ${seconds}s`
+		countdownTimer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`
 	}, 1000)
 
 	setTimeout(_ => countdownSection.style.visibility = "visible", 1000)
