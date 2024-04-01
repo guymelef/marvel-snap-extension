@@ -34,6 +34,7 @@ modal.onclick = handleModalClick
 submitBtn.onclick = importDeckCode
 
 let ALL_CARDS = []
+let RELEASED_CARDS = []
 let cardsToDisplay = []
 let selectedKeyword = ""
 let selectedAbility = ""
@@ -53,7 +54,8 @@ function startDeckBuilder() {
     .then(async (cards) => {
       cards = await cards.json()
       ALL_CARDS = cards
-      cardsToDisplay = ALL_CARDS
+      RELEASED_CARDS = cards.filter(card => card.type === 'character' && card.released)
+      cardsToDisplay = RELEASED_CARDS
       
       const urlParams = new URLSearchParams(window.location.search)
       let cardInDeck = urlParams.get('card')
@@ -161,7 +163,7 @@ function handleFilterChange(event) {
 function filterCards() {
   let cardPool = []
 		
-  if (!selectedAbility && !selectedKeyword) cardPool = [...ALL_CARDS]
+  if (!selectedAbility && !selectedKeyword) cardPool = [...RELEASED_CARDS]
 
   if (selectedKeyword) {
     for (const card of ALL_CARDS) {
@@ -181,24 +183,37 @@ function filterCards() {
 
   if (selectedAbility) {
     let cardsToFilter = []
-    const filteredCards = []
+    let filteredCards = []
     
     if (selectedKeyword) cardsToFilter = [...cardPool]
-    else cardsToFilter = ALL_CARDS
-
-    for (const card of cardsToFilter) {
-      if (selectedAbility === 'no ability' || selectedAbility === 'others') {
-        if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
+    else cardsToFilter = RELEASED_CARDS
+    
+    if (!selectedKeyword) {
+      if (selectedAbility === 'summon') {
+        filteredCards = ALL_CARDS.filter(card => card.type === selectedAbility)
       } else if (selectedAbility === 'unreleased') {
-        if (!card.released && card.type === "character") filteredCards.push(card)
-      } else if (selectedAbility === 'summon') {
-        if (card.type === selectedAbility) filteredCards.push(card)
-      } else if (card.ability) {
-        if (card.ability.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
-      } else if (card.evolved) {
-        if (card.evolved.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
+        filteredCards = ALL_CARDS.filter(card => !card.released && card.type === "character")
+      } else {
+        for (const card of cardsToFilter) {
+          if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
+        }
+      }
+    } else {
+      for (const card of cardsToFilter) {
+        if (selectedAbility === 'no ability' || selectedAbility === 'others') {
+          if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
+        } else if (selectedAbility === 'unreleased') {
+          if (!card.released && card.type === "character") filteredCards.push(card)
+        } else if (selectedAbility === 'summon') {
+          if (card.type === selectedAbility) filteredCards.push(card)
+        } else if (card.ability) {
+          if (card.ability.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
+        } else if (card.evolved) {
+          if (card.evolved.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
+        }
       }
     }
+
 
     cardPool = filteredCards
   }
@@ -232,6 +247,7 @@ function filterCards() {
   cardsToDisplay = cardPool
   renderCardsInPool()
   scrollToTop()
+  
   if (allImagesLoaded && cardsToDisplay.length > 10)
     showToastMsg({color:'cyan', msg:`ⓘ &nbsp;${cardsToDisplay.length} cards`})
 }
