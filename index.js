@@ -24,7 +24,7 @@ let LAST_RANDOM_INDEX = 0
 let BOTS = []
 let CARDS = []
 let LOCATIONS = []
-const FEATURED_LOCATIONS = ['Krakoa', 'Utopia']
+const FEATURED_LOCATIONS = ['Castle Zemo', 'Thunderbolts Tower']
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
@@ -282,8 +282,8 @@ function showModal(show = true) {
 
 function startCountdown() {
 	let year = 2024
-	let month = 3
-	let date = 2
+	let month = 4
+	let date = 7
 
 	let SEASON_END = new Date(Date.UTC(year, month, date, 19))
 	const x = setInterval(_ => {
