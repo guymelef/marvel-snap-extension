@@ -6,7 +6,7 @@
 	--clr-green: #108800;
 	--clr-red: #e50a10;
 	--clr-orange: #ff7300;
-	--clr-cyan: #00ced1;
+	--clr-cyan: #8AFFFF;
 	--clr-white: #fcfcfc;
 }
 
@@ -732,7 +732,7 @@ summary::marker {
 }
 
 .date {
-	color: #00ff00;
+	color: #ace209;
 	font-family: var(--ff-secondary);
 }
 
