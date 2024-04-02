@@ -84,7 +84,7 @@ function addOrRemoveCardToDeck(event) {
 
       if (cardsInDeck.length < 12) {
         if (!isCardInDeck) {
-          cardsInDeck = [...cardsInDeck, cardToAdd]
+          cardsInDeck.push(cardToAdd)
           sortCards(cardsInDeck, true)
           event.target.classList.toggle('selected')
           renderCardsInDeck()
@@ -185,20 +185,8 @@ function filterCards() {
     let cardsToFilter = []
     let filteredCards = []
     
-    if (selectedKeyword) cardsToFilter = [...cardPool]
-    else cardsToFilter = RELEASED_CARDS
-    
-    if (!selectedKeyword) {
-      if (selectedAbility === 'summon') {
-        filteredCards = ALL_CARDS.filter(card => card.type === selectedAbility)
-      } else if (selectedAbility === 'unreleased') {
-        filteredCards = ALL_CARDS.filter(card => !card.released && card.type === "character")
-      } else {
-        for (const card of cardsToFilter) {
-          if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
-        }
-      }
-    } else {
+    if (selectedKeyword) {
+      cardsToFilter = cardPool
       for (const card of cardsToFilter) {
         if (selectedAbility === 'no ability' || selectedAbility === 'others') {
           if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
@@ -212,9 +200,16 @@ function filterCards() {
           if (card.evolved.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
         }
       }
+    } else {
+      cardsToFilter = RELEASED_CARDS
+      if (selectedAbility === 'summon') {
+        filteredCards = ALL_CARDS.filter(card => card.type === selectedAbility)
+      } else if (selectedAbility === 'unreleased') {
+        filteredCards = ALL_CARDS.filter(card => !card.released && card.type === "character")
+      } else {
+        for (const card of cardsToFilter) if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
+      }
     }
-
-
     cardPool = filteredCards
   }
 
@@ -231,7 +226,7 @@ function filterCards() {
     let foundCards = []
     for (const card of cardPool) {
       if (selectedPower === '1-') { if (card.power <= 1) foundCards.push(card) } 
-      else if (selectedPower === '6+') {{ if (card.power >= 6) foundCards.push(card) }}
+      else if (selectedPower === '6+') { if (card.power >= 6) foundCards.push(card) }
       else { if (card.power === selectedPower) foundCards.push(card) }
     }
     cardPool = foundCards
@@ -248,8 +243,7 @@ function filterCards() {
   renderCardsInPool()
   scrollToTop()
   
-  if (allImagesLoaded && cardsToDisplay.length > 10)
-    showToastMsg({color:'cyan', msg:`ⓘ &nbsp;${cardsToDisplay.length} cards`})
+  if (allImagesLoaded && cardsToDisplay.length > 5) showToastMsg({color:'cyan', msg:`ⓘ &nbsp;${cardsToDisplay.length} cards`})
 }
 
 function handleSortChange(event) {
@@ -259,9 +253,7 @@ function handleSortChange(event) {
   if (prop === 'field') selectedSortProperty = value
   else selectedSortOrder = value
   
-  const cardsToSort = [...cardsToDisplay]					
-  sortCards(cardsToSort)
-  cardsToDisplay = cardsToSort
+  sortCards(cardsToDisplay)
   renderCardsInPool()
   scrollToTop()
 }
@@ -393,13 +385,13 @@ function renderCardsInPool() {
   cardsDiv.innerHTML = ""
   
   if (!cardsToDisplay.length) {
-    document.body.classList.add('hide-before')
     cardsDiv.innerHTML = '<p class="no-cards">No cards found.</p>'
   } else {
     cardsToDisplay.forEach((card, index) => {
       const isCardInDeck = cardsInDeck.find(deckCard => card.name === deckCard.name)
       let cardImgClasses = isCardInDeck ? 'selected ' : ''
       if (!card.released || card.type !== 'character') cardImgClasses += 'non-deck-card'
+      
       cardsDiv.innerHTML += `
         <img class="snap-card card-image ${cardImgClasses}"
           src=${createImgLink(card.image)}
@@ -408,10 +400,13 @@ function renderCardsInPool() {
           loading="eager"
         >
       `
-      document.querySelectorAll('.card-image').forEach(card => {
-        if (!allImagesLoaded) card.onload = imgLoaded
-        card.onerror = function() { this.src = `images/card.webp` }
-      })
+      
+      if (!allImagesLoaded) {
+        document.querySelectorAll('.card-image').forEach(card => {
+          card.onload = imgLoaded
+          card.onerror = function() { this.src = `images/card.webp` }
+        })
+      }
     })
   }
 }
