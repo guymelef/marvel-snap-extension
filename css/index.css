@@ -698,8 +698,9 @@ a {
 		.5px .5px #000;
 }
 
-.albums ul {
-	margin-bottom: 5px;
+.albums ul,
+.shop-takeover ul {
+	margin-bottom: 4px;
 }
 
 .styled-list {
