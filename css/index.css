@@ -2,12 +2,13 @@
 	--ff-primary: 'Roboto', sans-serif;
 	--ff-secondary: 'Roboto Mono', monospace;
 	--ff-title: 'Roboto Flex', sans-serif;
+	--clr-white: #fcfcfc;
 	--clr-blue: #2973C4;
 	--clr-green: #108800;
 	--clr-red: #e50a10;
 	--clr-orange: #ff7300;
 	--clr-cyan: #94fdff;
-	--clr-white: #fcfcfc;
+	--clr-gold: #ffdd00;
 }
 
 *,
@@ -709,7 +710,7 @@ a {
 
 .styled-list li::before {
 	content: "\2022";
-	color: #ffd700;
+	color: var(--clr-gold);
 	font-weight: bold;
 	display: inline-block;
 	width: 1em;
@@ -732,7 +733,7 @@ details {
 }
 
 summary::marker {
-	color: #ffd700;
+	color: var(--clr-gold);
 }
 
 .date {
