@@ -1,0 +1,18 @@
+<svg width="160px" height="160px" viewBox="0 0 16.00 16.00" xmlns="http://www.w3.org/2000/svg" fill="red">
+  <style>
+    @keyframes changeColors {
+      0%, 100% { fill: #2973C48a; }
+      33% { fill: #1088008a; }
+      66% { fill: #e50a108a; }
+    }
+    
+    .animated-svg {
+      animation: changeColors linear 3s infinite alternate;
+    }
+  </style>
+  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+  <g id="SVGRepo_iconCarrier">
+    <path d="M14 4.577v6.846L8 15l-6-3.577V4.577L8 1l6 3.577zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866L8.5.134z" class="animated-svg"></path>
+  </g>
+</svg>
