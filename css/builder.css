@@ -11,8 +11,7 @@
 }
 
 body {
-  background: url("../images/bg.webp") center fixed;
-  background-size: cover;
+	background: url('../images/bg.svg') fixed top no-repeat;
   width: 420px;
   height: 600px;
   margin: 0 auto;

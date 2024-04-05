@@ -18,8 +18,8 @@
 }
 
 body {
-	background: url("../images/bg.webp") center fixed;
-	background-size: cover;
+	background-color: #2C104E;
+	background: url('../images/bg.svg') fixed top no-repeat;
 	font-family: var(--ff-primary);
 	color: var(--clr-white);
 	font-size: 12px;
@@ -186,8 +186,15 @@ a {
 	width: 200px;
 }
 
+#card-img-div {
+	background: url('../images/spinner.svg') no-repeat;
+	background-size: 120px;
+	background-position: 50% 35%;
+}
+
 #location-img-div {
 	justify-content: center;
+	background: url('../images/loc-bg.svg') center no-repeat;
 }
 
 .search-result-info {
@@ -585,10 +592,10 @@ a {
 .countdown {
 	padding: 6px;
 	min-width: 205px;
-	background: #00000060;
+	background: #0000007e;
 	display: inline-flex;
 	justify-content: center;
-	box-shadow: 3px 3px #00008b;
+	box-shadow: 4px 4px #0c0cc5;
 	transform-style: preserve-3d;
 	opacity: 0;
 	transform: scaleY(-1);
