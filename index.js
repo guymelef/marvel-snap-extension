@@ -233,9 +233,14 @@ function displayCard(card, isRandom) {
 				alt="${card.name}"
 				loading="eager"
 			>
-			<p class="search-result-info-source">
-				<span class="secondary-text source-origin ${sourceClass}">${source}</span>
-			</p>
+			${type === 'card' ?
+				`
+					<p class="search-result-info-source">
+						<span class="secondary-text source-origin ${sourceClass}">${source}</span>
+					</p>
+				`
+				: ''
+			}
 		</div>
 		<div class="search-result-info ${type}-search-result">
 			${htmlStr}
@@ -244,8 +249,10 @@ function displayCard(card, isRandom) {
 
 	const cardImg = document.querySelector('.card-img')
 	cardImg.onload = () => {
+		document.querySelector('.search-result-img').style.background = "none"
 		cardImg.classList.add(`animate-${type}`)
-		document.querySelector('.search-result-info-source').style.animation = "fade-in 300ms ease-in-out 200ms forwards"
+		if (type === 'card')
+			document.querySelector('.search-result-info-source').style.animation = "fade-in 300ms ease-in-out 200ms forwards"
 	}
 	cardImg.onerror = function() { this.src = `images/${type}.webp` }
 }
