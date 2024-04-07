@@ -38,6 +38,7 @@ main {
   background-color: #1e3b8a;
   height: 100%;
   position: relative;
+  filter: blur(5px);
 }
 
 button, select, input {

@@ -483,6 +483,7 @@ function imgLoaded(event) {
   if (cardsToDisplay.length === loadedImages.size) {
     allImagesLoaded = true
     document.body.classList.add('hide-before')
+    document.querySelector('main').style.filter = 'none'
     showToastMsg({color:'cyan', msg:`ⓘ &nbsp;${cardsToDisplay.length} cards`})
   }
 }
