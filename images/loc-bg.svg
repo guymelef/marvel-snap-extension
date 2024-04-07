@@ -1,18 +1,25 @@
-<svg width="160px" height="160px" viewBox="0 0 16.00 16.00" xmlns="http://www.w3.org/2000/svg" fill="red">
-  <style>
+<svg
+   width="130.87865mm"
+   height="157.24084mm"
+   viewBox="0 0 130.87865 157.24084"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+   <style>
     @keyframes changeColors {
-      0%, 100% { fill: #2973C48a; }
-      33% { fill: #1088008a; }
-      66% { fill: #e50a108a; }
+      0%, 100% { stroke: #2973C48a; }
+      33% { stroke: #1088008a; }
+      66% { stroke: #e50a108a; }
     }
-    
-    .animated-svg {
-      animation: changeColors linear 3s infinite alternate;
-    }
+    .animated { animation: changeColors linear 1.5s infinite alternate; }
   </style>
-  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-  <g id="SVGRepo_iconCarrier">
-    <path d="M14 4.577v6.846L8 15l-6-3.577V4.577L8 1l6 3.577zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866L8.5.134z" class="animated-svg"></path>
-  </g>
+  <defs id="defs1" />
+    <g id="layer1" transform="translate(-55.818734,-84.121473)">
+      <path class="animated"
+       style="fill:none;stroke-width:5.21104;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 59.247867,103.52086 61.385583,-16.696793 62.82171,17.531633 0.62613,116.04276 -62.92606,18.25301 -62.717351,-17.83559 z"
+       id="path3" />
+    </g>
 </svg>
