@@ -187,13 +187,13 @@ a {
 }
 
 #card-img-div {
-	background: url('../images/card-bg.svg') 50% 25% no-repeat;
+	background: url('../images/index/card-bg.svg') 50% 25% no-repeat;
 	background-size: 130px;
 }
 
 #location-img-div {
 	justify-content: center;
-	background: url('../images/loc-bg.svg') center no-repeat;
+	background: url('../images/index/loc-bg.svg') center no-repeat;
 	background-size: 150px;
 }
 

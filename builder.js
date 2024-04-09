@@ -437,7 +437,7 @@ function renderCardsInDeck() {
       `
     } else {
       deckDiv.innerHTML += `
-        <img class="deck-card" src="images/blank.webp" alt="blank card">
+        <img class="deck-card" src="images/builder/blank.webp" alt="blank card">
       `
     }
   }
