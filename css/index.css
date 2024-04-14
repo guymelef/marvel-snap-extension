@@ -580,14 +580,13 @@ a {
 	font-size: inherit;
 	padding: 2.5px;
 	border-bottom: 3px solid #adff2f;
-	transition: all 0.3s ease-in;
 }
 
 .season-calendar:hover,
 .season-calendar:focus {
 	color: #adff2f;
-	background-color: #acff2f56;
-	border-color: var(--clr-white);
+	border-bottom: 4px solid var(--clr-white);
+
 }
 
 .countdown {
@@ -606,6 +605,12 @@ a {
 		0.5px -0.5px var(--clr-orange),
 		-0.5px 0.5px var(--clr-orange),
 		0.5px 0.5px var(--clr-orange);
+}
+
+.countdown:hover,
+.countdown:focus {
+	background: #0c0cc593;
+	box-shadow: 4px 4px #080200;
 }
 
 @keyframes flipVertical {
