@@ -585,7 +585,7 @@ a {
 .season-calendar:hover,
 .season-calendar:focus {
 	color: #adff2f;
-	border-bottom: 4px solid var(--clr-white);
+	border-bottom: 3px solid var(--clr-white);
 
 }
 
