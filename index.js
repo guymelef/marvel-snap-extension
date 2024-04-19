@@ -17,6 +17,7 @@ const borderColor = {
 	location: "#108800",
 	bot: "#e50a10"
 }
+let isChrome = false
 let controlsAreHidden = false
 let CATEGORY = 'card'
 let CARD_TO_DISPLAY = ""
@@ -39,6 +40,7 @@ startApp()
 
 async function startApp() {
 	startCountdown()
+	isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1
 
 	try {
 		let allCards = await fetch(`./data/cards.json`)
@@ -250,9 +252,13 @@ function displayCard(card, isRandom) {
 	const cardImg = document.querySelector('.card-img')
 	cardImg.onload = () => {
 		document.querySelector('.search-result-img').style.background = "none"
-		cardImg.classList.add(`animate-${type}`)
-		if (type === 'card')
+		if (type === 'location') {
+			cardImg.classList.add('animate-location')
+			cardImg.classList.add(`animate-location-${isChrome ? 'chrome' : 'others'}`)
+		} else {
+			cardImg.classList.add('animate-card')
 			document.querySelector('.search-result-info-source').style.animation = "fade-in 300ms ease-in-out 200ms forwards"
+		}
 	}
 	cardImg.onerror = function() { this.src = `images/${type}.webp` }
 }

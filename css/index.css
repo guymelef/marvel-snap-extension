@@ -187,8 +187,8 @@ a {
 }
 
 #card-img-div {
-	background: url('../images/index/card-bg.svg') 50% 25% no-repeat;
-	background-size: 130px;
+	background: url('../images/index/card-bg.svg') 50% 20% no-repeat;
+	background-size: 140px;
 }
 
 #location-img-div {
@@ -212,7 +212,14 @@ a {
 .animate-location {
 	opacity: 1;
 	transform-style: preserve-3d;
-	animation: rotate 300ms linear, loc-pulse 1.5s linear 300ms alternate infinite;
+}
+
+.animate-location-chrome{	
+	animation: rotate 300ms linear, loc-pulse-chrome 1.5s linear 300ms alternate infinite;
+}
+
+.animate-location-others {
+	animation: rotate 300ms linear, loc-pulse-others 1.5s linear 300ms alternate infinite;
 }
 
 @keyframes card-pulse {
@@ -230,15 +237,20 @@ a {
 	}
 }
 
-@keyframes loc-pulse {
+@keyframes loc-pulse-chrome {
 	from {
 		filter: drop-shadow(0 0 8px #e6e6fa);
 		transform: scale(1);
 	}
 	to {
 		filter: drop-shadow(0 0 8px #ee82ee);
-		transform: scale(1.01);
+		transform: scale(1.015);
 	}
+}
+
+@keyframes loc-pulse-others {
+	from { filter: drop-shadow(0 0 8px #e6e6fa); }
+	to { filter: drop-shadow(0 0 8px #ee82ee); }
 }
 
 @keyframes rotate {
