@@ -3,7 +3,6 @@ A browser extension built with vanilla HTML, CSS, and JavaScript
 
 Vectors and icons by [SVG Repo](https://www.svgrepo.com) and [Icons8](https://icons8.com/)
 
-
 ## About
 Build a Marvel SNAP deck, lookup game info (card, location, bot) and find out what's new every season straight from any browser tab!
 
