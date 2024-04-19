@@ -1,5 +1,6 @@
 # Marvel SNAP Search Browser Extension
 A browser extension built with vanilla HTML, CSS, and JavaScript
+
 Vectors and icons by [SVG Repo](https://www.svgrepo.com) and [Icons8](https://icons8.com/)
 
 
