@@ -856,6 +856,10 @@ footer img {
 	background-color: #5865f2;
 }
 
+.facebook:hover {
+	background-color: #1877F2;
+}
+
 .reddit:hover {
 	background-color: #ff4500;
 }
