@@ -453,7 +453,7 @@ function scrollToTop() {
 
 function createImgLink(url) {
   const [imgId, imgVersion, imgName] = url.split('/')
-	const link = `https://res.cloudinary.com/dekvdfhbv/image/upload/${imgId}/${imgVersion}/Marvel%20SNAP/Cards/${imgName}.webp`
+	const link = `https://res.cloudinary.com/dekvdfhbv/image/upload/${imgId}/${imgVersion}/Marvel%20SNAP/card/${imgName}.webp`
   return link
 }
 
