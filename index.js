@@ -26,6 +26,8 @@ let BOTS = []
 let CARDS = []
 let LOCATIONS = []
 let FEATURED_LOCATIONS = ['Castle Zemo', 'Thunderbolts Tower']
+let SEASON_END_DATE = [7, 4, 2024]
+let SEASON_END = ""
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
@@ -293,11 +295,9 @@ function showModal(show = true) {
 }
 
 function startCountdown() {
-	let year = 2024
-	let month = 4
-	let date = 7
+	const [date, month, year] = SEASON_END_DATE
+	SEASON_END = new Date(Date.UTC(year, month, date, 19))
 
-	let SEASON_END = new Date(Date.UTC(year, month, date, 19))
 	const x = setInterval(_ => {
 		const timeDifference = SEASON_END - new Date()
 
