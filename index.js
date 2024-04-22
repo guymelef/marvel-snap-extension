@@ -25,7 +25,7 @@ let LAST_RANDOM_INDEX = 0
 let BOTS = []
 let CARDS = []
 let LOCATIONS = []
-const FEATURED_LOCATIONS = ['Castle Zemo', 'Thunderbolts Tower']
+let FEATURED_LOCATIONS = ['Castle Zemo', 'Thunderbolts Tower']
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
