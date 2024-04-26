@@ -285,7 +285,7 @@ function saveDeckToClipboard() {
     let deckStr = ""
 
     cardsInDeck.forEach((card) => {
-      let id = card.code || card.name.replace(/[^\w^_]/g, "")
+      let id = card.code || card.name.replace(/[^\w]|_/g, "")
       deck.Cards.push({ CardDefId: id })
       deckStr += `# (${card.cost}) ${card.name}\n`
     })
