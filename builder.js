@@ -135,7 +135,7 @@ function showCardInfo(event) {
     
     infoDiv.innerHTML = `
       <p>
-        <h3>${cardInfo.name}</h3>
+        <h3>${cardInfo.displayName || cardInfo.name}</h3>
         <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}
         </h4>
         ${cardAbility}
