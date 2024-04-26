@@ -394,7 +394,7 @@ function renderCardsInPool() {
       
       cardsDiv.innerHTML += `
         <img class="snap-card card-image ${cardImgClasses}"
-          src=${createImgLink(card.image)}
+          src=${createImgLink(card)}
           alt="${card.name}"
           data-index=${index}
           loading="eager"
@@ -429,7 +429,7 @@ function renderCardsInDeck() {
     if (card) {
       deckDiv.innerHTML += `
         <img class="snap-card deck-card card-added"
-          src=${createImgLink(card.image)}
+          src=${createImgLink(card)}
           alt="${card.name}"
           title="${card.name}"
           loading="eager"
@@ -451,10 +451,15 @@ function scrollToTop() {
   document.querySelector('.cards-view').scrollTo({ top:0, behavior:"smooth" })
 }
 
-function createImgLink(url) {
-  const [imgId, imgVersion, imgName] = url.split('/')
-	const link = `https://res.cloudinary.com/dekvdfhbv/image/upload/${imgId}/${imgVersion}/Marvel%20SNAP/card/${imgName}.webp`
-  return link
+function createImgLink(card) {
+  let image = ''
+	if (card.noArt) {
+		image = 'default'
+	} else {
+		image = card.name.toLowerCase()
+		image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
+	}
+	return `https://files.guymelef.dev/card/${image}.webp`
 }
 
 function throttle(func, delay) {

@@ -162,8 +162,15 @@ function displayCard(card, isRandom) {
 	let source = ''
 	let sourceClass = ''
 	CARD_TO_DISPLAY = card.name
-	const [imgId, imgVersion, imgName] = card.image.split('/')
-	let imgSrc = `https://res.cloudinary.com/dekvdfhbv/image/upload/${imgId}/${imgVersion}/Marvel%20SNAP/${type}/${imgName}.webp`
+	
+	let image = ''
+	if (card.noArt) {
+		image = 'default'
+	} else {
+		image = card.name.toLowerCase()
+		image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
+	}
+	const imgSrc = `https://files.guymelef.dev/${type}/${image}.webp`
 
 	if (card.ability) {
 		card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
