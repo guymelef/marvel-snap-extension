@@ -209,7 +209,7 @@ function displayCard(card, isRandom) {
 				class="card-title"
 				style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
 			>
-				${card.name}
+				${card.displayName || card.name}
 			</h2>
 			<h3 class="secondary-text">
 				<span class="stats-text text-cost">Cost</span>:<span class="card-stats cost">${card.cost}</span> 
