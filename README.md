@@ -15,7 +15,7 @@ Build a Marvel SNAP deck, lookup game info (card, location, bot) and find out wh
 - no extra permissions required
 
 ## Install on your favorite browsers
-1. 🔹[Google Chrome](https://chromewebstore.google.com/u/1/detail/marvel-snap-search/ffhehbmccpiccnhgndldnfccddbefgjd)
+1. 🔹[Google Chrome / Opera](https://chromewebstore.google.com/u/1/detail/marvel-snap-search/ffhehbmccpiccnhgndldnfccddbefgjd)
 2. 🔸[Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/marvel-snap-search/)
 
 ## Disclaimer
