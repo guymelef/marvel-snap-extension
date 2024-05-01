@@ -25,9 +25,10 @@ let LAST_RANDOM_INDEX = 0
 let BOTS = []
 let CARDS = []
 let LOCATIONS = []
-let FEATURED_LOCATIONS = ['Castle Zemo', 'Thunderbolts Tower']
-let SEASON_END_DATE = [7, 4, 2024]
-let SEASON_END = ""
+let FEATURED_CARD = ''
+let FEATURED_LOCATIONS = []
+let SEASON_END_DATE = []
+let SEASON_INFO = {}
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
@@ -41,7 +42,6 @@ modal.onclick = ({ target }) => { target === modal && showModal(false) }
 startApp()
 
 async function startApp() {
-	startCountdown()
 	isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1
 
 	try {
@@ -57,7 +57,16 @@ async function startApp() {
 		allBots = await allBots.json()
 		BOTS = allBots
 
+		let seasonDetails = await fetch(`./data/calendar.json`)
+		seasonDetails = await seasonDetails.json()
+		SEASON_INFO = seasonDetails.info
+		FEATURED_CARD = SEASON_INFO.featuredCard
+		FEATURED_LOCATIONS = SEASON_INFO.featuredLocations
+		SEASON_END_DATE = SEASON_INFO.seasonEndDate
+
+		startCountdown()
 		displayFeaturedCard()
+		renderModalContent(seasonDetails.events)
 		searchBox.focus()
 	} catch(err) {
 		console.error("ERROR FETCHING DATA:", err)
@@ -185,7 +194,7 @@ function displayCard(card, isRandom) {
 			card.evolved = card.evolved.replaceAll("Ongoing:", "<b>Ongoing:</b>")
 		}
 
-		if (card.series === "Season Pass") {
+		if (card.name === FEATURED_CARD) {
 			source = "Season Pass"
 			sourceClass = "season-pass"
 		} else {
@@ -193,9 +202,12 @@ function displayCard(card, isRandom) {
 				if (card.series === "NA") {
 					source = "Unreleased"
 					sourceClass = "unreleased"
-				} else {
+				} else if (['1', '2', '3', '4', '5'].includes(card.series)) {
 					source = `Series ${card.series}`
 					sourceClass = `series${card.series}`
+				} else {
+					source = 'Series 5'
+					sourceClass = 'series5'
 				}
 			} else {
 				source = "Summon"
@@ -274,7 +286,7 @@ function displayCard(card, isRandom) {
 function displayFeaturedCard() {
 	if (CATEGORY === 'card') {
 		const featuredCard = CARDS.find((card, index) => {
-			if (card.series === "Season Pass") {
+			if (card.name === FEATURED_CARD) {
 				LAST_RANDOM_INDEX = index
 				return card
 			}
@@ -301,16 +313,229 @@ function showModal(show = true) {
 	}
 }
 
+function renderModalContent(events) {
+	let modalContent = ''
+
+	events.forEach(event => {
+		if (event.title === 'New Characters') {
+			let listItems = ''
+			event.items.forEach((item, index) => {
+				if (index === 0) {
+					listItems += `<li class="list-item" aria-label="season pass card"><span class="list-padding season-pass">${item.name}</span></li>`
+				} else if (index === event.items.length - 1) {
+					listItems += `<li class="list-item"><span class="list-padding series${item.series}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
+				} else {
+					listItems += `<li class="list-item"><span class="list-padding series${item.series}">${item.name}</span></li>`
+				}
+			})
+			modalContent += `
+				<div>
+					<h3>☄️ ${event.title}</h3>
+					<ul class="styled-list">
+						${listItems}
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'New Locations') {
+			let listItems = ''
+			event.items.forEach(item => {
+				listItems += `<li class="list-item"><span class="list-padding highlight-location">${item}</span></li>`
+			})
+			modalContent += `
+				<div>
+					<h3>🗺️ ${event.title}</h3>
+					<ul class="styled-list">
+						${listItems}	
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'Spotlight Caches') {
+			let listItems = ''
+			event.items.forEach(item => {
+				let cacheList = ''
+				item.items.forEach(item => {
+					cacheList += `<li class="list-item"><span class="list-padding series${item.series}">${item.name}</span></li>`
+				})
+				listItems += `
+					<li>
+						<strong class="date">${item.date}</strong>
+						<ul class="styled-list">
+							${cacheList}
+						</ul>
+					</li>
+				`
+			})
+			modalContent += `
+				<div>
+					<h3>🗝️ ${event.title}</h3>
+					<ul class="event">
+						${listItems}	
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'New Albums') {
+			let albumItems = ''
+			event.items.forEach(item => {
+				let listItems = ''
+				item.items.forEach(item => {
+					const [count, reward] = item.split(':')
+					listItems += `<li class="list-item">Collect ${count}: <span class="event-list secondary-text">${reward}</span></li>`
+				})
+				albumItems += `
+					<li>
+						<details>
+							<summary><strong class="date">${item.date}</strong> 🔹 ${item.name}</summary>
+							<ul class="styled-list">
+								${listItems}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+				<div class="albums">
+					<h3>🖼️ ${event.title}</h3>
+					<ul class="event">
+						${albumItems}	
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'Shop Takeover') {
+			let listItems = ''
+			event.items.forEach(item => {
+				let cards = ''
+				item.cards.forEach(card => cards +=  `<li class="list-item">${card}</li>`)
+				listItems += `
+					<li>
+						<details>
+							<summary><strong class="date">${item.date}</strong> 🔹 ${item.name}</summary>
+							<ul class="styled-list">
+								${cards}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+				<div class="shop-takeover">
+					<h3>🎨 ${event.title}</h3>
+					<ul class="event">
+						${listItems}	
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'Twitch Drops') {
+			let listItems = ''
+			event.items.forEach(item => {
+				const [hour, reward] = item.split(':')
+				listItems += `<li class="list-item">Watch ${hour} hours: <span class="event-list secondary-text">${reward}</span></li>`
+			})
+			modalContent += `
+				<div>
+					<h3>🎁 ${event.title}</h3>
+					<ul class="event">
+						<li>
+							<details>
+								<summary><strong class="date">${event.date}</strong></summary>
+								<ul class="styled-list">
+									${listItems}
+								</ul>
+							</details>
+						</li>
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === '7-Day Login' && event.items.length) {
+			let listItems = ''
+			event.items.forEach(item => {
+				let loginRewards = ''
+				item.items.forEach((item, index) => loginRewards += `<li class="list-item">Day ${index + 1}: <span class="event-list secondary-text">${item}</span></li>`)
+				listItems += `
+					<li>
+						<details>
+							<summary><strong class="date">${item.date}</strong> ${item.title ? `🔸 ${item.title}` : ''}</summary>
+							<ul class="styled-list">
+								${loginRewards}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+				<div>
+					<h3>📆 ${event.title}</h3>
+					<ul class="event">
+						${listItems}
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'Balance Updates' && event.items.length) {
+			let changes = ''
+			event.items.forEach(item => {
+				let listItems = ''
+				item.items.forEach(item => {
+					listItems += `
+						<li>
+							<h4>${item.name}</h4>
+							<p>⬅️ ${item.changes[0]}</p>
+							<p>➡️ ${item.changes[1]}</p>
+						</li>
+					`
+				})
+				changes += `
+					<li>
+						<details>
+							<summary><strong class="date">${item.date}</strong> 🔸 ${item.type}</summary>
+							<ul>
+								${listItems}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+			<div class="patch-ota">
+				<h3>🔄 ${event.title}</h3>
+				<ul class="event">
+					${changes}
+				</ul>
+			</div>
+			`
+		}
+	})
+
+	document.querySelector('.season-details').innerHTML = modalContent
+}
+
 function startCountdown() {
 	const [date, month, year] = SEASON_END_DATE
-	SEASON_END = new Date(Date.UTC(year, month, date, 19))
+	const SEASON_END = new Date(Date.UTC(year, month, date, 19))
 
 	const x = setInterval(_ => {
 		const timeDifference = SEASON_END - new Date()
 
 		if (timeDifference <= 0) {
 			countdownTimer.textContent = "NEW SEASON BEGINS!🎉"
-			return clearInterval(x)
+			FEATURED_CARD = SEASON_INFO.nextFeaturedCard
+			FEATURED_LOCATIONS = SEASON_INFO.nextFeaturedLocations
+			SEASON_END_DATE = SEASON_INFO.nextSeasonEndDate
+			displayFeaturedCard()
+			clearInterval(x)
+			return startCountdown()
 		}
 
 		const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24)).toString().padStart(2, 0)

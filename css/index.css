@@ -744,6 +744,22 @@ a {
 	margin-left: -1em;
 }
 
+.patch-ota details ul {
+	list-style-type: square;
+}
+
+.patch-ota h4 {
+	color: var(--clr-gold);
+}
+
+.patch-ota p {
+	font-weight: normal;
+}
+
+.patch-ota h4, p {
+	margin: 0;
+}
+
 @keyframes slide {
 	from {
 		bottom: -200px;
