@@ -314,6 +314,9 @@ function showModal(show = true) {
 }
 
 function renderModalContent(events) {
+	const seasonLink =	document.querySelector('.season-link')
+	seasonLink.innerText  = SEASON_INFO.seasonTitle
+	seasonLink.href = SEASON_INFO.seasonUrl
 	let modalContent = ''
 
 	events.forEach(event => {
