@@ -66,7 +66,7 @@ async function startApp() {
 
 		startCountdown()
 		displayFeaturedCard()
-		renderModalContent(seasonDetails.events)
+		renderModalContent(seasonDetails.events, seasonDetails.headerStyle)
 		searchBox.focus()
 	} catch(err) {
 		console.error("ERROR FETCHING DATA:", err)
@@ -313,12 +313,24 @@ function showModal(show = true) {
 	}
 }
 
-function renderModalContent(events) {
+function renderModalContent(events, headerStyle) {
 	const seasonLink =	document.querySelector('.season-link')
 	seasonLink.innerText  = SEASON_INFO.seasonTitle
 	seasonLink.href = SEASON_INFO.seasonUrl
-	let modalContent = ''
+	
+	const modalHeader = document.querySelector('.modal-content-header')
+	const modalHeaderStyle = headerStyle.style
+	const modalHeaderStyleHover = headerStyle.hover
+	for (let prop in modalHeaderStyle) modalHeader.style[prop] = modalHeaderStyle[prop]
+	modalHeader.onmouseenter = _ => { for (let prop in modalHeaderStyleHover) modalHeader.style[prop] = modalHeaderStyleHover[prop] }
+	modalHeader.onmouseleave = _ => { 
+		for (let prop in modalHeaderStyleHover) {
+			modalHeader.style[prop] = ""
+			if (modalHeaderStyle[prop]) modalHeader.style[prop] = modalHeaderStyle[prop]
+		}
+	}
 
+	let modalContent = ''
 	events.forEach(event => {
 		if (event.title === 'New Characters') {
 			let listItems = ''
