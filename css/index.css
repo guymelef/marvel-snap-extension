@@ -764,8 +764,8 @@ summary::marker {
 }
 
 .date {
-	color: #fe4eda;
 	font-family: var(--ff-secondary);
+	color: var(--clr-date);
 }
 
 .list-item {

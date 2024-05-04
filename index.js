@@ -45,19 +45,19 @@ async function startApp() {
 	isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1
 
 	try {
-		let allCards = await fetch(`./data/cards.json`)
+		let allCards = await fetch('./data/cards.json')
 		allCards = await allCards.json()
 		CARDS = allCards
 	
-		let allLocations = await fetch(`./data/locations.json`)
+		let allLocations = await fetch('./data/locations.json')
 		allLocations = await allLocations.json()
 		LOCATIONS = allLocations
 
-		let allBots = await fetch(`./data/bots.json`)
+		let allBots = await fetch('./data/bots.json')
 		allBots = await allBots.json()
 		BOTS = allBots
 
-		let seasonDetails = await fetch(`./data/calendar.json`)
+		let seasonDetails = await fetch('./data/calendar.json')
 		seasonDetails = await seasonDetails.json()
 		SEASON_INFO = seasonDetails.info
 		FEATURED_CARD = SEASON_INFO.featuredCard
@@ -66,7 +66,7 @@ async function startApp() {
 
 		startCountdown()
 		displayFeaturedCard()
-		renderModalContent(seasonDetails.events, seasonDetails.headerStyle)
+		renderModalContent(seasonDetails.events, seasonDetails.styles)
 		searchBox.focus()
 	} catch(err) {
 		console.error("ERROR FETCHING DATA:", err)
@@ -313,14 +313,15 @@ function showModal(show = true) {
 	}
 }
 
-function renderModalContent(events, headerStyle) {
+function renderModalContent(events, styles) {
 	const seasonLink =	document.querySelector('.season-link')
 	seasonLink.innerText  = SEASON_INFO.seasonTitle
 	seasonLink.href = SEASON_INFO.seasonUrl
 	
+	document.documentElement.style.setProperty('--clr-date', styles.dateColor)
 	const modalHeader = document.querySelector('.modal-content-header')
-	const modalHeaderStyle = headerStyle.style
-	const modalHeaderStyleHover = headerStyle.hover
+	const modalHeaderStyle = styles.headerStyle
+	const modalHeaderStyleHover = styles.hoverStyle
 	for (let prop in modalHeaderStyle) modalHeader.style[prop] = modalHeaderStyle[prop]
 	modalHeader.onmouseenter = _ => { for (let prop in modalHeaderStyleHover) modalHeader.style[prop] = modalHeaderStyleHover[prop] }
 	modalHeader.onmouseleave = _ => { 
