@@ -691,7 +691,6 @@ a {
 	font-family: var(--ff-title);
 	text-align: center;
 	text-transform: uppercase;
-	border-radius: 4px;
 	transition: all 0.3s ease-in;
 }
 
