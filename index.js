@@ -57,7 +57,7 @@ async function startApp() {
 		allBots = await allBots.json()
 		BOTS = allBots
 
-		let seasonDetails = await fetch('./data/calendar.json')
+		let seasonDetails = await fetch('./data/season.json')
 		seasonDetails = await seasonDetails.json()
 		SEASON_INFO = seasonDetails.info
 		FEATURED_CARD = SEASON_INFO.featuredCard
