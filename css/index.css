@@ -644,11 +644,8 @@ a {
 	height: 100%;
 	background-color: #120020e7;
 	overflow: auto;
-}
-
-.section-modal {
-	scrollbar-color: var(--clr-blue) #333;
 	scrollbar-width: thin;
+	scrollbar-color: var(--clr-blue) #333;
 }
 
 .modal-content {
