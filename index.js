@@ -545,7 +545,7 @@ function startCountdown() {
 		const timeDifference = SEASON_END - new Date()
 
 		if (timeDifference <= 0) {
-			countdownTimer.textContent = "NEW SEASON BEGINS!🎉"
+			countdownTimer.textContent = "NEW SEASON!🎉"
 			FEATURED_CARD = SEASON_INFO.nextFeaturedCard
 			FEATURED_LOCATIONS = SEASON_INFO.nextFeaturedLocations
 			SEASON_END_DATE = SEASON_INFO.nextSeasonEndDate
