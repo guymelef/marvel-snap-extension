@@ -1,4 +1,5 @@
-cooking
 data
-versions
-manifest-firefox.json
+build/.env
+build/chrome
+build/firefox
+build/node_modules
