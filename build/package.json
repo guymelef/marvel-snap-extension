@@ -1,0 +1,18 @@
+{
+	"name": "build",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"cpChromeFiles": "cp -r ../data/ ../css ../images chrome && cp ../*.html ../*.js chrome",
+		"cpFirefoxFiles": "cp -r ../data/ ../css ../images firefox && cp ../*.html ../*.js firefox",
+		"build": "rm -rf chrome firefox && mkdir chrome firefox && npm run cpChromeFiles && npm run cpFirefoxFiles && node build"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"adm-zip": "^0.5.12",
+		"dotenv": "^16.4.5"
+	}
+}
