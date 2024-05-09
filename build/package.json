@@ -6,7 +6,8 @@
 	"scripts": {
 		"cpChromeFiles": "cp -r ../data/ ../css ../images chrome && cp ../*.html ../*.js chrome",
 		"cpFirefoxFiles": "cp -r ../data/ ../css ../images firefox && cp ../*.html ../*.js firefox",
-		"build": "rm -rf chrome firefox && mkdir chrome firefox && npm run cpChromeFiles && npm run cpFirefoxFiles && node build"
+		"build": "rm -rf chrome firefox && mkdir chrome firefox && npm run cpChromeFiles && npm run cpFirefoxFiles && node build",
+		"purge": "node purge"
 	},
 	"keywords": [],
 	"author": "",
