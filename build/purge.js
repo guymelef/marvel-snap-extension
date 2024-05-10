@@ -12,7 +12,8 @@ const charactersToPurge = PURGE_CHARACTERS.split(',')
 const locationsToPurge = PURGE_LOCATIONS.split(',')
 
 function purgeCachedFiles() {
-	if (!charactersToPurge[0] && !locationsToPurge[0]) return
+	if (!charactersToPurge[0] && !locationsToPurge[0])
+		return console.log('✖️ No cache to purge')
 
 	let cachesToPurge = []
 	if (charactersToPurge.length && charactersToPurge[0])
