@@ -16,10 +16,10 @@ function purgeCachedFiles() {
 
 	let cachesToPurge = []
 	if (charactersToPurge.length && charactersToPurge[0])
-		cachesToPurge = charactersToPurge.map(item => `${FILE_URL}card/${item}.webp`)
+		cachesToPurge = charactersToPurge.map(item => `${FILE_URL}/card/${item}.webp`)
 
 	if (locationsToPurge.length && locationsToPurge[0])
-		cachesToPurge = cachesToPurge.concat(locationsToPurge.map(item => `${FILE_URL}location/${item}.webp`))
+		cachesToPurge = cachesToPurge.concat(locationsToPurge.map(item => `${FILE_URL}/location/${item}.webp`))
 
 	console.log(`(${cachesToPurge.length}) CACHED FILES:`, cachesToPurge)
 
@@ -27,13 +27,13 @@ function purgeCachedFiles() {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-Auth-Email': `${EMAIL}`,
-			'X-Auth-Key': `${API_KEY}`
+			'X-Auth-Email': EMAIL,
+			'X-Auth-Key': API_KEY
 		},
 		body: JSON.stringify({ files: cachesToPurge })
 	}
 
-	fetch(`${CF_API}${ZONE_ID}/purge_cache`, options)
+	fetch(`${CF_API}/${ZONE_ID}/purge_cache`, options)
 		.then(response => response.json())
 		.then(response => console.log(response))
 		.catch(err => console.error(err))
