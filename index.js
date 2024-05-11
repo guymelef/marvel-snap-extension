@@ -181,18 +181,10 @@ function displayCard(card, isRandom) {
 	}
 	const imgSrc = `https://files.guymelef.dev/${type}/${image}.webp`
 
-	if (card.ability) {
-		card.ability = card.ability.replaceAll("On Reveal:", "<b>On Reveal:</b>")
-		card.ability = card.ability.replaceAll("On Reveal", "<b>On Reveal</b>")
-		card.ability = card.ability.replaceAll("Ongoing:", "<b>Ongoing:</b>")
-		card.ability = card.ability.replaceAll("Ongoing", "<b>Ongoing</b>")
-	}
+	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing/g, match => match && `<b>${match}</b>`)
 
 	if (type === "card") {
-		if (card.evolved) {
-			card.evolved = card.evolved.replaceAll("On Reveal:", "<b>On Reveal:</b>")
-			card.evolved = card.evolved.replaceAll("Ongoing:", "<b>Ongoing:</b>")
-		}
+		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing/g, match => match && `<b>${match}</b>`)
 
 		if (card.name === FEATURED_CARD) {
 			source = "Season Pass"
