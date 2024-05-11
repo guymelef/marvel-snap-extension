@@ -115,36 +115,32 @@ function showCardInfo(event) {
     let cardAbility = ""
     if (cardInfo.ability) cardAbility = `
       <p class="card-info-text">
-        ${cardInfo.ability.replace('On Reveal:', '<b>On Reveal:</b>').replace('On Reveal', '<b>On Reveal</b>').replace('Ongoing:', '<b>Ongoing:</b>').replace('Ongoing', '<b>Ongoing</b>')}
+        ${cardInfo.ability.replace(/On Reveal|Ongoing/g, match => match && `<b>${match}</b>`)}
       </p>
     `
     else cardAbility = `
       <p class="card-info-text">
-        <i>${cardInfo.text}</i>
+        <i class="card-quote">${cardInfo.text}</i>
         ${cardInfo.evolved ?
           `
             <br>
-            <br>
-            <b>Evolved:</b> ${cardInfo.evolved}
+            <b class="evolved">Evolved:</b> ${cardInfo.evolved.replace(/On Reveal|Ongoing/g, match => match && `<b>${match}</b>`)}
           `
           : ''
         }
-        
       </p>
     `
     
     infoDiv.innerHTML = `
-      <p>
-        <h3>${cardInfo.displayName || cardInfo.name}</h3>
-        <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}
-        </h4>
-        ${cardAbility}
-      </p>
+      <h3>${cardInfo.displayName || cardInfo.name}</h3>
+      <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}</h4>
+      ${cardAbility}
     `
   }
 }
 
 function hideCardInfo() {
+  infoDiv.innerHTML = ""
   infoDiv.style.display = "none"
 }
 

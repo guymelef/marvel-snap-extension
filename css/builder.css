@@ -147,6 +147,15 @@ button, select, input {
   font-weight: 500;
 }
 
+.evolved {
+  color: #1fdd06;
+}
+
+.card-info-text .card-quote {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
 .card-info span {
   color: #ef4343;
 }
