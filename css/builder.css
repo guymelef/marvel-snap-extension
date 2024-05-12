@@ -124,6 +124,35 @@ button, select, input {
   display: none;
 }
 
+.card-info .series-label {
+  color: #f5f8f8;
+  font-family: var(--ff-secondary);
+  font-size: 14px;
+  padding: 1px 3px;
+  display: inline-block;
+}
+
+.series1,
+.series2 {
+	background-image: linear-gradient(#85ccd8, #658089);
+}
+
+.series3 {
+	background-image: linear-gradient(#2d7e56, #8df289);
+}
+
+.series4 {
+	background-image: linear-gradient(#0c7bfc, #00bce1);
+}
+
+.series5 {
+	background-image: linear-gradient(#d93758, #b62b84);
+}
+
+.season-pass {
+	background-image: linear-gradient(#cb28e1, #7e80df);
+}
+
 .card-info h3, h4, p {
   padding: 0;
   margin: 0;
@@ -143,12 +172,12 @@ button, select, input {
   margin-bottom: 4px;
 }
 
-.card-info-text {
-  font-weight: 500;
+.card-info .evolved {
+  color: #1fdd06;
 }
 
-.evolved {
-  color: #1fdd06;
+.card-info-text {
+  font-weight: 500;
 }
 
 .card-info-text .card-quote {

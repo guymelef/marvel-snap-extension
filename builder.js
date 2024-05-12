@@ -112,6 +112,24 @@ function showCardInfo(event) {
   const elClasses = [...event.target.classList]
   if (elClasses.includes('card-image')) {
     const cardInfo = cardsToDisplay[event.target.dataset.index]
+
+    let source = ''
+    let sourceClass = ''
+    let seriesLabel = ''
+    const cardSeries = cardInfo.series
+    if (cardSeries) {
+      if (cardSeries && cardSeries !== "NA") {
+        if (cardSeries === 'Season Pass') {
+          source = 'Season Pass'
+          sourceClass = 'season-pass'
+        } else {
+          source = `Series ${cardSeries}`
+          sourceClass = `series${cardSeries}`
+        }
+        seriesLabel = `<span class="series-label ${sourceClass}">${source}</span>`
+      }
+    }
+
     let cardAbility = ""
     if (cardInfo.ability) cardAbility = `
       <p class="card-info-text">
@@ -132,7 +150,7 @@ function showCardInfo(event) {
     `
     
     infoDiv.innerHTML = `
-      <h3>${cardInfo.displayName || cardInfo.name}</h3>
+      <h3>${cardInfo.displayName || cardInfo.name} ${seriesLabel}</h3>
       <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}</h4>
       ${cardAbility}
     `
