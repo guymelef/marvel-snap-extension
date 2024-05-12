@@ -130,6 +130,7 @@ button, select, input {
   font-size: 14px;
   padding: 1px 3px;
   display: inline-block;
+  vertical-align: text-top;
 }
 
 .series1,
