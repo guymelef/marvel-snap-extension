@@ -349,7 +349,7 @@ function importDeckCode() {
 }
 
 function resetDeckBuilder() {
-  cardsToDisplay = ALL_CARDS
+  cardsToDisplay = RELEASED_CARDS
   cardsInDeck = []
   selectedKeyword = ""
   selectedAbility = ""
