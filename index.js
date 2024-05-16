@@ -516,12 +516,36 @@ function renderModalContent(events, styles) {
 				`
 			})
 			modalContent += `
-			<div class="patch-ota">
-				<h3>🔄 ${event.title}</h3>
-				<ul class="event">
-					${changes}
-				</ul>
-			</div>
+				<div class="patch-ota">
+					<h3>♻️ ${event.title}</h3>
+					<ul class="event">
+						${changes}
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === "Series Drop" && event.items.length) {
+			let seriesDrop = ''
+			event.items.forEach(item => {
+				seriesDrop += `
+					<li>
+						<details>
+							<summary><strong class="date">${event.date}</strong> 🔸 ${item.name}</summary>
+							<ul class="styled-list">
+								${item.cards.map(card => `<li class="list-item">${card}</li>`).join('')}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+				<div>
+					<h3>⏬ ${event.title}</h3>
+					<ul class="event">
+						${seriesDrop}
+					</ul>
+				</div>
 			`
 		}
 	})
