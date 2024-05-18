@@ -740,6 +740,11 @@ a {
 	margin: 0;
 }
 
+.series-drop .series-drop-ul {
+	list-style: none;
+	margin-left: -16px;
+}
+
 @keyframes slide {
 	from {
 		bottom: -200px;
