@@ -347,15 +347,12 @@ function renderModalContent(events, styles) {
 		}
 
 		if (event.title === 'New Locations') {
-			let listItems = ''
-			event.items.forEach(item => {
-				listItems += `<li class="list-item"><span class="list-padding highlight-location">${item}</span></li>`
-			})
+			let listItems = event.items.map(loc => `<li class="list-item"><span class="list-padding highlight-location">${loc}</span></li>`)
 			modalContent += `
 				<div>
 					<h3>🗺️ ${event.title}</h3>
 					<ul class="styled-list">
-						${listItems}	
+						${listItems.join('')}
 					</ul>
 				</div>
 			`
@@ -364,15 +361,12 @@ function renderModalContent(events, styles) {
 		if (event.title === 'Spotlight Caches') {
 			let listItems = ''
 			event.items.forEach(item => {
-				let cacheList = ''
-				item.items.forEach(item => {
-					cacheList += `<li class="list-item"><span class="list-padding series${item.series}">${item.name}</span></li>`
-				})
+				let cacheList = item.items.map(card => `<li class="list-item"><span class="list-padding series${card.series}">${card.name}</span></li>`)
 				listItems += `
 					<li>
 						<strong class="date">${item.date}</strong>
 						<ul class="styled-list">
-							${cacheList}
+							${cacheList.join('')}
 						</ul>
 					</li>
 				`
@@ -419,14 +413,13 @@ function renderModalContent(events, styles) {
 		if (event.title === 'Shop Takeover') {
 			let listItems = ''
 			event.items.forEach(item => {
-				let cards = ''
-				item.cards.forEach(card => cards +=  `<li class="list-item">${card}</li>`)
+				let cards = item.cards.map(card => `<li class="list-item">${card}</li>`)
 				listItems += `
 					<li>
 						<details>
 							<summary><strong class="date">${item.date}</strong> 🔹 ${item.name}</summary>
 							<ul class="styled-list">
-								${cards}
+								${cards.join('')}
 							</ul>
 						</details>
 					</li>
@@ -468,14 +461,13 @@ function renderModalContent(events, styles) {
 		if (event.title === '7-Day Login' && event.items.length) {
 			let listItems = ''
 			event.items.forEach(item => {
-				let loginRewards = ''
-				item.items.forEach((item, index) => loginRewards += `<li class="list-item">Day ${index + 1}: <span class="event-list secondary-text">${item}</span></li>`)
+				let loginRewards = item.items.map((reward, index) => `<li class="list-item">Day ${index + 1}: <span class="event-list secondary-text">${reward}</span></li>`)
 				listItems += `
 					<li>
 						<details>
 							<summary><strong class="date">${item.date}</strong> ${item.title ? `🔸 ${item.title}` : ''}</summary>
 							<ul class="styled-list">
-								${loginRewards}
+								${loginRewards.join('')}
 							</ul>
 						</details>
 					</li>
@@ -531,7 +523,9 @@ function renderModalContent(events, styles) {
 				seriesDrop += `
 					<li>
 						<details>
-							<summary><strong class="date">${event.date}</strong> 🔸 ${item.name}</summary>
+							<summary>
+								Drop to <span class="list-padding ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
+							</summary>
 							<ul class="styled-list">
 								${item.cards.map(card => `<li class="list-item">${card}</li>`).join('')}
 							</ul>
@@ -540,10 +534,17 @@ function renderModalContent(events, styles) {
 				`
 			})
 			modalContent += `
-				<div>
+				<div class="series-drop">
 					<h3>⏬ ${event.title}</h3>
 					<ul class="event">
-						${seriesDrop}
+						<li>
+							<details open>
+								<summary><strong class="date">${event.date}</strong></summary>
+								<ul class="series-drop-ul">
+									${seriesDrop}
+								</ul>
+							</details>
+						</li>
 					</ul>
 				</div>
 			`
