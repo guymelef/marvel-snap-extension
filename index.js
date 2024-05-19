@@ -538,12 +538,10 @@ function renderModalContent(events, styles) {
 					<h3>⏬ ${event.title}</h3>
 					<ul class="event">
 						<li>
-							<details open>
-								<summary><strong class="date">${event.date}</strong></summary>
-								<ul class="series-drop-ul">
-									${seriesDrop}
-								</ul>
-							</details>
+							<strong class="date">${event.date}</strong>
+							<ul class="series-drop-ul">
+								${seriesDrop}
+							</ul>
 						</li>
 					</ul>
 				</div>

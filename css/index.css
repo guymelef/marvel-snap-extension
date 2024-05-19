@@ -742,7 +742,7 @@ a {
 
 .series-drop .series-drop-ul {
 	list-style: none;
-	margin-left: -16px;
+	margin-left: -20px;
 }
 
 @keyframes slide {
