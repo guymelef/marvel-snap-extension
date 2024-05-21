@@ -491,7 +491,7 @@ function renderModalContent(events, styles) {
 					listItems += `
 						<li>
 							<h4>${item.name}</h4>
-							<p>⬅️ ${item.changes[0]}</p>
+							${item.changes[0] && `<p>⬅️ ${item.changes[0]}</p>`}
 							<p>➡️ ${item.changes[1]}</p>
 						</li>
 					`
