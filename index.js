@@ -410,7 +410,7 @@ function renderModalContent(events, styles) {
 			`
 		}
 
-		if (event.title === 'Shop Takeover') {
+		if (event.title === 'Shop Takeover' && event.items.length) {
 			let listItems = ''
 			event.items.forEach(item => {
 				let cards = item.cards.map(card => `<li class="list-item">${card}</li>`)
