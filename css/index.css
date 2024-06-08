@@ -545,7 +545,8 @@ a {
 	box-shadow: 0 0 40px 3px #81c4e7;
 }
 
-.btn-deck-builder:hover::before {
+.btn-deck-builder:hover::before,
+.btn-deck-builder:focus::before {
 	content: "Build a deck!";
 	position: absolute;
 	top: -55%;
@@ -561,7 +562,8 @@ a {
 	font-family: var(--ff-title);
 }
 
-.btn-deck-builder:hover::after {
+.btn-deck-builder:hover::after,
+.btn-deck-builder:focus::after {
 	content: "";
 	position: absolute;
 	top: -12px;
