@@ -11,6 +11,7 @@ const seasonHeader = document.querySelector('.season-calendar')
 const countdownTimer = document.querySelector('.countdown-timer')
 const modal = document.querySelector('.section-modal')
 const modalCloseBtn = document.querySelector('.modal-close-btn')
+const cardInfoTooltip = document.querySelector('.card-info')
 
 const borderColor = {
 	card: "#2973C4",
@@ -68,6 +69,7 @@ async function startApp() {
 		displayFeaturedCard()
 		renderModalContent(seasonDetails.events, seasonDetails.styles)
 		searchBox.focus()
+		addHoverListenersToCards()
 	} catch(err) {
 		console.error("ERROR FETCHING DATA:", err)
 	}
@@ -283,7 +285,7 @@ function displayFeaturedCard() {
 				return card
 			}
 		})
-		displayCard(featuredCard)
+		displayCard({...featuredCard})
 	} else if (CATEGORY === 'location') {
 		const randomIndex = Math.floor(Math.random() * 2)
 		const featuredLocation = LOCATIONS.find((card, index) => {
@@ -292,7 +294,7 @@ function displayFeaturedCard() {
 				return card
 			}
 		})
-		displayCard(featuredLocation)
+		displayCard({...featuredLocation})
 	}
 }
 
@@ -329,11 +331,11 @@ function renderModalContent(events, styles) {
 			let listItems = ''
 			event.items.forEach((item, index) => {
 				if (index === 0) {
-					listItems += `<li class="list-item" aria-label="season pass card"><span class="list-padding season-pass">${item.name}</span></li>`
+					listItems += `<li class="list-item" aria-label="season pass card"><span class="highlight-card hoverable season-pass">${item.name}</span></li>`
 				} else if (index === event.items.length - 1) {
-					listItems += `<li class="list-item"><span class="list-padding series${item.series}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
+					listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
 				} else {
-					listItems += `<li class="list-item"><span class="list-padding series${item.series}">${item.name}</span></li>`
+					listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span></li>`
 				}
 			})
 			modalContent += `
@@ -347,7 +349,7 @@ function renderModalContent(events, styles) {
 		}
 
 		if (event.title === 'New Locations') {
-			let listItems = event.items.map(loc => `<li class="list-item"><span class="list-padding highlight-location">${loc}</span></li>`)
+			let listItems = event.items.map(loc => `<li class="list-item"><span class="highlight-card highlight-location hoverable">${loc}</span></li>`)
 			modalContent += `
 				<div>
 					<h3>🗺️ ${event.title}</h3>
@@ -361,7 +363,7 @@ function renderModalContent(events, styles) {
 		if (event.title === 'Spotlight Caches') {
 			let listItems = ''
 			event.items.forEach(item => {
-				let cacheList = item.items.map(card => `<li class="list-item"><span class="list-padding series${card.series}">${card.name}</span></li>`)
+				let cacheList = item.items.map(card => `<li class="list-item"><span class="highlight-card hoverable series${card.series}">${card.name}</span></li>`)
 				listItems += `
 					<li>
 						<strong class="date">${item.date}</strong>
@@ -413,7 +415,7 @@ function renderModalContent(events, styles) {
 		if (event.title === 'Shop Takeover' && event.items.length) {
 			let listItems = ''
 			event.items.forEach(item => {
-				let cards = item.cards.map(card => `<li class="list-item">${card}</li>`)
+				let cards = item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`)
 				listItems += `
 					<li>
 						<details>
@@ -524,10 +526,10 @@ function renderModalContent(events, styles) {
 					<li>
 						<details>
 							<summary>
-								Drop to <span class="list-padding ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
+								Drop to <span class="highlight-card ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
 							</summary>
 							<ul class="styled-list">
-								${item.cards.map(card => `<li class="list-item">${card}</li>`).join('')}
+								${item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`).join('')}
 							</ul>
 						</details>
 					</li>
@@ -550,6 +552,40 @@ function renderModalContent(events, styles) {
 	})
 
 	document.querySelector('.season-details').innerHTML = modalContent
+}
+
+function addHoverListenersToCards() {
+	document.querySelectorAll('.hoverable').forEach(el => {
+		el.onmouseover = () => {
+			const imageName = el.innerText.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '')
+			if ([...el.classList].includes('highlight-location')) {
+				const cardToDisplay = LOCATIONS.find(card => card.name === el.innerText)
+				cardInfoTooltip.innerHTML = `
+					<img src="https://files.guymelef.dev/location/${imageName}.webp" alt="${cardToDisplay.name}" width="120px">
+					<span>${cardToDisplay.ability}</span>
+				`
+			} else {
+				const cardToDisplay = CARDS.find(card => card.name === el.innerText)
+				const source = cardToDisplay.series !== "Season Pass" ? `Series ${cardToDisplay.series}` : "Season Pass"
+				cardInfoTooltip.innerHTML = `
+					<img src="https://files.guymelef.dev/card/${imageName}.webp"
+						alt="${cardToDisplay.name} | Series: ${cardToDisplay.series} | Cost: ${cardToDisplay.cost} | Power: ${cardToDisplay.power}"
+						width="120px"
+					>
+					<span style="color:lime" class="secondary-text"><b>${source}</b></span>
+					<span>${cardToDisplay.ability}</span>
+				`
+			}
+			cardInfoTooltip.style.display = "block"
+			cardInfoTooltip.style.opacity = 1
+		}
+
+		el.onmouseout = () => {
+			cardInfoTooltip.innerHTML = ""
+			cardInfoTooltip.style.opacity = 0
+			cardInfoTooltip.style.display = "none"
+		}
+	})
 }
 
 function startCountdown() {

@@ -650,6 +650,27 @@ a {
 	scrollbar-color: var(--clr-blue) #333;
 }
 
+.card-info {
+  position: fixed;
+  z-index: 1;
+  transform: translate(230px, 70px);
+  width: 150px;
+  font-size: 12px;
+  letter-spacing: .5px;
+  background-color: #010b13;
+  border-radius: 4px;
+	border: 1px dotted #696969;
+  padding: 6px;
+  color: #e0ffff;
+	text-align: center;
+  display: none;
+	opacity: 0;
+}
+
+.card-info > span {
+	display: block;
+}
+
 .modal-content {
 	position: relative;
 	font-size: 14px;
@@ -662,6 +683,11 @@ a {
 	border-radius: 4px;
 	width: 90%;
 	animation: slide 0.3s ease-out;
+}
+
+.modal-content .hoverable:hover {
+	cursor: help;
+	border-bottom: 2px dotted #000;
 }
 
 .modal-close {
@@ -775,7 +801,7 @@ summary::marker {
 	font-weight: bold;
 }
 
-.list-padding {
+.highlight-card {
 	padding: 1px 3px;
 	line-height: 1.75;
 }
