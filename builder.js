@@ -41,7 +41,7 @@ let selectedAbility = ""
 let selectedEnergy = ""
 let selectedPower = ""
 let selectedSeries = ""
-let selectedSortProperty = "name"
+let selectedSortProperty = "cost"
 let selectedSortOrder = "ascending"
 let cardsInDeck = []
 let loadedImages = new Set()
@@ -62,6 +62,7 @@ function startDeckBuilder() {
       cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck && card.released && card.type === 'character')
       if (cardInDeck) cardsInDeck = [cardInDeck]
       
+      sortCards(cardsToDisplay)
       renderCardsInDeck()
       renderCardsInPool()
     })
@@ -108,6 +109,7 @@ function removeCardFromDeck(name) {
 
 function showCardInfo(event) {
   infoDiv.style.display = "block"
+  infoDiv.style.opacity = 1
 
   const elClasses = [...event.target.classList]
   if (elClasses.includes('card-image')) {
@@ -154,6 +156,8 @@ function showCardInfo(event) {
       <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}</h4>
       ${cardAbility}
     `
+  } else {
+    hideCardInfo()
   }
 }
 
@@ -356,7 +360,7 @@ function resetDeckBuilder() {
   selectedEnergy = ""
   selectedPower = ""
   selectedSeries = ""
-  selectedSortProperty = "name"
+  selectedSortProperty = "cost"
   selectedSortOrder = "ascending"
   cardsInDeck = []
 
@@ -364,10 +368,11 @@ function resetDeckBuilder() {
   energySelector.value = ""
   powerSelector.value = ""
   seriesSelector.value = ""
-  propSorter.value = "name"
+  propSorter.value = "cost"
   orderSorter.value = "ascending"
   keywordSearcher.value = ""
   
+  sortCards(cardsToDisplay)
   renderCardsInDeck()
   renderCardsInPool()
   setTimeout(() => scrollToTop(), 300)
