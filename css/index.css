@@ -653,18 +653,18 @@ a {
 .card-info {
   position: fixed;
   z-index: 1;
-  transform: translate(230px, 70px);
+  transform: translate(230px, 85px);
   width: 150px;
   font-size: 12px;
   letter-spacing: .5px;
   background-color: #010b13;
-  border-radius: 4px;
-	border: 1px dotted #696969;
+	border: 1px solid #32cd32;
   padding: 6px;
   color: #e0ffff;
 	text-align: center;
   display: none;
 	opacity: 0;
+	box-shadow: 0px 8px 6px 0px #00000090;
 }
 
 .card-info > span {
@@ -687,7 +687,7 @@ a {
 
 .modal-content .hoverable:hover {
 	cursor: help;
-	border-bottom: 2px dotted #000;
+	border-bottom: 2px dotted #32cd32;
 }
 
 .modal-close {
