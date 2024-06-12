@@ -1,4 +1,3 @@
-const cardsView = document.querySelector('.cards-view')
 const cardsDiv = document.querySelector('.all-cards')
 const deckDiv = document.querySelector('.deck-view')
 const infoDiv = document.querySelector('.card-info')
