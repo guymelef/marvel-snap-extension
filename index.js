@@ -11,6 +11,7 @@ const seasonHeader = document.querySelector('.season-calendar')
 const countdownTimer = document.querySelector('.countdown-timer')
 const modal = document.querySelector('.section-modal')
 const modalCloseBtn = document.querySelector('.modal-close-btn')
+const modalScrollToTopBtn = document.querySelector('.modal-scrolltotop')
 const cardInfoTooltip = document.querySelector('.card-info')
 
 const borderColor = {
@@ -39,6 +40,8 @@ deckBuilderBtn.onclick = redirectToDeckBuilder
 seasonHeader.onclick = showModal
 modalCloseBtn.onclick = _ => showModal(false)
 modal.onclick = ({ target }) => { target === modal && showModal(false) }
+modal.onscroll = handleModalScroll
+modalScrollToTopBtn.onclick = _ => modal.scrollTo({ top:0, behavior:"smooth" })
 
 startApp()
 
@@ -586,6 +589,11 @@ function addHoverListenersToCards() {
 			cardInfoTooltip.style.display = "none"
 		}
 	})
+}
+
+function handleModalScroll() {
+	if (modal.scrollTop >= 400) modalScrollToTopBtn.style.display = 'block'
+	else modalScrollToTopBtn.style.display = 'none'
 }
 
 function startCountdown() {
