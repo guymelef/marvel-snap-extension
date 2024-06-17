@@ -718,6 +718,11 @@ a {
 	display: none;
 }
 
+.modal-scrolltotop:hover,
+.modal-scrolltotop:focus {
+	transform: scale(1.05);
+}
+
 .btn-scroll {
 	display: block;
 	font-size: 26px;
