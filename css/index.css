@@ -720,7 +720,7 @@ a {
 
 .modal-scrolltotop:hover,
 .modal-scrolltotop:focus {
-	transform: scale(1.05);
+	box-shadow: #05ce30cc 0 0 6px 2px;
 }
 
 .btn-scroll {
