@@ -56,6 +56,7 @@ function startDeckBuilder() {
       cards = await cards.json()
       ALL_CARDS = cards
       RELEASED_CARDS = cards.filter(card => card.type === 'character' && card.released)
+      sortCards(RELEASED_CARDS)
       cardsToDisplay = RELEASED_CARDS
       
       const urlParams = new URLSearchParams(window.location.search)
@@ -63,7 +64,6 @@ function startDeckBuilder() {
       cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck && card.released && card.type === 'character')
       if (cardInDeck) cardsInDeck = [cardInDeck]
       
-      sortCards(cardsToDisplay)
       renderCardsInDeck()
       renderCardsInPool()
     })
@@ -376,7 +376,6 @@ function resetDeckBuilder() {
   cardsInDeck = []
   resetSortAndFilter()
   
-  sortCards(cardsToDisplay)
   renderCardsInDeck()
   renderCardsInPool()
   setTimeout(() => scrollToTop(), 300)
