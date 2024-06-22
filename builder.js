@@ -10,6 +10,7 @@ const orderSorter = document.querySelector('#sort-order')
 const keywordSearcher = document.querySelector('#keyword-searcher')
 const saveDeckBtn = document.querySelector('#save-deck-btn')
 const importDeckBtn = document.querySelector('#import-deck-btn')
+const resetSortAndFilterBtn = document.querySelector('#reset-controls-btn')
 const resetAllBtn = document.querySelector('#reset-all-btn')
 const toastMsg = document.querySelector('.toast-msg')
 const modal = document.querySelector('.builder-modal')
@@ -28,6 +29,7 @@ orderSorter.onchange = handleSortChange
 keywordSearcher.oninput = debounce(handleKeywordInput, 300)
 saveDeckBtn.onclick = throttle(saveDeckToClipboard, 1100)
 importDeckBtn.onclick = toggleModal
+resetSortAndFilterBtn.onclick = throttle(resetSortAndFilter, 1000)
 resetAllBtn.onclick = throttle(resetDeckBuilder, 1000)
 modal.onclick = handleModalClick
 submitBtn.onclick = importDeckCode
@@ -351,9 +353,7 @@ function importDeckCode() {
   }
 }
 
-function resetDeckBuilder() {
-  cardsToDisplay = RELEASED_CARDS
-  cardsInDeck = []
+function resetSortAndFilter() {
   selectedKeyword = ""
   selectedAbility = ""
   selectedEnergy = ""
@@ -361,15 +361,20 @@ function resetDeckBuilder() {
   selectedSeries = ""
   selectedSortProperty = "cost"
   selectedSortOrder = "ascending"
-  cardsInDeck = []
-
+  
+  keywordSearcher.value = ""
   abilitySelector.value = ""
   energySelector.value = ""
   powerSelector.value = ""
   seriesSelector.value = ""
   propSorter.value = "cost"
   orderSorter.value = "ascending"
-  keywordSearcher.value = ""
+}
+
+function resetDeckBuilder() {
+  cardsToDisplay = RELEASED_CARDS
+  cardsInDeck = []
+  resetSortAndFilter()
   
   sortCards(cardsToDisplay)
   renderCardsInDeck()
