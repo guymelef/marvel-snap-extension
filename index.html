@@ -31,11 +31,11 @@
 			</a>
 		</section>
 		<section class="section-countdown secondary-text">
-			<button class="btn season-calendar" aria-label="View Season Calendar" title="View Season Calendar">
+			<button class="btn season-calendar tooltip" aria-label="View Season Calendar" data-tooltip="Season Details">
 				<img src="images/index/calendar.svg">Season End
 			</button>
 			<span>:</span>
-			<a class="countdown" href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" aria-label="Season Timer & Infinite Leaderboard Page" title="Check Infinite Leaderboard">
+			<a class="countdown tooltip" href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" aria-label="Season Timer & Infinite Leaderboard Page" data-tooltip="Infinite Leaderboard">
 				<img src="images/index/alarm.svg">
 				<span class="countdown-timer"></span>
 			</a>
@@ -50,9 +50,9 @@
 				<div class="modal-scrolltotop">
 					<button class="btn btn-scroll" aria-label="scroll to top">🔝</button>
 				</div>
-				<header>
+				<header class="tooltip" data-tooltip="Read Official Announcement">
 					<h2 class="modal-content-header">
-						<a target="_blank" class="season-link" aria-label="read current season info" title="View Season Details"></a>
+						<a target="_blank" class="season-link" aria-label="read current season info"></a>
 					</h2>
 				</header>
 				<div class="season-details"></div>
@@ -60,8 +60,8 @@
 		</section>
 	</main>
 	<footer>
-		<div>
-			<a href="https://ko-fi.com/sandvich" target="_blank" title="Support the Developer" aria-label="Support the developer">
+		<div class="kofi-div">
+			<a href="https://ko-fi.com/sandvich" target="_blank" aria-label="Support the developer" class="tooltip-donate" data-tooltip="Donate">
 				<img src="images/socials/ko-fi.svg" class="kofi" alt="Ko-Fi logo">
 			</a>
 		</div>
