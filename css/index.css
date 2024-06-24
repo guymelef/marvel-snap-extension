@@ -576,7 +576,7 @@ a {
 
 .btn-deck-builder:focus {
 	transform: scale(1.05);
-	box-shadow: 0 0 40px 3px #81c4e7;
+	box-shadow: 0 0 10px 5px #9dd1ec8e;
 }
 
 .btn-deck-builder:hover::before,
@@ -598,17 +598,18 @@ a {
 }
 
 .btn-deck-builder:hover::after,
-.btn-deck-builder:focus::after {
+.btn-deck-builder:focus::after,
+.tooltip-header:hover::after,
+.tooltip-header:focus::after {
 	content: "";
 	position: absolute;
 	top: -16px;
-	left: 40%;
+	left: calc(50% - 5px);
 	background: #000;
 	border-bottom: 1px solid #ccf0fc48;
 	border-right: 1px solid #ccf0fc48;
 	height: 10px;
 	width: 10px;
-	transform: translate(-50%, -50%);
 	transform: rotate(45deg);
 }
 
@@ -773,8 +774,11 @@ a {
 	margin-top: 6px;
 	font-family: var(--ff-title);
 	text-align: center;
-	text-transform: uppercase;
 	transition: all 0.3s ease-in;
+}
+
+.modal-content-header a {
+	text-transform: uppercase;
 }
 
 .modal-content h3 {
