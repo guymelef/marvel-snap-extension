@@ -581,36 +581,32 @@ a {
 
 .btn-deck-builder:hover::before,
 .btn-deck-builder:focus::before {
-	content: "Build a deck!";
+	content: attr(data-tooltip);
 	position: absolute;
-	top: -55%;
+	top: -52%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: max-content;
 	padding: 5px;
-	color: #2F88FF;
-	font-weight: bold;
-	text-align: center;
 	border-radius: 3px;
+	color: #2F88FF;
 	background-color: #000;
-	font-family: var(--ff-title);
 	border: 1px solid #ccf0fc48;
+	font-family: var(--ff-title);
 }
 
 .btn-deck-builder:hover::after,
-.btn-deck-builder:focus::after,
-.tooltip-header:hover::after,
-.tooltip-header:focus::after {
+.btn-deck-builder:focus::after {
 	content: "";
 	position: absolute;
-	top: -16px;
+	top: -15px;
 	left: calc(50% - 5px);
-	background: #000;
-	border-bottom: 1px solid #ccf0fc48;
-	border-right: 1px solid #ccf0fc48;
+	transform: rotate(45deg);
 	height: 10px;
 	width: 10px;
-	transform: rotate(45deg);
+	background-color: #000;
+	border-bottom: 1px solid #ccf0fc48;
+	border-right: 1px solid #ccf0fc48;
 }
 
 .section-countdown {
