@@ -320,7 +320,7 @@ button, select, input {
 .btn-control:focus-visible::before {
   content: attr(data-tooltip);
 	position: absolute;
-	top: -55%;
+	top: -69%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	padding: 3px 5px;
@@ -331,6 +331,20 @@ button, select, input {
   font-size: 12px;
 	color: #2F88FF;
 	border: 1px solid #ccf0fc48;
+}
+
+.btn-control:hover::after,
+.btn-control:focus-visible::after {
+  content: "";
+	position: absolute;
+	height: 8px;
+	width: 8px;
+  top: -10px;
+	left: calc(50% - 4px);
+	transform: rotate(45deg);
+	background-color: #000;
+	border-bottom: 1px solid #ccf0fc48;
+	border-right: 1px solid #ccf0fc48;
 }
 
 #exit-deck-builder {
