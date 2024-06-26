@@ -776,16 +776,6 @@ footer div {
 	text-transform: uppercase;
 }
 
-.season-link:hover::before,
-.season-link:focus-visible::before {
-	text-transform: none;
-}
-
-.season-link:hover::after,
-.season-link:focus-visible::after {
-	top: -8px;
-}
-
 .modal-content h3 {
 	font-family: var(--ff-title);
 	letter-spacing: normal;
