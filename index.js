@@ -397,7 +397,7 @@ function renderModalContent(events, styles) {
 				albumItems += `
 					<li>
 						<details>
-							<summary><strong class="date">${item.date}</strong> 🔹 ${item.name}</summary>
+							<summary><strong class="date">${item.date}</strong> 〰️ ${item.name}</summary>
 							<ul class="styled-list">
 								${listItems}
 							</ul>
@@ -422,7 +422,7 @@ function renderModalContent(events, styles) {
 				listItems += `
 					<li>
 						<details>
-							<summary><strong class="date">${item.date}</strong> 🔹 ${item.name}</summary>
+							<summary><strong class="date">${item.date}</strong> 💠 ${item.name}</summary>
 							<ul class="styled-list">
 								${cards.join('')}
 							</ul>
