@@ -26,7 +26,7 @@
 		</section>
 		<section class="section-controls">
 			<button type="button" class="btn btn-randomize" aria-label="Random Search">Randomize <img src="images/index/shuffle.svg"></button>
-			<a class="btn btn-deck-builder" href="builder.html" aria-label="Go to deck builder" data-tooltip="Build a deck!">
+			<a class="btn btn-deck-builder tooltip" href="builder.html" aria-label="Go to deck builder" data-tooltip="Build a deck!">
 				<img src="images/index/enter.svg">
 			</a>
 		</section>
@@ -35,7 +35,7 @@
 				<img src="images/index/calendar.svg">Season End
 			</button>
 			<span>:</span>
-			<a class="countdown tooltip" href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" aria-label="Season Timer & Infinite Leaderboard Page" data-tooltip="Infinite Leaderboard">
+			<a class="countdown tooltip" href="https://www.marvelsnap.com/infiniteleaderboard" target="_blank" aria-label="Season Timer & Infinite Leaderboard Page" data-tooltip="View Leaderboard">
 				<img src="images/index/alarm.svg">
 				<span class="countdown-timer"></span>
 			</a>
@@ -51,8 +51,8 @@
 					<button class="btn btn-scroll" aria-label="scroll to top">🔝</button>
 				</div>
 				<header>
-					<h2 class="modal-content-header tooltip" data-tooltip="Read Official Announcement">
-						<a target="_blank" class="season-link" aria-label="read current season info"></a>
+					<h2 class="modal-content-header">
+						<a target="_blank" class="season-link tooltip" aria-label="read season announcement"  data-tooltip="Read Season Announcement"></a>
 					</h2>
 				</header>
 				<div class="season-details"></div>
@@ -60,8 +60,8 @@
 		</section>
 	</main>
 	<footer>
-		<div class="kofi-div">
-			<a href="https://ko-fi.com/sandvich" target="_blank" aria-label="Support the developer" class="tooltip-donate" data-tooltip="Donate">
+		<div>
+			<a href="https://ko-fi.com/sandvich" target="_blank" aria-label="Support the developer" class="tooltip tooltip-donate" data-tooltip="Donate">
 				<img src="images/socials/ko-fi.svg" class="kofi" alt="Ko-Fi logo">
 			</a>
 		</div>
@@ -102,7 +102,6 @@
 				</a>
 			</li>
 		</ul>
-		
 	</footer>
 
 	<script type="text/javascript" src="index.js"></script>

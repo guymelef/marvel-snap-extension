@@ -62,38 +62,40 @@ a {
 	cursor: pointer;
 }
 
-.tooltip, .kofi-div {
+.tooltip,
+footer div {
 	position: relative;
 }
 
-.tooltip:hover::before, 
-.tooltip:focus-visible:before,
-.tooltip-donate:hover::before,
-.tooltip-donate:focus-visible:before {
+.tooltip:hover::before,
+.tooltip:focus-visible::before {
 	content: attr(data-tooltip);
 	position: absolute;
-	padding: 3px 5px;
-  width: max-content;
-	border-radius: 2px;
-	background-color: #000;
-	font-family: var(--ff-title);
-  font-size: 13px;
-	color: #4a98ff;
-	border: 1px solid #ccf0fc48;
-	text-shadow: none;
-}
-
-.tooltip:hover::before, 
-.tooltip:focus-visible:before {
 	top: -50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	width: max-content;
+	border-radius: 2px;
+	padding: 3px 5px;
+	color: #2F88FF;
+	background-color: #000;
+	border: 1px solid #ccf0fc48;
+	font-family: var(--ff-title);
+  font-size: 12px;
+	text-shadow: none;
 }
 
-.tooltip-donate:hover::before,
-.tooltip-donate:focus-visible:before {
-	top: 15%;
-	left: 120%;
+.tooltip:hover::after,
+.tooltip:focus-visible::after {
+	content: "";
+	position: absolute;
+	height: 8px;
+	width: 8px;
+	left: calc(50% - 4px);
+	transform: rotate(45deg);
+	background-color: #000;
+	border-bottom: 1px solid #ccf0fc48;
+	border-right: 1px solid #ccf0fc48;
 }
 
 .section-buttons {
@@ -508,7 +510,7 @@ a {
 	z-index: 0;
 }
 
-.btn-randomize:before {
+.btn-randomize::before {
 	content: '';
 	background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
 	position: absolute;
@@ -529,16 +531,16 @@ a {
 	color: #f5f5f5
 }
 
-.btn-randomize:active:after {
+.btn-randomize:active::after {
 	background: transparent;
 }
 
-.btn-randomize:hover:before,
-.btn-randomize:focus:before {
+.btn-randomize:hover::before,
+.btn-randomize:focus::before {
 	opacity: 1;
 }
 
-.btn-randomize:after {
+.btn-randomize::after {
 	content: '';
 	position: absolute;
 	z-index: -1;
@@ -581,32 +583,20 @@ a {
 
 .btn-deck-builder:hover::before,
 .btn-deck-builder:focus::before {
-	content: attr(data-tooltip);
-	position: absolute;
 	top: -52%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: max-content;
 	padding: 5px;
 	border-radius: 3px;
-	color: #2F88FF;
-	background-color: #000;
-	border: 1px solid #ccf0fc48;
-	font-family: var(--ff-title);
+	font-size: 14px;
 }
 
 .btn-deck-builder:hover::after,
 .btn-deck-builder:focus::after {
-	content: "";
-	position: absolute;
-	top: -15px;
+	top: -14px;
 	left: calc(50% - 5px);
-	transform: rotate(45deg);
 	height: 10px;
 	width: 10px;
-	background-color: #000;
-	border-bottom: 1px solid #ccf0fc48;
-	border-right: 1px solid #ccf0fc48;
 }
 
 .section-countdown {
@@ -636,7 +626,11 @@ a {
 .season-calendar:focus {
 	color: #adff2f;
 	border-bottom: 3px solid var(--clr-white);
+}
 
+.season-calendar:hover::after,
+.season-calendar:focus::after {
+	top: -5px;
 }
 
 .countdown {
@@ -661,6 +655,11 @@ a {
 .countdown:focus {
 	background: #0505c593;
 	box-shadow: 4px 4px #080200;
+}
+
+.countdown:hover::after,
+.countdown:focus::after {
+	top: -9px;
 }
 
 @keyframes flipVertical {
@@ -775,6 +774,16 @@ a {
 
 .modal-content-header a {
 	text-transform: uppercase;
+}
+
+.season-link:hover::before,
+.season-link:focus-visible::before {
+	text-transform: none;
+}
+
+.season-link:hover::after,
+.season-link:focus-visible::after {
+	top: -8px;
 }
 
 .modal-content h3 {
@@ -902,6 +911,21 @@ footer div {
 
 footer img {
 	display: block;
+}
+
+.tooltip-donate:hover::before,
+.tooltip-donate:focus::before {
+	top: 50%;
+	left: 250%;
+}
+
+.tooltip-donate:hover::after,
+.tooltip-donate:focus::after {
+	top: calc(50% - 3px);
+	left: 133%;
+	width: 7px;
+	height: 7px;
+	transform: rotate(135deg);
 }
 
 .socials,
