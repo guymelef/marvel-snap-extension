@@ -62,13 +62,14 @@ a {
 	cursor: pointer;
 }
 
-.tooltip,
-footer div {
+.tooltip {
 	position: relative;
 }
 
 .tooltip:hover::before,
-.tooltip:focus-visible::before {
+.tooltip:focus-visible::before,
+.tooltip-donate:hover::before,
+.tooltip-donate:focus-visible::before {
 	content: attr(data-tooltip);
 	position: absolute;
 	top: -50%;
@@ -86,7 +87,9 @@ footer div {
 }
 
 .tooltip:hover::after,
-.tooltip:focus-visible::after {
+.tooltip:focus-visible::after,
+.tooltip-donate:hover::after,
+.tooltip-donate:focus-visible::after {
 	content: "";
 	position: absolute;
 	height: 8px;
@@ -895,6 +898,7 @@ footer {
 }
 
 footer div {
+	position: relative;
 	opacity: 0;
 	animation: fade-in .4s ease-out .5s forwards;
 }
