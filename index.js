@@ -443,21 +443,27 @@ function renderModalContent(events, styles) {
 		if (event.title === 'Twitch Drops') {
 			let listItems = ''
 			event.items.forEach(item => {
-				const [hour, reward] = item.split(':')
-				listItems += `<li class="list-item">Watch ${hour} hours: <span class="event-list secondary-text">${reward}</span></li>`
+				let twitchDrops = ''
+				item.items.forEach(drop => {
+					const [hour, reward] = drop.split(':')
+					twitchDrops += `<li class="list-item">Watch ${hour} hours: <span class="event-list secondary-text">${reward}</span></li>`
+				})
+				listItems += `
+					<li>
+						<details>
+							<summary><strong class="date">${item.date}</strong></summary>
+							<ul class="styled-list">
+								${twitchDrops}
+							</ul>
+						</details>
+					</li>
+				`
 			})
 			modalContent += `
 				<div>
 					<h3>🎁 ${event.title}</h3>
 					<ul class="event">
-						<li>
-							<details>
-								<summary><strong class="date">${event.date}</strong></summary>
-								<ul class="styled-list">
-									${listItems}
-								</ul>
-							</details>
-						</li>
+						${listItems}
 					</ul>
 				</div>
 			`
@@ -481,6 +487,31 @@ function renderModalContent(events, styles) {
 			modalContent += `
 				<div>
 					<h3>📆 ${event.title}</h3>
+					<ul class="event">
+						${listItems}
+					</ul>
+				</div>
+			`
+		}
+
+		if (event.title === 'Features/Modes/Events' && event.items.length) {
+			let listItems = ''
+			event.items.forEach(item => {
+				let itemInfo = item.items.map(i => `<li class="list-item">${i}</li>`)
+				listItems += `
+					<li>
+						<details>
+							<summary><strong class="date">${item.date}</strong> 🔹 ${item.title}</summary>
+							<ul class="styled-list">
+								${itemInfo.join('')}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+				<div>
+					<h3>🎮 ${event.title}</h3>
 					<ul class="event">
 						${listItems}
 					</ul>
