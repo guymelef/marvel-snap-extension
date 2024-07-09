@@ -501,7 +501,7 @@ function renderModalContent(events, styles) {
 				listItems += `
 					<li>
 						<details>
-							<summary><strong class="date">${item.date}</strong> 🔹 ${item.title}</summary>
+							<summary><strong class="date">${item.date}</strong> ◾️ ${item.title}</summary>
 							<ul class="styled-list">
 								${itemInfo.join('')}
 							</ul>
