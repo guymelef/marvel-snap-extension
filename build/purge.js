@@ -6,8 +6,8 @@ const CF_API = process.env.CF_API_URL
 const API_KEY = process.env.CF_API_KEY
 const ZONE_ID = process.env.CF_ZONE_ID
 
-const PURGE_CHARACTERS = process.env.PURGE_CHARACTERS
-const PURGE_LOCATIONS = process.env.PURGE_LOCATIONS
+const PURGE_CHARACTERS = process.env.PURGE_CHARACTERS.toLowerCase()
+const PURGE_LOCATIONS = process.env.PURGE_LOCATIONS.toLowerCase()
 const charactersToPurge = PURGE_CHARACTERS.split(',')
 const locationsToPurge = PURGE_LOCATIONS.split(',')
 
