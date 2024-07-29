@@ -31,6 +31,8 @@ let FEATURED_CARD = ''
 let FEATURED_LOCATIONS = []
 let SEASON_END_DATE = []
 let SEASON_INFO = {}
+let SEASON_STYLES = {}
+let SEASON_EVENTS = []
 
 buttonsSection.onclick = handleCategoryBtnClick
 searchBox.onclick = handleSearchBoxClick
@@ -67,15 +69,51 @@ async function startApp() {
 		FEATURED_CARD = SEASON_INFO.featuredCard
 		FEATURED_LOCATIONS = SEASON_INFO.featuredLocations
 		SEASON_END_DATE = SEASON_INFO.seasonEndDate
+		SEASON_EVENTS = seasonDetails.events
+		SEASON_STYLES = seasonDetails.styles
 
 		startCountdown()
 		displayFeaturedCard()
-		renderModalContent(seasonDetails.events, seasonDetails.styles)
+		renderModalContent()
 		searchBox.focus()
 		addHoverListenersToCards()
+		checkForUpdates()
 	} catch(err) {
 		console.error("ERROR FETCHING DATA:", err)
 	}
+}
+
+function checkForUpdates() {
+	fetch('https://guymelef.dev/update.json')
+		.then(data => data.json())
+		.then(data => {
+			if (data.isUpdateAvailable) {
+				console.log(data)
+				if (data.partsToUpdate.includes('cards')) {
+					for (const updatedCard of data.cards) {
+						const index = CARDS.findIndex(card => card.name === updatedCard.name)
+						CARDS[index] = updatedCard
+						if (updatedCard.name === FEATURED_CARD) displayFeaturedCard()
+					}
+				}
+
+				if (data.partsToUpdate.includes('locations')) {
+					for (const updatedLocation of data.locations) {
+						const index = LOCATIONS.findIndex(location => location.name === updatedLocation.name)
+						LOCATIONS[index] = updatedLocation
+					}
+				}
+
+				if (data.partsToUpdate.includes('season')) {
+					for (const updatedSeasonItem of data.season) {
+						const index = SEASON_EVENTS.findIndex(event => event.title === updatedSeasonItem.title)
+						SEASON_EVENTS[index] = updatedSeasonItem
+					}
+					renderModalContent()
+				}
+			}
+		})
+		.catch(err => console.error("ERROR FETCHING UPDATES:", err))
 }
 
 function handleCategoryBtnClick(event) {
@@ -310,9 +348,11 @@ function showModal(show = true) {
 	}
 }
 
-function renderModalContent(events, styles) {
+function renderModalContent() {
+	const events = SEASON_EVENTS
+	const styles = SEASON_STYLES
 	const seasonLink =	document.querySelector('.season-link')
-	seasonLink.innerText  = SEASON_INFO.seasonTitle
+	seasonLink.innerText = SEASON_INFO.seasonTitle
 	seasonLink.href = SEASON_INFO.seasonUrl
 	
 	document.documentElement.style.setProperty('--clr-date', styles.dateColor)
