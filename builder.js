@@ -54,6 +54,21 @@ function startDeckBuilder() {
   fetch('./data/cards.json')
     .then(async (cards) => {
       cards = await cards.json()
+
+      try {
+        let cardUpdates = await fetch('https://guymelef.dev/data/snap-extn/update.json')
+        cardUpdates = await cardUpdates.json()
+        if (cardUpdates.isUpdateAvailable && cardUpdates.partsToUpdate.includes('cards')) {
+          for (const updatedCard of cardUpdates.cards) {
+						const index = cards.findIndex(card => card.name === updatedCard.name)
+						if (index !== -1) cards[index] = updatedCard
+						else cards.push(updatedCard)
+					}
+        }
+      } catch (err) {
+        console.error("ERROR FETCHING UPDATES:", err)
+      }
+
       ALL_CARDS = cards
       RELEASED_CARDS = cards.filter(card => card.type === 'character' && card.released)
       sortCards(RELEASED_CARDS)

@@ -30,6 +30,7 @@ let LOCATIONS = []
 let FEATURED_CARD = ''
 let FEATURED_LOCATIONS = []
 let SEASON_END_DATE = []
+let COUNTDOWN_INTERVAL
 let SEASON_INFO = {}
 let SEASON_STYLES = {}
 let SEASON_EVENTS = []
@@ -84,15 +85,16 @@ async function startApp() {
 }
 
 function checkForUpdates() {
-	fetch('https://guymelef.dev/update.json')
+	fetch('https://guymelef.dev/data/snap-extn/update.json')
 		.then(data => data.json())
 		.then(data => {
 			if (data.isUpdateAvailable) {
-				console.log(data)
 				if (data.partsToUpdate.includes('cards')) {
 					for (const updatedCard of data.cards) {
 						const index = CARDS.findIndex(card => card.name === updatedCard.name)
-						CARDS[index] = updatedCard
+						if (index !== -1) CARDS[index] = updatedCard
+						else CARDS.push(updatedCard)
+
 						if (updatedCard.name === FEATURED_CARD) displayFeaturedCard()
 					}
 				}
@@ -100,17 +102,30 @@ function checkForUpdates() {
 				if (data.partsToUpdate.includes('locations')) {
 					for (const updatedLocation of data.locations) {
 						const index = LOCATIONS.findIndex(location => location.name === updatedLocation.name)
-						LOCATIONS[index] = updatedLocation
+						if (index !== -1) LOCATIONS[index] = updatedLocation
+						else LOCATIONS.push(updatedLocation)
 					}
 				}
 
 				if (data.partsToUpdate.includes('season')) {
-					for (const updatedSeasonItem of data.season) {
-						const index = SEASON_EVENTS.findIndex(event => event.title === updatedSeasonItem.title)
-						SEASON_EVENTS[index] = updatedSeasonItem
+					if (data.seasonInfo.length) {
+						SEASON_INFO = data.seasonInfo[0]
+						FEATURED_CARD = SEASON_INFO.featuredCard
+						FEATURED_LOCATIONS = SEASON_INFO.featuredLocations
+						SEASON_END_DATE = SEASON_INFO.seasonEndDate
+						displayFeaturedCard()
+						clearInterval(COUNTDOWN_INTERVAL)
+						startCountdown()
 					}
+
+					if (data.seasonStyles.length) SEASON_STYLES = data.seasonStyles[0]
+
+					SEASON_EVENTS = data.seasonEvents
+					
 					renderModalContent()
 				}
+
+				addHoverListenersToCards()
 			}
 		})
 		.catch(err => console.error("ERROR FETCHING UPDATES:", err))
@@ -426,7 +441,7 @@ function renderModalContent() {
 			`
 		}
 
-		if (event.title === 'New Albums') {
+		if (event.title === 'New Albums' && event.items.length) {
 			let albumItems = ''
 			event.items.forEach(item => {
 				let listItems = ''
@@ -480,7 +495,7 @@ function renderModalContent() {
 			`
 		}
 
-		if (event.title === 'Twitch Drops') {
+		if (event.title === 'Twitch Drops' && event.items.length) {
 			let listItems = ''
 			event.items.forEach(item => {
 				let twitchDrops = ''
@@ -671,7 +686,7 @@ function startCountdown() {
 	const [date, month, year] = SEASON_END_DATE
 	const SEASON_END = new Date(Date.UTC(year, month, date, 19))
 
-	const x = setInterval(_ => {
+	COUNTDOWN_INTERVAL = setInterval(_ => {
 		const timeDifference = SEASON_END - new Date()
 
 		if (timeDifference <= 0) {
@@ -680,7 +695,7 @@ function startCountdown() {
 			FEATURED_LOCATIONS = SEASON_INFO.nextFeaturedLocations
 			SEASON_END_DATE = SEASON_INFO.nextSeasonEndDate
 			displayFeaturedCard()
-			clearInterval(x)
+			clearInterval(COUNTDOWN_INTERVAL)
 			return startCountdown()
 		}
 
