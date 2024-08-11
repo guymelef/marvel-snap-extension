@@ -574,6 +574,37 @@ function renderModalContent() {
 			`
 		}
 
+		if (event.title === "Series Drop" && event.items.length) {
+			let seriesDrop = ''
+			event.items.forEach(item => {
+				seriesDrop += `
+					<li>
+						<details>
+							<summary>
+								Drop to <span class="highlight-card ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
+							</summary>
+							<ul class="styled-list">
+								${item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`).join('')}
+							</ul>
+						</details>
+					</li>
+				`
+			})
+			modalContent += `
+				<div class="series-drop">
+					<h3>⏬ ${event.title}</h3>
+					<ul class="event">
+						<li>
+							<strong class="date">${event.date}</strong>
+							<ul class="series-drop-ul">
+								${seriesDrop}
+							</ul>
+						</li>
+					</ul>
+				</div>
+			`
+		}
+
 		if (event.title === 'Balance Updates' && event.items.length) {
 			let changes = ''
 			event.items.forEach(item => {
@@ -603,37 +634,6 @@ function renderModalContent() {
 					<h3>♻️ ${event.title}</h3>
 					<ul class="event">
 						${changes}
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === "Series Drop" && event.items.length) {
-			let seriesDrop = ''
-			event.items.forEach(item => {
-				seriesDrop += `
-					<li>
-						<details>
-							<summary>
-								Drop to <span class="highlight-card ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
-							</summary>
-							<ul class="styled-list">
-								${item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`).join('')}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div class="series-drop">
-					<h3>⏬ ${event.title}</h3>
-					<ul class="event">
-						<li>
-							<strong class="date">${event.date}</strong>
-							<ul class="series-drop-ul">
-								${seriesDrop}
-							</ul>
-						</li>
 					</ul>
 				</div>
 			`
