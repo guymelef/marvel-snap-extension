@@ -107,19 +107,27 @@ function checkForUpdates() {
 					}
 				}
 
+				if (data.partsToUpdate.includes('events')) {					
+					data.seasonEvents.forEach(event => {
+						SEASON_EVENTS.forEach((item, index) => {
+							if (item.title === event.title) {
+								SEASON_EVENTS[index] = event
+							}
+						})
+					})
+					renderModalContent()
+				}
+
 				if (data.partsToUpdate.includes('season')) {
-					if (data.seasonInfo.length) {
-						SEASON_INFO = data.seasonInfo[0]
-						FEATURED_CARD = SEASON_INFO.featuredCard
-						FEATURED_LOCATIONS = SEASON_INFO.featuredLocations
-						SEASON_END_DATE = SEASON_INFO.seasonEndDate
-						displayFeaturedCard()
-						clearInterval(COUNTDOWN_INTERVAL)
-						startCountdown()
-					}
+					SEASON_INFO = data.seasonInfo[0]
+					FEATURED_CARD = SEASON_INFO.featuredCard
+					FEATURED_LOCATIONS = SEASON_INFO.featuredLocations
+					SEASON_END_DATE = SEASON_INFO.seasonEndDate
+					displayFeaturedCard()
+					clearInterval(COUNTDOWN_INTERVAL)
+					startCountdown()
 
-					if (data.seasonStyles.length) SEASON_STYLES = data.seasonStyles[0]
-
+					SEASON_STYLES = data.seasonStyles[0]
 					SEASON_EVENTS = data.seasonEvents
 					
 					renderModalContent()
@@ -385,262 +393,277 @@ function renderModalContent() {
 
 	let modalContent = ''
 	events.forEach(event => {
-		if (event.title === 'New Characters') {
-			let listItems = ''
-			event.items.forEach((item, index) => {
-				if (index === 0) {
-					listItems += `<li class="list-item" aria-label="season pass card"><span class="highlight-card hoverable season-pass">${item.name}</span></li>`
-				} else if (index === event.items.length - 1) {
-					listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
-				} else {
-					listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span></li>`
-				}
-			})
-			modalContent += `
-				<div>
-					<h3>☄️ ${event.title}</h3>
-					<ul class="styled-list">
-						${listItems}
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'New Locations') {
-			let listItems = event.items.map(loc => `<li class="list-item"><span class="highlight-card highlight-location hoverable">${loc}</span></li>`)
-			modalContent += `
-				<div>
-					<h3>🗺️ ${event.title}</h3>
-					<ul class="styled-list">
-						${listItems.join('')}
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'Spotlight Caches') {
-			let listItems = ''
-			event.items.forEach(item => {
-				let cacheList = item.items.map(card => `<li class="list-item"><span class="highlight-card hoverable series${card.series}">${card.name}</span></li>`)
-				listItems += `
-					<li>
-						<strong class="date">${item.date}</strong>
-						<ul class="styled-list">
-							${cacheList.join('')}
-						</ul>
-					</li>
-				`
-			})
-			modalContent += `
-				<div>
-					<h3>🗝️ ${event.title}</h3>
-					<ul class="event">
-						${listItems}	
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'New Albums' && event.items.length) {
-			let albumItems = ''
-			event.items.forEach(item => {
-				let listItems = ''
-				item.items.forEach(item => {
-					const [count, reward] = item.split(':')
-					listItems += `<li class="list-item">Collect ${count}: <span class="event-list secondary-text">${reward}</span></li>`
-				})
-				albumItems += `
-					<li>
-						<details>
-							<summary><strong class="date">${item.date}</strong> 〰️ ${item.name}</summary>
-							<ul class="styled-list">
-								${listItems}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div class="albums">
-					<h3>🖼️ ${event.title}</h3>
-					<ul class="event">
-						${albumItems}	
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'Shop Takeover' && event.items.length) {
-			let listItems = ''
-			event.items.forEach(item => {
-				let cards = item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`)
-				listItems += `
-					<li>
-						<details>
-							<summary><strong class="date">${item.date}</strong> 💠 ${item.name}</summary>
-							<ul class="styled-list">
-								${cards.join('')}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div class="shop-takeover">
-					<h3>🎨 ${event.title}</h3>
-					<ul class="event">
-						${listItems}	
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'Twitch Drops' && event.items.length) {
-			let listItems = ''
-			event.items.forEach(item => {
-				let twitchDrops = ''
-				item.items.forEach(drop => {
-					const [hour, reward] = drop.split(':')
-					twitchDrops += `<li class="list-item">Watch ${hour} hours: <span class="event-list secondary-text">${reward}</span></li>`
-				})
-				listItems += `
-					<li>
-						<details>
-							<summary><strong class="date">${item.date}</strong></summary>
-							<ul class="styled-list">
-								${twitchDrops}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div>
-					<h3>🎁 ${event.title}</h3>
-					<ul class="event">
-						${listItems}
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === '7-Day Login' && event.items.length) {
-			let listItems = ''
-			event.items.forEach(item => {
-				let loginRewards = item.items.map((reward, index) => `<li class="list-item">Day ${index + 1}: <span class="event-list secondary-text">${reward}</span></li>`)
-				listItems += `
-					<li>
-						<details>
-							<summary><strong class="date">${item.date}</strong> ${item.title ? `🔸 ${item.title}` : ''}</summary>
-							<ul class="styled-list">
-								${loginRewards.join('')}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div>
-					<h3>📆 ${event.title}</h3>
-					<ul class="event">
-						${listItems}
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'Features/Modes/Events' && event.items.length) {
-			let listItems = ''
-			event.items.forEach(item => {
-				let itemInfo = item.items.map(i => `<li class="list-item">${i}</li>`)
-				listItems += `
-					<li>
-						<details>
-							<summary><strong class="date">${item.date}</strong> ◾️ ${item.title}</summary>
-							<ul class="styled-list">
-								${itemInfo.join('')}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div>
-					<h3>🎮 ${event.title}</h3>
-					<ul class="event">
-						${listItems}
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === "Series Drop" && event.items.length) {
-			let seriesDrop = ''
-			event.items.forEach(item => {
-				seriesDrop += `
-					<li>
-						<details>
-							<summary>
-								Drop to <span class="highlight-card ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
-							</summary>
-							<ul class="styled-list">
-								${item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`).join('')}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div class="series-drop">
-					<h3>⏬ ${event.title}</h3>
-					<ul class="event">
-						<li>
-							<strong class="date">${event.date}</strong>
-							<ul class="series-drop-ul">
-								${seriesDrop}
-							</ul>
-						</li>
-					</ul>
-				</div>
-			`
-		}
-
-		if (event.title === 'Balance Updates' && event.items.length) {
-			let changes = ''
-			event.items.forEach(item => {
-				let listItems = ''
-				item.items.forEach(item => {
-					listItems += `
-						<li>
-							<h4>${item.name}</h4>
-							${item.changes[0] && `<p>⬅️ ${item.changes[0]}</p>`}
-							<p>➡️ ${item.changes[1]}</p>
-						</li>
-					`
-				})
-				changes += `
-					<li>
-						<details>
-							<summary><strong class="date">${item.date}</strong> 🔸 ${item.type}</summary>
-							<ul>
-								${listItems}
-							</ul>
-						</details>
-					</li>
-				`
-			})
-			modalContent += `
-				<div class="patch-ota">
-					<h3>♻️ ${event.title}</h3>
-					<ul class="event">
-						${changes}
-					</ul>
-				</div>
-			`
-		}
+		const htmlForEvent = generateHtmlForEvent(event)
+		if (htmlForEvent) modalContent += htmlForEvent
 	})
 
 	document.querySelector('.season-details').innerHTML = modalContent
+}
+
+function generateHtmlForEvent(event) {
+	if (event.title === 'New Characters') {
+		let listItems = ''
+		event.items.forEach((item, index) => {
+			if (index === 0) {
+				listItems += `<li class="list-item" aria-label="season pass card"><span class="highlight-card hoverable season-pass">${item.name}</span></li>`
+			} else if (index === event.items.length - 1) {
+				listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
+			} else {
+				listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span></li>`
+			}
+		})
+		
+		return `
+			<div class="season-events">
+				<h3>☄️ ${event.title}</h3>
+				<ul class="styled-list">
+					${listItems}
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'New Locations') {
+		let listItems = event.items.map(loc => `<li class="list-item"><span class="highlight-card highlight-location hoverable">${loc}</span></li>`)
+		
+		return `
+			<div class="season-events">
+				<h3>🗺️ ${event.title}</h3>
+				<ul class="styled-list">
+					${listItems.join('')}
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'Spotlight Caches') {
+		let listItems = ''
+		event.items.forEach(item => {
+			let cacheList = item.items.map(card => `<li class="list-item"><span class="highlight-card hoverable series${card.series}">${card.name}</span></li>`)
+			listItems += `
+				<li>
+					<strong class="date">${item.date}</strong>
+					<ul class="styled-list">
+						${cacheList.join('')}
+					</ul>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events">
+				<h3>🗝️ ${event.title}</h3>
+				<ul class="event">
+					${listItems}	
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'New Albums' && event.items.length) {
+		let albumItems = ''
+		event.items.forEach(item => {
+			let listItems = ''
+			item.items.forEach(item => {
+				const [count, reward] = item.split(':')
+				listItems += `<li class="list-item">Collect ${count}: <span class="event-list secondary-text">${reward}</span></li>`
+			})
+			albumItems += `
+				<li>
+					<details>
+						<summary><strong class="date">${item.date}</strong> 〰️ ${item.name}</summary>
+						<ul class="styled-list">
+							${listItems}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events albums">
+				<h3>🖼️ ${event.title}</h3>
+				<ul class="event">
+					${albumItems}	
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'Shop Takeover' && event.items.length) {
+		let listItems = ''
+		event.items.forEach(item => {
+			let cards = item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`)
+			listItems += `
+				<li>
+					<details>
+						<summary><strong class="date">${item.date}</strong> 💠 ${item.name}</summary>
+						<ul class="styled-list">
+							${cards.join('')}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events shop-takeover">
+				<h3>🎨 ${event.title}</h3>
+				<ul class="event">
+					${listItems}	
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'Twitch Drops' && event.items.length) {
+		let listItems = ''
+		event.items.forEach(item => {
+			let twitchDrops = ''
+			item.items.forEach(drop => {
+				const [hour, reward] = drop.split(':')
+				twitchDrops += `<li class="list-item">Watch ${hour} hours: <span class="event-list secondary-text">${reward}</span></li>`
+			})
+			listItems += `
+				<li>
+					<details>
+						<summary><strong class="date">${item.date}</strong></summary>
+						<ul class="styled-list">
+							${twitchDrops}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events">
+				<h3>🎁 ${event.title}</h3>
+				<ul class="event">
+					${listItems}
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === '7-Day Login' && event.items.length) {
+		let listItems = ''
+		event.items.forEach(item => {
+			let loginRewards = item.items.map((reward, index) => `<li class="list-item">Day ${index + 1}: <span class="event-list secondary-text">${reward}</span></li>`)
+			listItems += `
+				<li>
+					<details>
+						<summary><strong class="date">${item.date}</strong> ${item.title ? `🔸 ${item.title}` : ''}</summary>
+						<ul class="styled-list">
+							${loginRewards.join('')}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events">
+				<h3>📆 ${event.title}</h3>
+				<ul class="event">
+					${listItems}
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'Features/Modes/Events' && event.items.length) {
+		let listItems = ''
+		event.items.forEach(item => {
+			let itemInfo = item.items.map(i => `<li class="list-item">${i}</li>`)
+			listItems += `
+				<li>
+					<details>
+						<summary><strong class="date">${item.date}</strong> ◾️ ${item.title}</summary>
+						<ul class="styled-list">
+							${itemInfo.join('')}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events">
+				<h3>🎮 ${event.title}</h3>
+				<ul class="event">
+					${listItems}
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === "Series Drop" && event.items.length) {
+		let seriesDrop = ''
+		event.items.forEach(item => {
+			seriesDrop += `
+				<li>
+					<details>
+						<summary>
+							Drop to <span class="highlight-card ${item.name.toLowerCase().split(' ').join('')}">${item.name}</span>
+						</summary>
+						<ul class="styled-list">
+							${item.cards.map(card => `<li class="list-item"><span class="hoverable">${card}</span></li>`).join('')}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events series-drop">
+				<h3>⏬ ${event.title}</h3>
+				<ul class="event">
+					<li>
+						<strong class="date">${event.date}</strong>
+						<ul class="series-drop-ul">
+							${seriesDrop}
+						</ul>
+					</li>
+				</ul>
+			</div>
+		`
+	}
+
+	if (event.title === 'Balance Updates' && event.items.length) {
+		let changes = ''
+		event.items.forEach(item => {
+			let listItems = ''
+			item.items.forEach(item => {
+				listItems += `
+					<li>
+						<h4>${item.name}</h4>
+						${item.changes[0] && `<p>⬅️ ${item.changes[0]}</p>`}
+						<p>➡️ ${item.changes[1]}</p>
+					</li>
+				`
+			})
+			changes += `
+				<li>
+					<details>
+						<summary><strong class="date">${item.date}</strong> 🔸 ${item.type}</summary>
+						<ul>
+							${listItems}
+						</ul>
+					</details>
+				</li>
+			`
+		})
+		
+		return `
+			<div class="season-events patch-ota">
+				<h3>♻️ ${event.title}</h3>
+				<ul class="event">
+					${changes}
+				</ul>
+			</div>
+		`
+	}
 }
 
 function addHoverListenersToCards() {
