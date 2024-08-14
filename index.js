@@ -115,7 +115,8 @@ function checkForUpdates() {
 							}
 						})
 					})
-					renderModalContent()
+
+					renderModalEvents()
 				}
 
 				if (data.partsToUpdate.includes('season')) {
@@ -372,7 +373,6 @@ function showModal(show = true) {
 }
 
 function renderModalContent() {
-	const events = SEASON_EVENTS
 	const styles = SEASON_STYLES
 	const seasonLink =	document.querySelector('.season-link')
 	seasonLink.innerText = SEASON_INFO.seasonTitle
@@ -384,20 +384,14 @@ function renderModalContent() {
 	const modalHeaderStyleHover = styles.hoverStyle
 	for (let prop in modalHeaderStyle) modalHeader.style[prop] = modalHeaderStyle[prop]
 	modalHeader.onmouseenter = _ => { for (let prop in modalHeaderStyleHover) modalHeader.style[prop] = modalHeaderStyleHover[prop] }
-	modalHeader.onmouseleave = _ => { 
+	modalHeader.onmouseleave = _ => {
 		for (let prop in modalHeaderStyleHover) {
 			modalHeader.style[prop] = ""
 			if (modalHeaderStyle[prop]) modalHeader.style[prop] = modalHeaderStyle[prop]
 		}
 	}
 
-	let modalContent = ''
-	events.forEach(event => {
-		const htmlForEvent = generateHtmlForEvent(event)
-		if (htmlForEvent) modalContent += htmlForEvent
-	})
-
-	document.querySelector('.season-details').innerHTML = modalContent
+	renderModalEvents()
 }
 
 function generateHtmlForEvent(event) {
@@ -664,6 +658,17 @@ function generateHtmlForEvent(event) {
 			</div>
 		`
 	}
+}
+
+function renderModalEvents() {
+	let modalContent = ''
+
+	SEASON_EVENTS.forEach(event => {
+		const htmlForEvent = generateHtmlForEvent(event)
+		if (htmlForEvent) modalContent += htmlForEvent
+	})
+
+	document.querySelector('.season-details').innerHTML = modalContent
 }
 
 function addHoverListenersToCards() {
