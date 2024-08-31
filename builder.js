@@ -168,7 +168,7 @@ function showCardInfo(event) {
     `
     
     infoDiv.innerHTML = `
-      <h3>${cardInfo.displayName || cardInfo.name} ${seriesLabel}</h3>
+      <h3>${cardInfo.name} ${seriesLabel}</h3>
       <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}</h4>
       ${cardAbility}
     `
@@ -493,7 +493,7 @@ function createImgLink(card) {
 	if (card.noArt) {
 		image = 'default'
 	} else {
-		image = card.name.toLowerCase()
+		image = card.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 		image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
 	}
 	return `https://files.guymelef.dev/card/${image}.webp`

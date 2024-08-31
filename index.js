@@ -243,7 +243,7 @@ function displayCard(card, isRandom) {
 	if (card.noArt) {
 		image = 'default'
 	} else {
-		image = card.name.toLowerCase()
+		image = card.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 		image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
 	}
 	const imgSrc = `https://files.guymelef.dev/${type}/${image}.webp`
@@ -280,7 +280,7 @@ function displayCard(card, isRandom) {
 				class="card-title"
 				style="--h2-border:${isRandom ? "#e50a10" : borderColor[type]}; --h2-shadow: ${borderColor[type]}"
 			>
-				${card.displayName || card.name}
+				${card.name}
 			</h2>
 			<h3 class="secondary-text">
 				<span class="stats-text text-cost">Cost</span>:<span class="card-stats cost">${card.cost}</span> 
@@ -674,7 +674,7 @@ function renderModalEvents() {
 function addHoverListenersToCards() {
 	document.querySelectorAll('.hoverable').forEach(el => {
 		el.onmouseover = () => {
-			const imageName = el.innerText.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '')
+			const imageName = el.innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').replace(/[^\w-]/g, '')
 			if ([...el.classList].includes('highlight-location')) {
 				const cardToDisplay = LOCATIONS.find(card => card.name === el.innerText)
 				cardInfoTooltip.innerHTML = `
@@ -773,8 +773,8 @@ function findClosest(str) {
 	
 	for (const item of data) {
 		const itemName = item.name.toLowerCase()
-		const strippedItemName = itemName.replace(/[\W_]/g, '')
-		const strippedKeyword = str.replace(/[\W_]/g, '')
+		const strippedItemName = itemName.replace(/[\W_]/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+		const strippedKeyword = str.replace(/[\W_]/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
 		if (itemName === str) {
 			closestMatch = item
