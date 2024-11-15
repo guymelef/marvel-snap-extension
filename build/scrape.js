@@ -34,7 +34,7 @@ const scrapeSnap = async () => {
   changes = {
     "date": date,
     "type": type,
-    "changes": changes
+    "items": changes
   }
   clipboardy.writeSync(JSON.stringify(changes, null, 2))
   console.log(`✅ Copied to clipboard!`)
