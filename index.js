@@ -540,7 +540,7 @@ function generateHtmlForEvent(event) {
 		`
 	}
 
-	if (event.title === '7-Day Login' && event.items.length) {
+	if (event.title === 'Daily Login' && event.items.length) {
 		let listItems = ''
 		event.items.forEach(item => {
 			let loginRewards = item.items.map((reward, index) => `<li class="list-item">Day ${index + 1}: <span class="event-list secondary-text">${reward}</span></li>`)
