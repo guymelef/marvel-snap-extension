@@ -690,7 +690,7 @@ function addHoverListenersToCards() {
 						width="120px"
 					>
 					<span style="color:lime" class="secondary-text"><b>${source}</b></span>
-					<span>${cardToDisplay.ability}</span>
+					<span>${cardToDisplay.ability || cardToDisplay.text}</span>
 				`
 			}
 			cardInfoTooltip.style.display = "block"
