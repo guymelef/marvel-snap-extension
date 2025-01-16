@@ -248,10 +248,10 @@ function displayCard(card, isRandom) {
 	}
 	const imgSrc = `https://files.guymelef.dev/${type}/${image}.webp`
 
-	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate/g, match => match && `<b>${match}</b>`)
+	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate|Game Start/g, match => match && `<b>${match}</b>`)
 
 	if (type === "card") {
-		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing|Activate/g, match => match && `<b>${match}</b>`)
+		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing|Activate|Game Start/g, match => match && `<b>${match}</b>`)
 
 		if (card.name === FEATURED_CARD) {
 			source = "Season Pass"
