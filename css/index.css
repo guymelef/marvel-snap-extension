@@ -958,6 +958,10 @@ footer img {
 	background-color: #2bb24c;
 }
 
+.shop:hover {
+	background-color: #f66700;
+}
+
 .discord:hover {
 	background-color: #5865f2;
 }
