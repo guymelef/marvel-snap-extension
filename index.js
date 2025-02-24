@@ -119,18 +119,23 @@ function checkForUpdates() {
 					renderModalEvents()
 				}
 
+				if (data.partsToUpdate.includes('seasonInfo')) SEASON_INFO = data.seasonInfo[0]
+
+				if (data.partsToUpdate.includes('seasonStyles')) SEASON_STYLES = data.seasonStyles[0]
+
 				if (data.partsToUpdate.includes('season')) {
 					SEASON_INFO = data.seasonInfo[0]
+					SEASON_STYLES = data.seasonStyles[0]
+					SEASON_EVENTS = data.seasonEvents
 					FEATURED_CARD = SEASON_INFO.featuredCard
 					FEATURED_LOCATIONS = SEASON_INFO.featuredLocations
 					SEASON_END_DATE = SEASON_INFO.seasonEndDate
 					displayFeaturedCard()
 					clearInterval(COUNTDOWN_INTERVAL)
 					startCountdown()
+				}
 
-					SEASON_STYLES = data.seasonStyles[0]
-					SEASON_EVENTS = data.seasonEvents
-					
+				if (data.partsToUpdate.includes('season') || data.partsToUpdate.includes('seasonInfo') || data.partsToUpdate.includes('seasonStyles')) {
 					renderModalContent()
 				}
 
