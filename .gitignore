@@ -1,6 +1,7 @@
 update.json
 data
 build/.env
+build/tool.js
 build/chrome
 build/firefox
 build/node_modules
