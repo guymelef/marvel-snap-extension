@@ -269,13 +269,10 @@ function displayCard(card, isRandom) {
 				} else if (['1', '2', '3', '4', '5'].includes(card.series)) {
 					source = `Series ${card.series}`
 					sourceClass = `series${card.series}`
-				} else {
-					source = 'Series 5'
-					sourceClass = 'series5'
 				}
 			} else {
-				source = "Summon"
-				sourceClass = 'summon'
+				source = card.type === 'token' ? 'Token' : 'Skill'
+				sourceClass = card.type
 			}
 		}
 		
@@ -289,7 +286,7 @@ function displayCard(card, isRandom) {
 			</h2>
 			<h3 class="secondary-text">
 				<span class="stats-text text-cost">Cost</span>:<span class="card-stats cost">${card.cost}</span> 
-				<span class="stats-text text-power">Power</span>:<span class="card-stats power">${card.power}</span>
+				${card.type !== 'skill' ? `<span class="stats-text text-power">Power</span>:<span class="card-stats power">${card.power}</span>` : ''}
 			</h3>
 			<p class="card-ability ${card.evolved ? 'evolved-card' : ''}">
 				${card.ability}

@@ -169,7 +169,7 @@ function showCardInfo(event) {
     
     infoDiv.innerHTML = `
       <h3>${cardInfo.name} ${seriesLabel}</h3>
-      <h4>Cost:${cardInfo.cost}<span> ┇ </span>Power:${cardInfo.power}</h4>
+      <h4>Cost:${cardInfo.cost}<span> ${cardInfo.type !== 'skill' ? `┇ </span>Power:${cardInfo.power}` : ''}</h4>
       ${cardAbility}
     `
   } else {
@@ -226,7 +226,7 @@ function filterCards() {
           if (card.tags && card.tags.includes(selectedAbility)) filteredCards.push(card)
         } else if (selectedAbility === 'unreleased') {
           if (!card.released && card.type === "character") filteredCards.push(card)
-        } else if (selectedAbility === 'summon') {
+        } else if (selectedAbility === 'token' || selectedAbility === 'skill') {
           if (card.type === selectedAbility) filteredCards.push(card)
         } else if (card.ability) {
           if (card.ability.toLowerCase().includes(selectedAbility)) filteredCards.push(card)
@@ -236,7 +236,7 @@ function filterCards() {
       }
     } else {
       cardsToFilter = RELEASED_CARDS
-      if (selectedAbility === 'summon') {
+      if (selectedAbility === 'token' || selectedAbility === 'skill') {
         filteredCards = ALL_CARDS.filter(card => card.type === selectedAbility)
       } else if (selectedAbility === 'unreleased') {
         filteredCards = ALL_CARDS.filter(card => !card.released && card.type === "character")

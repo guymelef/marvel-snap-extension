@@ -463,7 +463,11 @@ a {
 	background-image: linear-gradient(#cb28e1, #7e80df);
 }
 
-.summon {
+.skill {
+	background-image: linear-gradient(#3c6289, #355b7a);
+}
+
+.token {
 	background-image: linear-gradient(#8d2f1d, #ad5017);
 }
 
