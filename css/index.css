@@ -1012,3 +1012,29 @@ mark {
 	border-bottom-width: thin;
 	border-bottom-style: solid;
 }
+
+.section-ref-cards {
+	position: fixed;
+	display: none;
+	top: 135px;
+	right: 15px;
+	z-index: 1;
+	padding: 15px 20px;
+	width: 210px;
+	height: 300px;
+	overflow: scroll;
+	overflow-x: hidden;
+	background-color: #0a001df5;
+	scrollbar-width: thin;
+	scrollbar-color: #0dffff #333;
+	border-radius: 5px;
+}
+
+.ref-cards {
+	text-align: center;
+	letter-spacing: .5px;
+}
+
+.ref-cards strong {
+	font-size: 14px;
+}

@@ -10,6 +10,7 @@ const countdownSection = document.querySelector('.section-countdown')
 const seasonHeader = document.querySelector('.season-calendar')
 const countdownTimer = document.querySelector('.countdown-timer')
 const modal = document.querySelector('.section-modal')
+const refCardsSection = document.querySelector('.section-ref-cards')
 const modalCloseBtn = document.querySelector('.modal-close-btn')
 const modalScrollToTopBtn = document.querySelector('.modal-scrolltotop')
 const cardInfoTooltip = document.querySelector('.card-info')
@@ -224,6 +225,7 @@ function handleFormSubmit(event) {
 
 function getRandomCard() {
   searchBox.focus()
+	refCardsSection.innerHTML = ''
 
 	let cardPool = []
 	if (CATEGORY === 'card') cardPool = CARDS.filter(card => card.type === "character" && card.released)
@@ -342,6 +344,9 @@ function displayCard(card, isRandom) {
 		}
 	}
 	cardImg.onerror = function() { this.src = `images/${type}.webp` }
+
+	if (card.refs) renderRefCardsSection(card.refs)
+	else refCardsSection.innerHTML = ''
 }
 
 function displayFeaturedCard() {
@@ -372,6 +377,46 @@ function showModal(show = true) {
 		modal.scrollTop = 0
 		modal.style.display = "none"
 	}
+}
+
+function renderRefCardsSection(refs) {
+	refCardsSection.innerHTML = ''
+	let cards = []
+	
+	refs.forEach(id => {
+		let refCard = CARDS.find(card => card.id === id)
+		cards.push(refCard)
+	})
+
+	function generateCardImgSrc(card) {
+		let image = ''
+		if (card.noArt) {
+			image = 'default'
+		} else {
+			image = card.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+			image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
+		}
+		
+		return `https://files.guymelef.dev/card/${image}.webp`
+	}
+
+	cards.forEach(card => card.src = generateCardImgSrc(card))
+
+	refCardsSection.innerHTML = cards.map(card => {
+		return `
+			<div class="ref-cards">
+				<img src=${card.src} alt='${card.name}' width='150px'>
+				<p>
+					<strong>${card.name}</strong>
+					<br>
+					${card.ability || `<i>${card.text}</i>`}
+					</p>
+			</div>
+		`
+	}).join('<hr>')
+
+	document.querySelector('mark').onmouseover = () => refCardsSection.style.display = 'block'
+	refCardsSection.onmouseleave = () => refCardsSection.style.display = 'none'
 }
 
 function renderModalContent() {
