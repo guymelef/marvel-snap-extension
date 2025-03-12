@@ -1003,3 +1003,12 @@ footer img {
 	40% { transform: translateY(-6px); }
  	60% {	transform: translateY(-3px); }
 }
+
+mark {
+	color: var(--clr-white);
+	background-color: transparent;
+	cursor: pointer;
+	border-bottom: #0dffff;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+}
