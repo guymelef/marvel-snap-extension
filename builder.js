@@ -60,7 +60,7 @@ function startDeckBuilder() {
         cardUpdates = await cardUpdates.json()
         if (cardUpdates.isUpdateAvailable && cardUpdates.partsToUpdate.includes('cards')) {
           for (const updatedCard of cardUpdates.cards) {
-						const index = cards.findIndex(card => card.name === updatedCard.name)
+						const index = cards.findIndex(card => card.id === updatedCard.id)
 						if (index !== -1) cards[index] = updatedCard
 						else cards.push(updatedCard)
 					}
@@ -151,7 +151,7 @@ function showCardInfo(event) {
     let cardAbility = ""
     if (cardInfo.ability) cardAbility = `
       <p class="card-info-text">
-        ${cardInfo.ability.replace(/On Reveal|Ongoing|Activate|Game Start/g, match => match && `<b>${match}</b>`)}
+        ${cardInfo.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)}
       </p>
     `
     else cardAbility = `
@@ -160,7 +160,7 @@ function showCardInfo(event) {
         ${cardInfo.evolved ?
           `
             <br>
-            <b class="evolved">Evolved:</b> ${cardInfo.evolved.replace(/On Reveal|Ongoing|Activate|Game Start/g, match => match && `<b>${match}</b>`)}
+            <b class="evolved">Evolved:</b> ${cardInfo.evolved.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)}
           `
           : ''
         }

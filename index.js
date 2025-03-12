@@ -91,7 +91,7 @@ function checkForUpdates() {
 			if (data.isUpdateAvailable) {
 				if (data.partsToUpdate.includes('cards')) {
 					for (const updatedCard of data.cards) {
-						const index = CARDS.findIndex(card => card.name === updatedCard.name)
+						const index = CARDS.findIndex(card => card.id === updatedCard.id)
 						if (index !== -1) CARDS[index] = updatedCard
 						else CARDS.push(updatedCard)
 
@@ -101,7 +101,7 @@ function checkForUpdates() {
 
 				if (data.partsToUpdate.includes('locations')) {
 					for (const updatedLocation of data.locations) {
-						const index = LOCATIONS.findIndex(location => location.name === updatedLocation.name)
+						const index = LOCATIONS.findIndex(location => location.id === updatedLocation.id)
 						if (index !== -1) LOCATIONS[index] = updatedLocation
 						else LOCATIONS.push(updatedLocation)
 					}
@@ -198,7 +198,7 @@ function handleSearchBoxClick() {
 function handleFormSubmit(event) {
   event.preventDefault()
   const searchTerm = searchBox.value.trim()
-  if (!searchTerm || searchTerm.length < 3) return
+  if (!searchTerm) return
 
   const cardToDisplay = findClosest(searchTerm)
 	if (!cardToDisplay) {
@@ -253,10 +253,10 @@ function displayCard(card, isRandom) {
 	}
 	const imgSrc = `https://files.guymelef.dev/${type}/${image}.webp`
 
-	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate|Game Start/g, match => match && `<b>${match}</b>`)
+	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)
 
 	if (type === "card") {
-		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing|Activate|Game Start/g, match => match && `<b>${match}</b>`)
+		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)
 
 		if (card.name === FEATURED_CARD) {
 			source = "Season Pass"
@@ -760,7 +760,6 @@ function findClosest(str) {
 	if (type === "card") {
 		data = CARDS
 
-		if (str.length < 3) return null
 		str = str.replace('dr ','doctor ')
 		str = str.replace('dr. ','doctor ')
 		str = str.replace('mr ','mister ')
