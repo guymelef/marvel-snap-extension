@@ -409,7 +409,7 @@ function renderRefCardsSection(refs) {
 				<p>
 					<strong>${card.name}</strong>
 					<br>
-					${card.ability || `<i>${card.text}</i>`}
+					${card.ability.replace(/<mark>|<\\mark>/g, '') || `<i>${card.text}</i>`}
 				</p>
 			</div>
 		`
@@ -730,7 +730,7 @@ function addHoverListenersToCards() {
 				const cardToDisplay = LOCATIONS.find(card => card.name === el.innerText)
 				cardInfoTooltip.innerHTML = `
 					<img src="https://files.guymelef.dev/location/${imageName}.webp" alt="${cardToDisplay.name}" width="120px">
-					<span>${cardToDisplay.ability}</span>
+					<span>${cardToDisplay.ability.replace(/<mark>|<\\mark>/g, '')}</span>
 				`
 			} else {
 				const cardToDisplay = CARDS.find(card => card.name === el.innerText)
@@ -741,7 +741,7 @@ function addHoverListenersToCards() {
 						width="120px"
 					>
 					<span style="color:lime" class="secondary-text"><b>${source}</b></span>
-					<span>${cardToDisplay.ability || cardToDisplay.text}</span>
+					<span>${cardToDisplay.ability.replace(/<mark>|<\\mark>/g, '') || cardToDisplay.text}</span>
 				`
 			}
 			cardInfoTooltip.style.display = "block"
