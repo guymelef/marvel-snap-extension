@@ -246,14 +246,7 @@ function displayCard(card, isRandom) {
 	let sourceClass = ''
 	CARD_TO_DISPLAY = card.name
 	
-	let image = ''
-	if (card.noArt) {
-		image = 'default'
-	} else {
-		image = card.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-		image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
-	}
-	const imgSrc = `https://files.guymelef.dev/${type}/${image}.webp`
+	const imgSrc = generateCardImgSrc(card, type)
 
 	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)
 
@@ -348,7 +341,7 @@ function displayCard(card, isRandom) {
 	}
 	cardImg.onerror = function() { this.src = `images/${type}.webp` }
 
-	if (card.refs) renderRefCardsSection(card.refs)
+	if (card.refs || card.locRefs) renderRefCardsSection(card.refs || card.locRefs, card.refs)
 	else refCardsSection.innerHTML = ''
 }
 
@@ -382,28 +375,29 @@ function showModal(show = true) {
 	}
 }
 
-function renderRefCardsSection(refs) {
+function generateCardImgSrc(card, type) {
+	let image = ''
+	if (card.noArt) {
+		image = 'default'
+	} else {
+		image = card.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+		image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
+	}
+	
+	return `https://files.guymelef.dev/${type}/${image}.webp`
+}
+
+function renderRefCardsSection(refs, isCardRef) {
 	refCardsSection.innerHTML = ''
 	let cards = []
+	const cardSource = isCardRef ? CARDS : LOCATIONS
 	
 	refs.forEach(id => {
-		let refCard = CARDS.find(card => card.id === id)
+		let refCard = cardSource.find(card => card.id === id)
 		cards.push(refCard)
 	})
 
-	function generateCardImgSrc(card) {
-		let image = ''
-		if (card.noArt) {
-			image = 'default'
-		} else {
-			image = card.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-			image = image.replace(/ /g, '-').replace(/[^\w-]/g, '')
-		}
-		
-		return `https://files.guymelef.dev/card/${image}.webp`
-	}
-
-	cards.forEach(card => card.src = generateCardImgSrc(card))
+	cards.forEach(card => card.src = generateCardImgSrc(card, isCardRef ? 'card' : 'location'))
 
 	refCardsSection.innerHTML = cards.map(card => {
 		let cardAbility
