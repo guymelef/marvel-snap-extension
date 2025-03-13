@@ -1016,18 +1016,19 @@ mark {
 .section-ref-cards {
 	position: fixed;
 	display: none;
-	top: 135px;
-	right: 15px;
+	top: 145px;
+	right: 10px;
 	z-index: 1;
 	padding: 15px 20px;
 	width: 210px;
-	height: 300px;
+	height: 285px;
 	overflow: scroll;
 	overflow-x: hidden;
 	background-color: #0a001df5;
 	scrollbar-width: thin;
 	scrollbar-color: #0dffff #333;
 	border-radius: 5px;
+	box-shadow: 0px 0px 9px 1px #001f42d0;
 }
 
 .ref-cards {
