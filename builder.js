@@ -138,8 +138,11 @@ function showCardInfo(event) {
     if (cardSeries) {
       if (cardSeries && cardSeries !== "NA") {
         if (cardSeries === 'Season Pass') {
-          source = 'Season Pass'
+          source = cardSeries
           sourceClass = 'season-pass'
+        } else if (cardSeries === 'Ltd. Time Event') {
+          source = cardSeries
+          sourceClass = 'event-card'
         } else {
           source = `Series ${cardSeries}`
           sourceClass = `series${cardSeries}`
@@ -151,7 +154,7 @@ function showCardInfo(event) {
     let cardAbility = ""
     if (cardInfo.ability) cardAbility = `
       <p class="card-info-text">
-        ${cardInfo.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)}
+        ${cardInfo.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`).replace(/<mark>|<\\mark>/g, '')}
       </p>
     `
     else cardAbility = `

@@ -271,6 +271,9 @@ function displayCard(card, isRandom) {
 				} else if (['1', '2', '3', '4', '5'].includes(card.series)) {
 					source = `Series ${card.series}`
 					sourceClass = `series${card.series}`
+				} else {
+					source = card.series
+					sourceClass = 'event-card'
 				}
 			} else {
 				source = card.type === 'token' ? 'Token' : 'Skill'
@@ -403,13 +406,18 @@ function renderRefCardsSection(refs) {
 	cards.forEach(card => card.src = generateCardImgSrc(card))
 
 	refCardsSection.innerHTML = cards.map(card => {
+		let cardAbility
+		if (card.ability) cardAbility = card.ability.replace(/<mark>|<\\mark>/g, '')
+		else if (card.evolved) cardAbility = card.evolved
+		else cardAbility = `<i>${card.text}</i>`
+		
 		return `
 			<div class="ref-cards">
 				<img src=${card.src} alt='${card.name}' width='150px'>
 				<p>
 					<strong>${card.name}</strong>
 					<br>
-					${card.ability.replace(/<mark>|<\\mark>/g, '') || `<i>${card.text}</i>`}
+					${cardAbility}
 				</p>
 			</div>
 		`
@@ -449,12 +457,13 @@ function generateHtmlForEvent(event) {
 	if (event.title === 'New Characters') {
 		let listItems = ''
 		event.items.forEach((item, index) => {
+			let seriesFlair = item.series === 'Ltd. Time Event' ? 'event-card' : `series${item.series}`
 			if (index === 0) {
 				listItems += `<li class="list-item" aria-label="season pass card"><span class="highlight-card hoverable season-pass">${item.name}</span></li>`
 			} else if (index === event.items.length - 1) {
-				listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
+				listItems += `<li class="list-item"><span class="highlight-card hoverable ${seriesFlair}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
 			} else {
-				listItems += `<li class="list-item"><span class="highlight-card hoverable series${item.series}">${item.name}</span></li>`
+				listItems += `<li class="list-item"><span class="highlight-card hoverable ${seriesFlair}">${item.name}</span></li>`
 			}
 		})
 		
@@ -734,7 +743,7 @@ function addHoverListenersToCards() {
 				`
 			} else {
 				const cardToDisplay = CARDS.find(card => card.name === el.innerText)
-				const source = cardToDisplay.series !== "Season Pass" ? `Series ${cardToDisplay.series}` : "Season Pass"
+				const source = ["Season Pass","Ltd. Time Event"].includes(cardToDisplay.series) ? cardToDisplay.series : `Series ${cardToDisplay.series}`
 				cardInfoTooltip.innerHTML = `
 					<img src="https://files.guymelef.dev/card/${imageName}.webp"
 						alt="${cardToDisplay.name} | Series: ${cardToDisplay.series} | Cost: ${cardToDisplay.cost} | Power: ${cardToDisplay.power}"

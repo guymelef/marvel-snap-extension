@@ -155,6 +155,10 @@ button, select, input {
 	background-image: linear-gradient(#cb28e1, #7e80df);
 }
 
+.event-card {
+	background-color: #E62429;
+}
+
 .card-info h3, h4, p {
   padding: 0;
   margin: 0;

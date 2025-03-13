@@ -475,6 +475,10 @@ a {
 	background-image: linear-gradient(#192929, #1a5564);
 }
 
+.event-card {
+	background-color: #E62429;
+}
+
 .section-controls {
 	display: flex;
 	justify-content: center;
