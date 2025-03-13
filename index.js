@@ -415,7 +415,11 @@ function renderRefCardsSection(refs) {
 		`
 	}).join('<hr>')
 
-	document.querySelector('mark').onmouseover = () => refCardsSection.style.display = 'block'
+	document.querySelector('mark').onmouseover = () => {
+		refCardsSection.style.display = 'block'
+		refCardsSection.scrollTop = 0
+	}
+	
 	refCardsSection.onmouseleave = () => refCardsSection.style.display = 'none'
 }
 
