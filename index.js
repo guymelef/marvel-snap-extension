@@ -410,15 +410,15 @@ function renderRefCardsSection(refs) {
 					<strong>${card.name}</strong>
 					<br>
 					${card.ability || `<i>${card.text}</i>`}
-					</p>
+				</p>
 			</div>
 		`
 	}).join('<hr>')
 
-	document.querySelector('mark').onmouseover = () => {
+	document.querySelectorAll('mark').forEach(mark => mark.onmouseover = () => {
 		refCardsSection.style.display = 'block'
 		refCardsSection.scrollTop = 0
-	}
+	})
 	
 	refCardsSection.onmouseleave = () => refCardsSection.style.display = 'none'
 }
