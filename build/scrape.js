@@ -14,31 +14,34 @@ const scrapeSnap = async () => {
   const htmlToScrape = ``
   const $ = cheerio.load(htmlToScrape)
   
-  let changes = []
+  let cardNames = []
+  $('h5').each((_, x) => cardNames.push($(x).text().trim()))
+
+  let cardChanges = []
   $('ul').each((_, list) => {
     let change = {
       name: "",
       changes: []
     }
 
-    $(list).find('li').each((index, item) => {
-      if (index === 0) change.name = $(item).text().trim()
-      else change.changes.push($(item).text().replace('[Old] ','').replace('[Old]','').replace('[Change] ','').replace('[Change]','').replace('[New] ','').replace('[New]',''))
+    $(list).find('li').each((_, item) => {
+      change.changes.push($(item).text().replace('[Old] ','').replace('[Old]','').replace('[Change] ','').replace('[Change]','').replace('[New] ','').replace('[New]','').replace('>','->'))
     })
 
-    changes.push(change)
+    cardChanges.push(change)
   })
 
-  const numberOfChanges = changes.length
-  console.log(changes)
-  changes = {
+  const numberOfChanges = cardChanges.length
+  console.log('🆕 BALANCE CHANGES:\n', cardChanges)
+  cardChanges = {
     "date": date,
     "type": type,
-    "items": changes
+    "items": cardChanges
   }
-  clipboardy.writeSync(JSON.stringify(changes, null, 2))
-  console.log(`✅ Copied to clipboard!`)
-  console.log(`✨ Found ${numberOfChanges} changes.`)
+  clipboardy.writeSync(JSON.stringify(cardChanges, null, 2))
+  console.log(`✅ Copied to clipboard`)
+  console.log(`✨ Found [${numberOfChanges}] changes`)
+  console.log('🎴 CARD NAMES:', cardNames.join(', '))
 }
 
 scrapeSnap()
