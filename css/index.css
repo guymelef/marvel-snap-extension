@@ -771,9 +771,10 @@ a {
 .btn-scroll {
 	display: block;
 	font-size: 26px;
-	background: #00ff00;
+	background: #00e900;
 	border-radius: 2px;
 	box-shadow: 0px 8px 6px 0px #00000090;
+	padding: 4px 4px 0 4px;
 }
 
 .modal-content-header {
