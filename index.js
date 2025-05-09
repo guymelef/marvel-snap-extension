@@ -450,22 +450,26 @@ function renderModalContent() {
 function generateHtmlForEvent(event) {
 	if (event.title === 'New Characters') {
 		let listItems = ''
-		event.items.forEach((item, index) => {
-			let seriesFlair = item.series === 'Ltd. Time Event' ? 'event-card' : `series${item.series}`
-			if (index === 0) {
-				listItems += `<li class="list-item" aria-label="season pass card"><span class="highlight-card hoverable season-pass">${item.name}</span></li>`
-			} else if (index === event.items.length - 1) {
-				listItems += `<li class="list-item"><span class="highlight-card hoverable ${seriesFlair}">${item.name}</span><span style="color:var(--clr-gold)">＊</span></li>`
-			} else {
-				listItems += `<li class="list-item"><span class="highlight-card hoverable ${seriesFlair}">${item.name}</span></li>`
-			}
+		event.items.forEach(item => {
+			let cacheList = item.items.map(card => {
+				let series = card.series === 'Season Pass' ? 'season-pass' : `series${card.series}`
+				return `<li class="list-item"><span class="highlight-card hoverable ${series}">${card.name}</span></li>`
+			})
+			listItems += `
+				<li>
+					<strong class="date">${item.date}</strong>
+					<ul class="styled-list">
+						${cacheList.join('')}
+					</ul>
+				</li>
+			`
 		})
 		
 		return `
 			<div class="season-events">
 				<h3>☄️ ${event.title}</h3>
-				<ul class="styled-list">
-					${listItems}
+				<ul class="event">
+					${listItems}	
 				</ul>
 			</div>
 		`
@@ -479,30 +483,6 @@ function generateHtmlForEvent(event) {
 				<h3>🗺️ ${event.title}</h3>
 				<ul class="styled-list">
 					${listItems.join('')}
-				</ul>
-			</div>
-		`
-	}
-
-	if (event.title === 'Spotlight Caches') {
-		let listItems = ''
-		event.items.forEach(item => {
-			let cacheList = item.items.map(card => `<li class="list-item"><span class="highlight-card hoverable series${card.series}">${card.name}</span></li>`)
-			listItems += `
-				<li>
-					<strong class="date">${item.date}</strong>
-					<ul class="styled-list">
-						${cacheList.join('')}
-					</ul>
-				</li>
-			`
-		})
-		
-		return `
-			<div class="season-events">
-				<h3>🗝️ ${event.title}</h3>
-				<ul class="event">
-					${listItems}	
 				</ul>
 			</div>
 		`
@@ -744,7 +724,7 @@ function addHoverListenersToCards() {
 						width="120px"
 					>
 					<span style="color:lime" class="secondary-text"><b>${source}</b></span>
-					<span>${cardToDisplay.ability.replace(/<mark>|<\\mark>/g, '') || cardToDisplay.text}</span>
+					<span>${cardToDisplay.text || cardToDisplay.ability.replace(/<mark>|<\\mark>/g, '')}</span>
 				`
 			}
 			cardInfoTooltip.style.display = "block"
