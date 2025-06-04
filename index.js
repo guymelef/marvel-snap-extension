@@ -450,9 +450,13 @@ function renderModalContent() {
 function generateHtmlForEvent(event) {
 	if (event.title === 'New Characters') {
 		let listItems = ''
+		let series = ''
 		event.items.forEach(item => {
 			let cacheList = item.items.map(card => {
-				let series = card.series === 'Season Pass' ? 'season-pass' : `series${card.series}`
+				if (card.series === 'Season Pass') series = 'season-pass'
+				else if (card.series === 'Ltd. Time Event') series = 'event-card'
+				else series = `series${card.series}`
+
 				return `<li class="list-item"><span class="highlight-card hoverable ${series}">${card.name}</span></li>`
 			})
 			listItems += `
