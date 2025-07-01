@@ -305,6 +305,7 @@ function displayCard(card, isRandom) {
 		`
 	}
 
+	const skillCardSpan = '<span style="margin-top: 3px; display: inline-block" class="secondary-text source-origin skill">Skill</span>'
 	searchResult.innerHTML = ""
 	searchResult.innerHTML = `
 		<div class="search-result-img" id="${type}-img-div">
@@ -325,6 +326,7 @@ function displayCard(card, isRandom) {
 		</div>
 		<div class="search-result-info ${type}-search-result">
 			${htmlStr}
+			${card.type === 'skill' && card.released ? skillCardSpan : ''}
 		</div>
 	`
 

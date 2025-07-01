@@ -70,13 +70,13 @@ function startDeckBuilder() {
       }
 
       ALL_CARDS = cards
-      RELEASED_CARDS = cards.filter(card => card.type === 'character' && card.released)
+      RELEASED_CARDS = cards.filter(card => (card.type === 'character' || card.type === "skill") && card.released)
       sortCards(RELEASED_CARDS)
       cardsToDisplay = RELEASED_CARDS
       
       const urlParams = new URLSearchParams(window.location.search)
       let cardInDeck = urlParams.get('card')
-      cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck && card.released && card.type === 'character')
+      cardInDeck = cardsToDisplay.find(card => card.name === cardInDeck && card.released && (card.type === 'character' || card.type === 'skill'))
       if (cardInDeck) cardsInDeck = [cardInDeck]
       
       renderCardsInDeck()
@@ -428,7 +428,7 @@ function renderCardsInPool() {
     cardsToDisplay.forEach((card, index) => {
       const isCardInDeck = cardsInDeck.find(deckCard => card.name === deckCard.name)
       let cardImgClasses = isCardInDeck ? 'selected ' : ''
-      if (!card.released || card.type !== 'character') cardImgClasses += 'non-deck-card'
+      if (!card.released) cardImgClasses += 'non-deck-card'
       
       cardsDiv.innerHTML += `
         <img class="snap-card card-image ${cardImgClasses}"
