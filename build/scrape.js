@@ -25,7 +25,7 @@ const scrapeSnap = async () => {
     }
 
     $(list).find('li').each((_, item) => {
-      change.changes.push($(item).text().replace('[Old] ','').replace('[Old]','').replace('[Change] ','').replace('[Change]','').replace('[New] ','').replace('[New]','').replace('>','->'))
+      change.changes.push($(item).text().replace('[Old] ','').replace('[Old]','').replace('[Changes] ','').replace('[Changes]','').replace('[New] ','').replace('[New]','').replace('>','->'))
     })
 
     cardChanges.push(change)
