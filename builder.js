@@ -137,7 +137,7 @@ function showCardInfo(event) {
     const cardSeries = cardInfo.series
     if (cardSeries) {
       if (cardSeries && cardSeries !== "NA") {
-        if (cardSeries === 'Season Pass') {
+        if (cardSeries === 'Season Pass' || cardSeries === 'Super Premium') {
           source = cardSeries
           sourceClass = 'season-pass'
         } else if (cardSeries === 'Ltd. Time Event') {

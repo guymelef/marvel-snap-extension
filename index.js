@@ -265,8 +265,13 @@ function displayCard(card, isRandom) {
 					source = `Series ${card.series}`
 					sourceClass = `series${card.series}`
 				} else {
-					source = card.series
-					sourceClass = 'event-card'
+					if (card.series === "Super Premium") {
+						source = card.series
+						sourceClass = "season-pass"
+					} else {
+						source = card.series
+						sourceClass = 'event-card'
+					}
 				}
 			} else {
 				source = card.type === 'token' ? 'Token' : 'Skill'
@@ -455,7 +460,7 @@ function generateHtmlForEvent(event) {
 		let series = ''
 		event.items.forEach(item => {
 			let cacheList = item.items.map(card => {
-				if (card.series === 'Season Pass') series = 'season-pass'
+				if (card.series === 'Season Pass' || card.series === 'Super Premium') series = 'season-pass'
 				else if (card.series === 'Ltd. Time Event') series = 'event-card'
 				else series = `series${card.series}`
 
@@ -723,7 +728,7 @@ function addHoverListenersToCards() {
 				`
 			} else {
 				const cardToDisplay = CARDS.find(card => card.name === el.innerText)
-				const source = ["Season Pass","Ltd. Time Event"].includes(cardToDisplay.series) ? cardToDisplay.series : `Series ${cardToDisplay.series}`
+				const source = ["Season Pass", "Super Premium", "Ltd. Time Event"].includes(cardToDisplay.series) ? cardToDisplay.series : `Series ${cardToDisplay.series}`
 				cardInfoTooltip.innerHTML = `
 					<img src="https://files.guymelef.dev/card/${imageName}.webp"
 						alt="${cardToDisplay.name} | Series: ${cardToDisplay.series} | Cost: ${cardToDisplay.cost} | Power: ${cardToDisplay.power}"
