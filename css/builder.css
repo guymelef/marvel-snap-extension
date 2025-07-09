@@ -207,7 +207,7 @@ button, select, input {
 .filters {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   font-size: 14px;
   font-weight: bold;
   margin-top: 5px;
