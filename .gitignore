@@ -5,3 +5,4 @@ build/tool.js
 build/chrome
 build/firefox
 build/node_modules
+build/unreleased-cards.json
