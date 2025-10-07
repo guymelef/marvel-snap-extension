@@ -154,7 +154,7 @@ function showCardInfo(event) {
     let cardAbility = ""
     if (cardInfo.ability) cardAbility = `
       <p class="card-info-text">
-        ${cardInfo.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`).replace(/<mark>|<\\mark>/g, '')}
+        ${cardInfo.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn|Horde/g, match => match && `<b>${match}</b>`).replace(/<mark>|<\\mark>/g, '')}
       </p>
     `
     else cardAbility = `
@@ -163,7 +163,7 @@ function showCardInfo(event) {
         ${cardInfo.evolved ?
           `
             <br>
-            <b class="evolved">Evolved:</b> ${cardInfo.evolved.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)}
+            <b class="evolved">Evolved:</b> ${cardInfo.evolved.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn|Horde/g, match => match && `<b>${match}</b>`)}
           `
           : ''
         }

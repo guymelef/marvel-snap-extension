@@ -248,10 +248,10 @@ function displayCard(card, isRandom) {
 	
 	const imgSrc = generateCardImgSrc(card, type)
 
-	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)
+	if (card.ability) card.ability = card.ability.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn|Horde/g, match => match && `<b>${match}</b>`)
 
 	if (type === "card") {
-		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn/g, match => match && `<b>${match}</b>`)
+		if (card.evolved) card.evolved = card.evolved.replace(/On Reveal|Ongoing|Activate|Game Start|End of Turn|Horde/g, match => match && `<b>${match}</b>`)
 
 		if (card.name === FEATURED_CARD) {
 			source = "Season Pass"
